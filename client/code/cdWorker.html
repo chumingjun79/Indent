@@ -1,0 +1,48 @@
+<template name="cdworker">
+    <form class="form-horizontal" role="form">
+        <div class="panel panel-default ">
+            <div class="panel-heading" align="center">
+                <h3><span class="label label-default">员工维护</span></h3>
+            </div>
+            <div class="panel-body">
+                <div class="pre-scrollable">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>部门</th>
+                                <th>员工姓名</th>
+                                <th>员工编号</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each workers}}
+                                {{> cdworkerBody}}
+                            {{/each}}
+                        </tbody>
+                    </table>
+                </div>
+
+		        <button class="btn btn-success" id="add-code" type="button">
+		            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+		        </button>
+            </div>
+        </div>
+    </form>
+</template>
+
+<template name="cdworkerBody">
+    <tr>
+        <td id="ygbm" data-index="{{_id}}">{{ygbm}}</td>
+        <td id="ygxm" data-index="{{_id}}">{{ygxm}}</td>
+        <td id="ygbh" data-index="{{_id}}">{{ygbh}}</td>
+        <td align="right">
+            <button id="edit-code" type="button" class="btn btn-info" data-index="{{_id}}">
+                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+            </button>
+            <button id="del-code" type="button" class="btn btn-danger" data-index="{{_id}}">
+                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+            </button>
+        </td>
+    </tr>
+</template>

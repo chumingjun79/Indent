@@ -1,0 +1,46 @@
+<template name="shipment">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="col-sm-5 pull-left">
+                <p>第一步：输入订单号并查询，然后选中订单</p>
+                <form role="form" class="form-horizontal">
+                    <div class="form-group">
+                        <div class="col-sm-6">
+                            <input class="form-control" id="ddbh">
+                        </div>
+                        <div class="col-sm-6">
+                            <button id="btn-find" type="button" class="btn btn-primary">
+                                <span class="fa fa-refresh" aria-hidden="true"></span> 查询
+                            </button>
+                        </div>
+                    </div>
+                </form>
+                <table id="tb_indent" class="table table-bordered"></table>
+            </div>
+
+            <div class="col-sm-7 pull-right">
+                <p>第二步：选中订单中需要发货的设备</p>
+                <table id="tb_device" class="table table-bordered"></table>
+            </div>
+        </div>
+
+        <div class="panel-body">
+            <p>第三步：在下面录入发货的信息</p>
+            <table id="tb_shipment" class="table table-bordered"></table>
+
+            <div class="panel">
+                <div class="panel-heading" align="center">
+                    <button class="btn btn-success" id="btn-add" type="button">
+                        <span class="fa fa-plus" aria-hidden="true"></span> 增加
+                    </button>
+                    <button class="btn btn-info" id="btn-edit" type="button">
+                        <span class="fa fa-pencil" aria-hidden="true"></span> 修改
+                    </button>
+                    <button class="btn btn-danger" id="btn-del" type="button">
+                        <span class="fa fa-trash" aria-hidden="true"></span> 删除
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

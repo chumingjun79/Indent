@@ -1,0 +1,7 @@
+<template name="homepage">
+	{{#if currentUser}}
+		<div class="alert alert-success">登录成功，请通过菜单实现相应功能。如果没有权限，请与管理员联系</div>
+	{{else}}
+		<div class="alert alert-warning">欢迎使用，请先登录系统</div>
+	{{/if}}
+</template>

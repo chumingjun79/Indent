@@ -1,0 +1,94 @@
+.form-box {
+	margin-top: 35px;
+}
+
+.form-top {
+	overflow: hidden;
+	height: 120px;
+	padding: 0 10% 0 10%;
+	background: #f8f8f8;
+	border-radius: 10px 10px 0 0;
+}
+
+.form-top-left {
+	float: left;
+	width: 80%;
+	padding-top: 3%;
+	line-height: 200%;
+	color: #808080;
+}
+
+.form-top-right {
+	float: left;
+	width: 20%;
+	padding-top: 2%;
+	font-size: 500%;
+	color: #ddd;
+	text-align: right;
+}
+
+.form-bottom {
+	padding: 5% 10% 10% 10%;
+	background: #eee;
+	border-radius: 0 0 10px 10px;
+	text-align: left;
+}
+
+.form-loginout {
+	height: 45px;
+	border-radius: 6px 6px 6px 6px;
+}
+
+label {
+	font-weight: normal;
+}
+
+.panel {
+	margin-bottom: 5px;
+}
+
+.panel-body {
+	padding: 5px;
+}
+
+.form-group {
+	margin-bottom: 5px;
+}
+
+.control-label {
+	font-weight: normal;
+	padding-right: 0;
+	margin-right: 0;
+}
+
+.checkbox-cmj {
+	width: 100%;
+	height: 24px;
+}
+
+.col-cmj-10, .col-cmj-12, .col-cmj-15, .col-cmj-20 {
+	position: relative;
+	min-height: 1px;
+	padding-right: 15px;
+	padding-left: 15px;
+}
+@media (min-width: 768px) {
+	.col-cmj-10, .col-cmj-12, .col-cmj-15, .col-cmj-20 {
+		float: left;
+	}
+	.col-cmj-10 {
+		width: 10%;
+	}
+	.col-cmj-12 {
+		width: 12%;
+	}
+	.col-cmj-15 {
+		width: 15%;
+	}
+	.col-cmj-20 {
+		width: 20%;
+	}
+}
+
+
+

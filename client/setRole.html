@@ -1,0 +1,57 @@
+<template name = "setrole">
+    <form class="form-horizontal" role="form">
+        <div class="panel panel-default ">
+            <div class="panel-heading" align="center">
+                <h3><span class="label label-default">设 置 权 限</span></h3>
+                <p>正在设置<strong class="text-danger"> {{getUserName}} </strong>的权限...</p>
+            </div>
+
+            <div class="panel-body">
+                <div class="pre-scrollable">
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th>功能大类</th>
+                            <th>功能名称</th>
+                            <th>功能内码</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            {{#with userRoles}}
+                                {{#each roles}}
+                                    {{> setroleBody}}
+                                {{/each}}
+                            {{/with}}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="panel">
+                    <div class="panel-heading" align="center">
+                        <button class="btn btn-warning" id="btn-init" type="button">
+                            <span class="fa fa-plus" aria-hidden="true"></span> 增加所有
+                        </button>
+                        <button class="btn btn-success" id="btn-add" type="button">
+                            <span class="fa fa-pencil" aria-hidden="true"></span> 增加一项
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</template>
+
+<template name="setroleBody">
+    <tr>
+        <td id="gndl" data-index="{{_id}}">{{gndl}}</td>
+        <td id="gnmc" data-index="{{_id}}">{{gnmc}}</td>
+        <td id="gnnm" data-index="{{_id}}">{{gnnm}}</td>
+        <td align="right">
+            <button id="del-code" type="button" class="btn btn-danger" data-index="{{_id}}">
+                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+            </button>
+        </td>
+    </tr>
+</template>

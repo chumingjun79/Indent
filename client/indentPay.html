@@ -1,0 +1,339 @@
+<template name="indentpay">
+    <form class="form-horizontal" role="form">
+        <div class="panel panel-default ">
+            <div class="panel-heading" align="center">
+                {{> payHead}}
+            </div>
+            <div class="panel-body">
+                {{#unless selectedIndent}}
+                    <div class="alert alert-danger">
+                        没有订单编号所对应的订单，请检查订单编号输入是否正确，尤其要注意大小写
+                    </div>
+                {{/unless}}
+                {{#with selectedIndent}}
+                    {{> payBody}}
+                {{/with}}
+            </div>
+        </div>
+        {{#with selectedIndent}}
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    {{> payFoot}}
+                </div>
+            </div>
+        {{/with}}
+    </form>
+
+    {{#if selectedIndent}}
+        {{> payHandle}}
+    {{/if}}
+</template>
+
+<template name="payHead">
+	<h3><span class="label label-default">顿汉布什销售订单信息表</span></h3>
+	
+	<div class="form-group">
+		<div class="col-sm-4 col-sm-offset-4">
+			<label class="control-label col-sm-4">订单编号No.</label>
+			<div class="col-sm-8">
+				<input class="form-control" id="ddbh" name="ddbh"
+				placeholder="请输入订单编号后回车..." value="{{ddbh}}">
+			</div>
+		</div>
+	</div>
+</template>
+
+<template name="payFoot">
+    <div class="form-group">
+        <label class="control-label col-sm-2">合同总金额</label>
+        <div class="col-sm-2">
+            <input class="form-control" id="htzje" value="{{htzje}}" readonly>
+        </div>
+
+        <label class="control-label col-sm-2">收款总金额</label>
+        <div class="col-sm-2">
+            <input class="form-control" id="skzje" value="{{skzje}}" readonly>
+        </div>
+    </div>
+</template>
+
+<template name="payHandle">
+    <div class="panel">
+        <div class="panel-heading" align="center">
+            <button class="btn btn-success" id="baocundd">保存订单</button>
+        </div>
+    </div>
+</template>
+
+<template name="payBody">
+    <div class="form-group">
+        <label class="control-label col-sm-2">订单年度</label>
+        <div class="col-sm-2">
+            <input class="form-control" id="kjnd" name="kjnd" value="{{kjnd}}" readonly>
+        </div>
+
+        <label class="control-label col-sm-2">订单月份</label>
+        <div class="col-sm-2">
+            <input class="form-control" id="kjyf" name="kjyf" value="{{kjyf}}" readonly>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-sm-2">项目名称</label>
+        <div class="col-sm-10">
+            <input class="form-control" id="xmmc" name="xmmc" value="{{xmmc}}" readonly>
+        </div>
+    </div>
+	<div class="form-group">
+		<label class="control-label col-sm-2">项目分类</label>
+		<div class="col-sm-2">
+            <input class="form-control" id="xmfl" value="{{xmfl}}" readonly>
+		</div>
+
+        <label class="control-label col-sm-2">联系人</label>
+        <div class="col-sm-2">
+            <input class="form-control" id="lxr" value="{{lxr}}" readonly>
+        </div>
+
+        <label class="control-label col-sm-2">联系电话</label>
+        <div class="col-sm-2">
+            <input class="form-control" id="lxdh" value="{{lxdh}}" readonly>
+        </div>
+    </div>
+	<div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" id="dxm" checked={{dxm}} disabled>地铁、高铁、核电等大项目个人业绩按50%计算
+                </label>
+            </div>
+        </div>
+	</div>
+
+	<!--标签页-->
+	<ul id="myTab" class="nav nav-tabs">
+		<li class="active"><a href="#invoice" data-toggle="tab">发票信息</a></li>
+		<li><a href="#payTerms" data-toggle="tab">付款条款</a></li>
+		<li><a href="#deposit" data-toggle="tab">定金信息</a></li>
+        <li><a href="#receivable" data-toggle="tab">应收款项</a></li>
+		<li><a href="#ppp" data-toggle="tab">PPP信息</a></li>
+	</ul>
+	<div class="tab-content">
+        <div class="tab-pane fade in active" id="invoice"><!--发票信息-->
+            {{> invoice}}
+        </div>
+
+        <div class="tab-pane fade" id="payTerms"><!--付款条款-->
+            <div class="panel">
+                <textarea class="form-control" rows="5" id="fktk">{{fktk}}</textarea>
+            </div>
+        </div>
+
+		<div class="tab-pane fade" id="deposit"><!--定金信息-->
+            <table id="deposit" class="table table-hover table-condensed">
+                <thead>
+                    <tr>
+                        <th class="text-center">定金比例</th>
+                        <th class="text-center">应收定金</th>
+                        <th class="text-center">是否收到</th>
+                        <th class="text-center">排产日期</th>
+                        <th class="text-center">出货日期</th>
+                        <th class="text-center">调试日期</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each withIndex deposit}}
+                        {{> deposit}}
+                    {{/each}}
+                </tbody>
+
+                <button class="btn btn-success" id="add-deposit" type="button">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                </button>
+            </table>
+		</div>
+
+        <div class="tab-pane fade" id="receivable"><!--应收款项-->
+            <table id="receivable" class="table table-hover table-condensed">
+                <thead>
+                    <tr>
+                        <th class="text-center">应收金额</th>
+                        <th class="text-center">到期日</th>
+                        <th class="text-center">提醒日</th>
+                        <th class="text-center">类型</th>
+                        <th class="text-center">是否收款</th>
+                        <th class="text-center">备注</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each withIndex pay}}
+                        {{> pay}}
+                    {{/each}}
+                </tbody>
+
+                <button class="btn btn-success" id="add-pay" type="button">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                </button>
+            </table>
+        </div>
+
+		<div class="tab-pane fade" id="ppp"><!--PPP-->
+            <table id="ppp" class="table table-hover table-condensed">
+                <thead>
+                    <tr>
+                        <th class="text-center">设备型号</th>
+                        <th class="text-center">密码</th>
+                        <th class="text-center">到期日</th>
+                        <th class="text-center">提醒日</th>
+                        <th class="text-center">密码级别</th>
+                        <th class="text-center">是否关闭</th>
+                        <th class="text-center">备注</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each withIndex ppp}}
+                        {{> ppp}}
+                    {{/each}}
+                </tbody>
+
+                <button class="btn btn-success" id="add-ppp" type="button">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                </button>
+            </table>
+		</div>
+
+
+	</div>
+</template>
+
+<template name="deposit">
+    <tr>
+        <td><input class="form-control" id="djdjbl" data-index="{{index}}" value="{{djdjbl}}"></td>
+        <td><input class="form-control" id="djysdj" data-index="{{index}}" value="{{djysdj}}"></td>
+        <td><input class="checkbox-cmj" id="djsfsd" data-index="{{index}}"
+                   type="checkbox" checked={{djsfsd}}>
+        </td>
+        <td><input class="form-control datepicker" id="djpcrq" data-index="{{index}}"
+                   value="{{djpcrq}}" readonly>
+        </td>
+        <td><input class="form-control datepicker" id="djchrq" data-index="{{index}}"
+                   value="{{djchrq}}" readonly>
+        </td>
+        <td><input class="form-control datepicker" id="djtsrq" data-index="{{index}}"
+                   value="{{djtsrq}}" readonly>
+        </td>
+        <td>
+            <button id="del-deposit" type="button" class="btn btn-danger" data-index="{{index}}">
+                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+            </button>
+        </td>
+    </tr>
+</template>
+
+<template name="pay">
+	<tr>
+		<td><input class="form-control" id="skysje" data-index="{{index}}" value="{{skysje}}"></td>
+        <td><input class="form-control datepicker" id="skdqr" data-index="{{index}}"
+                   value="{{skdqr}}" readonly>
+        </td>
+        <td><input class="form-control datepicker" id="sktxr" data-index="{{index}}"
+                   value="{{sktxr}}" readonly>
+        </td>
+        <td>
+            <select class="form-control" id="sklx" data-index="{{index}}">
+                {{#each paytypes}}
+                    <option value="{{name}}" {{isSelected ../sklx name}}>{{name}}</option>
+                {{/each}}
+            </select>
+        </td>
+        <td><input class="checkbox-cmj" id="sksfsk" data-index="{{index}}"
+                   type="checkbox" checked={{sksfsk}}>
+        </td>
+        <td><input class="form-control" id="skbz" data-index="{{index}}" value="{{skbz}}"></td>
+		<td>
+			<button id="del-pay" type="button" class="btn btn-danger" data-index="{{index}}">
+				<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+			</button>
+		</td>
+	</tr>
+</template>
+
+<template name="ppp">
+    <tr>
+        <td><input class="form-control" id="ppsbxh" data-index="{{index}}" value="{{ppsbxh}}"></td>
+        <td><input class="form-control" id="ppmm" data-index="{{index}}" value="{{ppmm}}"></td>
+        <td><input class="form-control datepicker" id="ppdqr" data-index="{{index}}"
+                   value="{{ppdqr}}" readonly>
+        </td>
+        <td><input class="form-control datepicker" id="pptxr" data-index="{{index}}"
+                   value="{{pptxr}}" readonly>
+        </td>
+        <td>
+            <select class="form-control" id="ppmmjb" data-index="{{index}}">
+                <option value="0级密码" {{isSelected ppmmjb "0级密码"}}>0级密码</option>
+                <option value="1级密码" {{isSelected ppmmjb "1级密码"}}>1级密码</option>
+                <option value="2级密码" {{isSelected ppmmjb "2级密码"}}>2级密码</option>
+                <option value="3级密码" {{isSelected ppmmjb "3级密码"}}>3级密码</option>
+                <option value="4级密码" {{isSelected ppmmjb "4级密码"}}>4级密码</option>
+                <option value="5级密码" {{isSelected ppmmjb "5级密码"}}>5级密码</option>
+                <option value="6级密码" {{isSelected ppmmjb "6级密码"}}>6级密码</option>
+                <option value="7级密码" {{isSelected ppmmjb "7级密码"}}>7级密码</option>
+                <option value="8级密码" {{isSelected ppmmjb "8级密码"}}>8级密码</option>
+                <option value="9级密码" {{isSelected ppmmjb "9级密码"}}>9级密码</option>
+            </select>
+        </td>
+        <td><input class="checkbox-cmj" id="ppsfgb" data-index="{{index}}"
+                   type="checkbox" checked={{ppsfgb}}>
+        </td>
+        <td><input class="form-control" id="ppbz" data-index="{{index}}" value="{{ppbz}}"></td>
+        <td>
+            <button id="del-ppp" type="button" class="btn btn-danger" data-index="{{index}}">
+                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+            </button>
+        </td>
+    </tr>
+</template>
+
+<template name="invoice">
+	<div class="form-group">
+		<label class="control-label col-sm-2">发票类型</label>
+        <div class="col-sm-2">
+            <label class="radio-inline">
+                <input type="radio" name="fplxpt" id="fplxpt" value=0 checked="{{isChecked fplx 0}}">普通
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="fplxzzs" id="fplxzzs" value=1 checked="{{isChecked fplx 1}}">增值税
+            </label>
+        </div>
+    </div>
+    <div class="form-group">
+		<label class="control-label col-sm-2">公司名称</label>
+		<div class="col-sm-2">
+			<input class="form-control" id="fpgsmc" name="fpgsmc" value="{{fpgsmc}}">
+		</div>
+
+		<label class="control-label col-sm-2">税号</label>
+		<div class="col-sm-2">
+			<input class="form-control" id="fpsh" name="fpsh" value="{{fpsh}}">
+		</div>
+
+		<label class="control-label col-sm-2">单位地址</label>
+		<div class="col-sm-2">
+			<input class="form-control" id="fpdwdz" name="fpdwdz" value="{{fpdwdz}}">
+		</div>
+    </div>
+    <div class="form-group">
+		<label class="control-label col-sm-2">电话号码</label>
+		<div class="col-sm-2">
+			<input class="form-control" id="fpdhhm" name="fpdhhm" value="{{fpdhhm}}">
+		</div>
+
+		<label class="control-label col-sm-2">开户银行</label>
+		<div class="col-sm-2">
+			<input class="form-control" id="fpkhyh" name="fpkhyh" value="{{fpkhyh}}">
+		</div>
+		<label class="control-label col-sm-2">银行账号</label>
+		<div class="col-sm-2">
+			<input class="form-control" id="fpyhzh" name="fpyhzh" value="{{fpyhzh}}">
+		</div>
+	</div>
+</template>

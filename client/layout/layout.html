@@ -1,0 +1,90 @@
+<template name="layout">
+    <div class="container">
+	    <nav class="navbar navbar-default" role="navigation">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="/"><img src="/img/logo.png"></a>
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                        data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+			</div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            订单系统 <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/indent">订单录入</a></li>
+                            <li><a href="/indentlist">订单查询</a></li>
+                            <li><a href="/devicedetail">订单设备明细</a></li>
+                            <li class="divider"></li>
+                            <li><a href="/shipment">订单发货</a></li>
+                            <li><a href="/shipmentlist">发货明细查询</a></li>
+                            <li><a href="/devicelist">设备发货信息</a></li>
+                            <li class="divider"></li>
+                            <li><a href="/orderstatus">订单状态比较</a></li>
+                            <li><a href="/monthly">订单月度比较</a></li>
+                            <li><a href="/officereport">办事处业绩</a></li>
+                            <li><a href="/productreport">分产品订货</a></li>
+                            <li><a href="/averagemf">平均系数对比</a></li>
+                            <li><a href="/monthcost">分月份费用率</a></li>
+                            <li><a href="/officecost">办事处费用率</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            收款系统 <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/indentpay">订单收款</a></li>
+                            <li><a href="/paylist">收款查询</a></li>
+                            <li class="divider"></li>
+                            <li><a href="/paywarn">收款到期查询</a></li>
+                            <li><a href="/pppwarn">PPP到期查询</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            系统功能 <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/userlist">用户管理</a></li>
+                            <li><a href="/changepass">更改密码</a></li>
+                            <li class="divider"></li>
+                            <li><a href="/systeminfo">系统信息</a></li>
+                            <li><a href="/function">功能维护</a></li>
+                            <li class="divider"></li>
+                            <li><a href="/item">项目分类</a></li>
+                            <li><a href="/office">办事处维护</a></li>
+                            <li><a href="/product">产品分类</a></li>
+                            <li><a href="/worker">员工维护</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <ul class="nav navbar-nav navbar-right">
+                    {{#if currentUser}}
+                        <li><a href="/logout">
+                            <span class="glyphicon glyphicon-log-out"></span> 注销【{{userObject.username}}】</a>
+                        </li>
+                    {{else}}
+                        <li><a href="/login">
+                            <span class="glyphicon glyphicon-log-in"></span> 登录</a>
+                        </li>
+                    {{/if}}
+                </ul>
+            </div>
+	    </nav>
+
+        {{#with systemInfo}}
+            <div class="alert alert-danger">{{info}}</div>
+        {{/with}}
+
+	    {{> yield}}
+    </div>
+</template>

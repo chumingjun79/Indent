@@ -1,0 +1,35 @@
+<template name="paywarn">
+	<div class="panel panel-default">
+        <div class="panel-body">
+        	<form role="form" class="form-horizontal">
+				<div class="form-group">
+					<label class="control-label col-sm-1" for="ddbh">订单号</label>
+					<div class="col-sm-2">
+						<input class="form-control" id="ddbh">
+					</div>
+
+					<label class="control-label col-sm-1" for="xmmc">项目名称</label>
+					<div class="col-sm-2">
+						<input class="form-control" id="xmmc">
+					</div>
+                    <div class="col-sm-2">
+                        <button id="btn_refresh" type="button" class="btn btn-primary">
+                            <span class="fa fa-refresh" aria-hidden="true"></span> 查询
+                        </button>
+                    </div>
+				</div>	
+			</form>
+        </div>
+
+		<div class="panel-body">
+            <button id="btn_info" type="button" class="btn btn-default">
+                <span class="fa fa-info-circle" aria-hidden="true"></span> 详细信息
+            </button>
+            <button id="btn_toexcel" type="button" class="btn btn-default">
+                <span class="fa fa-file-excel-o" aria-hidden="true"></span> 导出EXCEL
+            </button>
+
+			<table id="tb_list" class="table table-bordered"></table>
+		</div>
+	</div>
+</template>

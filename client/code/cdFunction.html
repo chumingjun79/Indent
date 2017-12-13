@@ -1,0 +1,45 @@
+<template name="cdfunction">
+    <form class="form-horizontal" role="form">
+        <div class="panel panel-default ">
+            <div class="panel-heading" align="center">
+                <h3><span class="label label-default">系统功能维护</span></h3>
+            </div>
+            <div class="panel-body">
+                <div class="pre-scrollable">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>功能大类</th>
+                                <th>功能名称</th>
+                                <th>功能内码</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each functions}}
+                                {{> cdfunctionBody}}
+                            {{/each}}
+                        </tbody>
+                    </table>
+                </div>
+
+		        <button class="btn btn-success" id="add-code" type="button">
+		            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+		        </button>
+            </div>
+        </div>
+    </form>
+</template>
+
+<template name="cdfunctionBody">
+    <tr>
+        <td id="gndl" data-index="{{_id}}">{{gndl}}</td>
+        <td id="gnmc" data-index="{{_id}}">{{gnmc}}</td>
+        <td id="gnnm" data-index="{{_id}}">{{gnnm}}</td>
+        <td align="right">
+            <button id="del-code" type="button" class="btn btn-danger" data-index="{{_id}}">
+                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+            </button>
+        </td>
+    </tr>
+</template>

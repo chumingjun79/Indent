@@ -1,0 +1,231 @@
+<template name="indent">
+	{{#with selectedIndent}}
+		{{> showIndent}}
+	{{/with}}
+</template>
+
+<template name="showIndent">
+    <form class="form-horizontal" role="form">
+        <div class="panel panel-default ">
+            <div class="panel-heading" align="center">
+                {{> indentHead}}
+            </div>
+            <div class="panel-body">
+                {{> indentBody}}
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-body">
+                {{> indentFoot}}
+            </div>
+        </div>
+    </form>
+    {{#if getUserRole}}
+	    {{> indentHandle}}
+    {{/if}}
+</template>
+
+<template name="indentHead">
+	<h3><span class="label label-default">顿汉布什销售订单信息表</span></h3>
+	
+	<div class="form-group">
+		<div class="col-sm-4 col-sm-offset-4">
+			<label class="control-label col-sm-4">订单编号No.</label>
+			<div class="col-sm-6">
+				<input class="form-control" id="ddbh" name="ddbh" 
+				placeholder="请输入订单编号" value="{{ddbh}}">
+			</div>
+		</div>
+	</div>
+</template>
+
+<template name="indentFoot">
+	<div class="form-group">
+		<label class="control-label col-sm-2">设备总金额</label>
+		<div class="col-sm-2">
+			<input class="form-control" id="sbzje" value="{{sbzje}}">
+		</div>
+
+		<label class="control-label col-sm-2">合同总金额</label>
+		<div class="col-sm-2">
+			<input class="form-control" id="htzje" value="{{htzje}}">
+		</div>
+	</div>
+</template>
+
+<template name="indentHandle">
+    <div class="panel">
+        <div class="panel-heading" align="center">
+            <button class="btn btn-success" id="baocundd">保存订单</button>
+            <button class="btn btn-default" id="xinzengdd">新增订单</button>
+            <button class="btn btn-danger" id="shanchudd">删除订单</button>
+        </div>
+    </div>
+</template>
+
+<template name="indentBody">
+    <div class="form-group">
+        <label class="control-label col-sm-2">订单年度</label>
+        <div class="col-sm-2">
+            <input class="form-control" id="kjnd" name="kjnd" value="{{kjnd}}">
+        </div>
+
+        <label class="control-label col-sm-2">订单月份</label>
+        <div class="col-sm-2">
+            <input class="form-control" id="kjyf" name="kjyf" value="{{kjyf}}">
+        </div>
+    </div>
+	<div class="form-group">
+		<label class="control-label col-sm-2">项目名称</label>
+		<div class="col-sm-10">
+			<input class="form-control" id="xmmc" name="xmmc" value="{{xmmc}}">
+		</div>
+	</div>
+    <div class="form-group">
+        <label class="control-label col-sm-2">项目分类</label>
+        <div class="col-sm-2">
+            <select class="form-control col-sm-2" id="xmfl" name="xmfl">
+                <option value=""></option>
+                {{#each items}}
+                    <option value="{{name}}" {{isSelected ../xmfl name}}>{{name}}</option>
+                {{/each}}
+            </select>
+        </div>
+
+        <label class="control-label col-sm-2">联系人</label>
+        <div class="col-sm-2">
+            <input class="form-control" id="lxr" value="{{lxr}}">
+        </div>
+
+        <label class="control-label col-sm-2">联系电话</label>
+        <div class="col-sm-2">
+            <input class="form-control" id="lxdh" value="{{lxdh}}">
+        </div>
+    </div>
+	<div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" id="dxm" checked={{dxm}}>地铁、高铁、核电等大项目个人业绩按50%计算
+                </label>
+            </div>
+        </div>
+	</div>
+
+	<!--标签页-->
+	<ul id="myTab" class="nav nav-tabs">
+		<li class="active"><a href="#devices" data-toggle="tab">设备列表</a></li>
+		<li><a href="#remark" data-toggle="tab">备注信息</a></li>
+	</ul>
+	<div class="tab-content">
+		<div class="tab-pane fade in active" id="devices"><!--设备列表-->
+            <div class="list-group">
+                {{#each withIndex device}}
+                    {{> device}}
+                {{/each}}
+            </div>
+            <button class="btn btn-success" id="btn-add" type="button">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+            </button>
+		</div>
+
+		<div class="tab-pane fade" id="remark"><!--备注信息-->
+			<div class="panel">
+				<textarea class="form-control" rows="5" id="remark">{{remark}}</textarea>
+			</div>
+		</div>
+	</div>
+</template>
+
+<template name="device">
+    <a class="list-group-item">
+        <div class="panel-body">
+            <!--设备信息-->
+            <div class="form-group col-cmj-15">
+                <div class="input-group">
+                    <input class="form-control" id="cpfl" data-index="{{index}}"
+                           placeholder="产品分类" value="{{cpfl}}">
+                    <div class="input-group-addon">
+                        <span class="glyphicon glyphicon-list" id="span-cpfl" data-index="{{index}}"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group col-cmj-20">
+                <input class="form-control" id="sbxh" data-index="{{index}}"
+                       placeholder="设备型号" value="{{sbxh}}">
+            </div>
+            <div class="form-group col-sm-2">
+                <div class="input-group">
+                    <input class="form-control" id="bsc" data-index="{{index}}"
+                           placeholder="办事处" value="{{bsc}}">
+                    <div class="input-group-addon">
+                        <span class="glyphicon glyphicon-list" id="span-bsc" data-index="{{index}}"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group col-cmj-15">
+                <div class="input-group">
+                    <input class="form-control" id="fzr" data-index="{{index}}"
+                           placeholder="负责人" value="{{fzr}}">
+                    <div class="input-group-addon">
+                        <span class="glyphicon glyphicon-list" id="span-fzr" data-index="{{index}}"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group col-cmj-12">
+                <input class="form-control" id="ygbh" data-index="{{index}}"
+                       placeholder="员工编号" value="{{ygbh}}">
+            </div>
+            <div class="form-group col-cmj-10">
+                <input class="form-control" id="sbxs" data-index="{{index}}"
+                       placeholder="系数" value="{{sbxs}}">
+            </div>
+            <div class="form-group col-cmj-10">
+                <input class="form-control" id="sbsl" data-index="{{index}}"
+                       placeholder="数量" value="{{sbsl}}">
+            </div>
+            <div class="form-group col-sm-2">
+                <input class="form-control xj" id="sbje" data-index="{{index}}"
+                       placeholder="设备金额" value="{{sbje}}">
+            </div>
+
+            <!--费用信息-->
+            <div class="form-group col-sm-2">
+                <input class="form-control" id="tcxs" data-index="{{index}}"
+                       placeholder="提成（销售员）" value="{{tcxs}}">
+            </div>
+            <div class="form-group col-sm-2">
+                <input class="form-control" id="tcjs" data-index="{{index}}"
+                       placeholder="提成（技术支持）" value="{{tcjs}}">
+            </div>
+            <div class="form-group col-sm-2">
+                <input class="form-control" id="fysc" data-index="{{index}}"
+                       placeholder="费用（市场推广）" value="{{fysc}}">
+            </div>
+            <div class="form-group col-sm-2">
+                <input class="form-control" id="fyqt" data-index="{{index}}"
+                       placeholder="费用（其他）" value="{{fyqt}}">
+            </div>
+            <div class="form-group col-sm-2">
+                <input class="form-control" id="fyyj" data-index="{{index}}"
+                       placeholder="样机费" value="{{fyyj}}">
+            </div>
+            <div class="form-group col-sm-2">
+                <input class="form-control" id="fykc" data-index="{{index}}"
+                       placeholder="考察礼品费" value="{{fykc}}">
+            </div>
+
+            <!--调试质保加价-->
+            <div class="form-group col-sm-2">
+                <input class="form-control" id="tszbjj" data-index="{{index}}"
+                       placeholder="调试质保加价" value="{{tszbjj}}">
+            </div>
+
+            <button id="btn-del" type="button" class="btn btn-danger" data-index="{{index}}">
+                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+            </button>
+        </div>
+    </a>
+</template>
+
+

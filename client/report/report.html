@@ -1,0 +1,31 @@
+<template name="report">
+    <div class="panel panel-default ">
+        <div class="panel-heading" align="center">
+            <h3><span class="label label-default">{{this.title}}</span></h3>
+        </div>
+        <div class="panel-body">
+            <img class="img-responsive center-block" src="/img/{{this.filename}}.jpg">
+        </div>
+        <div class="panel-body">
+            <form role="form" class="form-horizontal">
+                <div class="form-group">
+                    <label class="control-label col-sm-6">
+                        报表下载地址：
+                        <a href="/down/excel?downfile={{this.filename}}.xlsx">
+                            {{this.title}}
+                        </a>
+                    </label>
+                    <div class="col-sm-6">
+                        <button id="btn_refresh" type="button" class="btn btn-success"
+                                data-loading-text="Loading...">
+                            <span class="fa fa-bar-chart" aria-hidden="true"></span> 生成报表
+                        </button>
+                        <button id="btn_down" type="button" class="btn btn-info">
+                            <span class="fa fa-download" aria-hidden="true"></span> 下载报表
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</template>
