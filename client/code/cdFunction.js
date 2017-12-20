@@ -6,7 +6,6 @@ Template.cdfunction.helpers({
 
 functionInput = function(caption, opt, callback){
     $.confirm({
-        icon: 'fa fa-smile-o',
         title: caption,
         content: '' +
         '<form action="" class="formName">' +

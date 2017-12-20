@@ -74,7 +74,6 @@ Tracker.autorun(function(){
 
 shipmentInput = function(caption, opt, callback){
     $.confirm({
-        icon: 'fa fa-smile-o',
         title: caption,
         content: '' +
         '<form action="" class="formName">' +
@@ -148,6 +147,7 @@ Template.shipment.events({
             Session.set('shipmentBh', ddbh);
         }else{
             Session.set('shipmentBh', '');
+            Bert.alert('请先输入订单号再查询', 'info');
         };
     },
     'click button#btn-add': function(evt, tpl){

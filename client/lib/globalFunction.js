@@ -56,7 +56,6 @@ chumjConfirm = function(caption, callback){
 //alertValue:警示提示信息
 chumjInput = function(caption, inputHtml, inputClass, alertValue, callback){
     $.confirm({
-        icon: 'fa fa-smile-o',
         title: caption,
         content: '' +
         '<form action="" class="formName">' +
