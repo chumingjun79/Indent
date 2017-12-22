@@ -10,17 +10,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a2aa21be-7847-4d56-8e23-bdcefc72410c" name="默认的" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/excel/averagemf.xlsx" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.meteor/platforms" afterPath="$PROJECT_DIR$/.meteor/platforms" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/code/cdFunction.js" afterPath="$PROJECT_DIR$/client/code/cdFunction.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/code/cdOffice.js" afterPath="$PROJECT_DIR$/client/code/cdOffice.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/code/cdProduct.js" afterPath="$PROJECT_DIR$/client/code/cdProduct.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/code/cdWorker.js" afterPath="$PROJECT_DIR$/client/code/cdWorker.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/lib/globalFunction.js" afterPath="$PROJECT_DIR$/client/lib/globalFunction.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/list/deviceDetail.html" afterPath="$PROJECT_DIR$/client/list/deviceDetail.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/list/deviceList.html" afterPath="$PROJECT_DIR$/client/list/deviceList.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/shipment.html" afterPath="$PROJECT_DIR$/client/shipment.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/shipment.js" afterPath="$PROJECT_DIR$/client/shipment.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/excel/devicedetail.xlsx" afterPath="$PROJECT_DIR$/excel/devicedetail.xlsx" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/list/deviceDetail.js" afterPath="$PROJECT_DIR$/client/list/deviceDetail.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/list/deviceList.js" afterPath="$PROJECT_DIR$/client/list/deviceList.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/list/indentList.js" afterPath="$PROJECT_DIR$/client/list/indentList.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/list/payList.js" afterPath="$PROJECT_DIR$/client/list/payList.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/list/payWarn.js" afterPath="$PROJECT_DIR$/client/list/payWarn.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/list/pppWarn.js" afterPath="$PROJECT_DIR$/client/list/pppWarn.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/list/shipmentList.js" afterPath="$PROJECT_DIR$/client/list/shipmentList.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/report/report.html" afterPath="$PROJECT_DIR$/client/report/report.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/report/report.js" afterPath="$PROJECT_DIR$/client/report/report.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/excelRouter.js" afterPath="$PROJECT_DIR$/server/excelRouter.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/main.js" afterPath="$PROJECT_DIR$/server/main.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -107,8 +109,8 @@
       <file leaf-file-name="excelRouter.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/server/excelRouter.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="5187">
-              <caret line="273" column="23" lean-forward="false" selection-start-line="273" selection-start-column="23" selection-end-line="273" selection-end-column="23" />
+            <state relative-caret-position="38">
+              <caret line="2" column="48" lean-forward="true" selection-start-line="2" selection-start-column="48" selection-end-line="2" selection-end-column="48" />
               <folding />
             </state>
           </provider>
@@ -117,8 +119,8 @@
       <file leaf-file-name="serverRouter.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/server/serverRouter.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3572">
-              <caret line="188" column="6" lean-forward="false" selection-start-line="188" selection-start-column="6" selection-end-line="188" selection-end-column="6" />
+            <state relative-caret-position="-1805">
+              <caret line="10" column="0" lean-forward="true" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -127,8 +129,8 @@
       <file leaf-file-name="deviceList.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/client/list/deviceList.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="389">
-              <caret line="46" column="19" lean-forward="true" selection-start-line="46" selection-start-column="19" selection-end-line="46" selection-end-column="19" />
+            <state relative-caret-position="104">
+              <caret line="31" column="69" lean-forward="true" selection-start-line="31" selection-start-column="69" selection-end-line="31" selection-end-column="69" />
               <folding />
             </state>
           </provider>
@@ -137,8 +139,8 @@
       <file leaf-file-name="deviceList.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/client/list/deviceList.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="304">
-              <caret line="16" column="18" lean-forward="true" selection-start-line="16" selection-start-column="18" selection-end-line="16" selection-end-column="18" />
+            <state relative-caret-position="209">
+              <caret line="11" column="43" lean-forward="true" selection-start-line="11" selection-start-column="43" selection-end-line="11" selection-end-column="43" />
               <folding />
             </state>
           </provider>
@@ -147,48 +149,88 @@
       <file leaf-file-name="deviceDetail.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/client/list/deviceDetail.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="209">
-              <caret line="11" column="43" lean-forward="true" selection-start-line="11" selection-start-column="43" selection-end-line="11" selection-end-column="43" />
+            <state relative-caret-position="437">
+              <caret line="71" column="38" lean-forward="true" selection-start-line="71" selection-start-column="38" selection-end-line="71" selection-end-column="38" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="deviceDetail.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/client/list/deviceDetail.html">
+      <file leaf-file-name="main.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/server/main.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="314">
-              <caret line="35" column="22" lean-forward="true" selection-start-line="35" selection-start-column="22" selection-end-line="35" selection-end-column="22" />
+            <state relative-caret-position="152">
+              <caret line="8" column="63" lean-forward="true" selection-start-line="8" selection-start-column="63" selection-end-line="8" selection-end-column="63" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="shipment.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/client/shipment.html">
+      <file leaf-file-name="report.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/client/report/report.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="427">
-              <caret line="24" column="14" lean-forward="true" selection-start-line="24" selection-start-column="14" selection-end-line="24" selection-end-column="14" />
+            <state relative-caret-position="57">
+              <caret line="3" column="6" lean-forward="true" selection-start-line="3" selection-start-column="6" selection-end-line="3" selection-end-column="6" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="shipment.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/client/shipment.js">
+      <file leaf-file-name="indentList.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/client/list/indentList.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="228">
-              <caret line="75" column="13" lean-forward="true" selection-start-line="75" selection-start-column="4" selection-end-line="75" selection-end-column="13" />
+            <state relative-caret-position="484">
+              <caret line="31" column="31" lean-forward="true" selection-start-line="31" selection-start-column="31" selection-end-line="31" selection-end-column="31" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="cdFunction.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/client/code/cdFunction.js">
+      <file leaf-file-name="payList.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/client/list/payList.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="190">
-              <caret line="34" column="43" lean-forward="true" selection-start-line="34" selection-start-column="43" selection-end-line="34" selection-end-column="43" />
+            <state relative-caret-position="494">
+              <caret line="35" column="13" lean-forward="false" selection-start-line="35" selection-start-column="13" selection-end-line="35" selection-end-column="13" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="payWarn.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/client/list/payWarn.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="554">
+              <caret line="51" column="24" lean-forward="true" selection-start-line="51" selection-start-column="24" selection-end-line="51" selection-end-column="24" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="pppWarn.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/client/list/pppWarn.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="402">
+              <caret line="29" column="13" lean-forward="false" selection-start-line="29" selection-start-column="13" selection-end-line="29" selection-end-column="13" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="shipmentList.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/client/list/shipmentList.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="478">
+              <caret line="40" column="26" lean-forward="true" selection-start-line="40" selection-start-column="26" selection-end-line="40" selection-end-column="26" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="report.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/client/report/report.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="285">
+              <caret line="15" column="28" lean-forward="true" selection-start-line="15" selection-start-column="28" selection-end-line="15" selection-end-column="28" />
               <folding />
             </state>
           </provider>
@@ -206,9 +248,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>data</find>
-      <find>radio</find>
-      <find>des</find>
       <find>kjyf</find>
       <find>col-sm-6</find>
       <find>overflow</find>
@@ -236,6 +275,9 @@
       <find>table</find>
       <find>$tr.html('')</find>
       <find>$.confirm</find>
+      <find>paywarn/excel</find>
+      <find>HTTP</find>
+      <find>fixedColumns</find>
     </findStrings>
     <replaceStrings>
       <replace>payIndentId</replace>
@@ -255,13 +297,10 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/client/report/orderStatus.js" />
         <option value="$PROJECT_DIR$/client/report/monthly.html" />
-        <option value="$PROJECT_DIR$/client/report/report.js" />
         <option value="$PROJECT_DIR$/client/report/reportTemp.html" />
         <option value="$PROJECT_DIR$/client/lib/globalFunction.js" />
         <option value="$PROJECT_DIR$/client/main.html" />
-        <option value="$PROJECT_DIR$/client/report/report.html" />
         <option value="$PROJECT_DIR$/client/indentPay.html" />
         <option value="$PROJECT_DIR$/client/code/cdOffice.html" />
         <option value="$PROJECT_DIR$/client/code/cdProduct.html" />
@@ -270,11 +309,7 @@
         <option value="$PROJECT_DIR$/client/code/cdItem.js" />
         <option value="$PROJECT_DIR$/client/code/cdProduct.js" />
         <option value="$PROJECT_DIR$/client/list/shipmentList.html" />
-        <option value="$PROJECT_DIR$/client/list/indentList.js" />
-        <option value="$PROJECT_DIR$/client/list/payList.js" />
-        <option value="$PROJECT_DIR$/client/list/pppWarn.js" />
         <option value="$PROJECT_DIR$/client/list/indentList.html" />
-        <option value="$PROJECT_DIR$/client/list/shipmentList.js" />
         <option value="$PROJECT_DIR$/client/userpass/resetPass.html" />
         <option value="$PROJECT_DIR$/client/code/cdFunction.html" />
         <option value="$PROJECT_DIR$/client/userpass/createUser.js" />
@@ -282,7 +317,6 @@
         <option value="$PROJECT_DIR$/client/setRole.html" />
         <option value="$PROJECT_DIR$/client/home.html" />
         <option value="$PROJECT_DIR$/client/list/payWarn.html" />
-        <option value="$PROJECT_DIR$/client/list/payWarn.js" />
         <option value="$PROJECT_DIR$/client/indent.html" />
         <option value="$PROJECT_DIR$/client/indent.js" />
         <option value="$PROJECT_DIR$/lib/collection.js" />
@@ -292,20 +326,28 @@
         <option value="$PROJECT_DIR$/client/layout/layout.js" />
         <option value="$PROJECT_DIR$/client/layout/systemInfo.html" />
         <option value="$PROJECT_DIR$/client/layout/systemInfo.js" />
-        <option value="$PROJECT_DIR$/server/excelRouter.js" />
         <option value="$PROJECT_DIR$/client/layout/layout.html" />
         <option value="$PROJECT_DIR$/client/lib/router.js" />
         <option value="$PROJECT_DIR$/client/css/style.css" />
         <option value="$PROJECT_DIR$/client/locale/bootstrap-table-fixed-columns.js" />
         <option value="$PROJECT_DIR$/server/importIndent.js" />
-        <option value="$PROJECT_DIR$/client/list/deviceDetail.js" />
-        <option value="$PROJECT_DIR$/server/serverRouter.js" />
-        <option value="$PROJECT_DIR$/client/list/deviceList.js" />
         <option value="$PROJECT_DIR$/client/list/deviceList.html" />
         <option value="$PROJECT_DIR$/client/list/deviceDetail.html" />
         <option value="$PROJECT_DIR$/client/shipment.html" />
         <option value="$PROJECT_DIR$/client/shipment.js" />
         <option value="$PROJECT_DIR$/client/code/cdFunction.js" />
+        <option value="$PROJECT_DIR$/server/serverRouter.js" />
+        <option value="$PROJECT_DIR$/client/report/report.js" />
+        <option value="$PROJECT_DIR$/client/list/indentList.js" />
+        <option value="$PROJECT_DIR$/client/list/payList.js" />
+        <option value="$PROJECT_DIR$/client/list/payWarn.js" />
+        <option value="$PROJECT_DIR$/client/list/pppWarn.js" />
+        <option value="$PROJECT_DIR$/client/list/shipmentList.js" />
+        <option value="$PROJECT_DIR$/client/list/deviceList.js" />
+        <option value="$PROJECT_DIR$/client/list/deviceDetail.js" />
+        <option value="$PROJECT_DIR$/server/excelRouter.js" />
+        <option value="$PROJECT_DIR$/server/main.js" />
+        <option value="$PROJECT_DIR$/client/report/report.html" />
       </list>
     </option>
   </component>
@@ -515,12 +557,14 @@
       <workItem from="1512950596661" duration="12170000" />
       <workItem from="1512980476654" duration="759000" />
       <workItem from="1513038591846" duration="5859000" />
-      <workItem from="1513730335862" duration="4774000" />
+      <workItem from="1513730335862" duration="8914000" />
+      <workItem from="1513815131226" duration="6642000" />
+      <workItem from="1513902136195" duration="18076000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="615626000" />
+    <option name="totallyTimeSpent" value="644484000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -570,34 +614,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/client/list/payList.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="190">
-          <caret line="10" column="44" lean-forward="true" selection-start-line="10" selection-start-column="44" selection-end-line="10" selection-end-column="44" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/list/pppWarn.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="171">
-          <caret line="9" column="0" lean-forward="false" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/func/function.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="190">
-          <caret line="10" column="0" lean-forward="false" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/list/indentList.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="361">
-          <caret line="19" column="24" lean-forward="true" selection-start-line="19" selection-start-column="24" selection-end-line="19" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/client/lib/globalHelper.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="342">
@@ -665,13 +681,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="776">
           <caret line="93" column="14" lean-forward="true" selection-start-line="93" selection-start-column="14" selection-end-line="93" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/list/indentList.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="700">
-          <caret line="41" column="3" lean-forward="true" selection-start-line="41" selection-start-column="3" selection-end-line="41" selection-end-column="3" />
         </state>
       </provider>
     </entry>
@@ -754,13 +763,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/report/report.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="380">
-          <caret line="20" column="3" lean-forward="true" selection-start-line="20" selection-start-column="3" selection-end-line="20" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/client/report/reportTemp.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -788,13 +790,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="513">
           <caret line="27" column="12" lean-forward="false" selection-start-line="27" selection-start-column="12" selection-end-line="29" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/list/payWarn.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="667">
-          <caret line="52" column="6" lean-forward="true" selection-start-line="42" selection-start-column="4" selection-end-line="52" selection-end-column="6" />
         </state>
       </provider>
     </entry>
@@ -828,13 +823,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/locale/bootstrap-table-fixed-columns.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="570">
-          <caret line="30" column="23" lean-forward="true" selection-start-line="30" selection-start-column="23" selection-end-line="30" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/client/indent.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1976">
@@ -850,83 +838,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/server/excelRouter.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5187">
-          <caret line="273" column="23" lean-forward="false" selection-start-line="273" selection-start-column="23" selection-end-line="273" selection-end-column="23" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/serverRouter.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3572">
-          <caret line="188" column="6" lean-forward="false" selection-start-line="188" selection-start-column="6" selection-end-line="188" selection-end-column="6" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/list/deviceList.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="304">
-          <caret line="16" column="18" lean-forward="true" selection-start-line="16" selection-start-column="18" selection-end-line="16" selection-end-column="18" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/list/deviceDetail.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="209">
-          <caret line="11" column="43" lean-forward="true" selection-start-line="11" selection-start-column="43" selection-end-line="11" selection-end-column="43" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/list/deviceDetail.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="314">
-          <caret line="35" column="22" lean-forward="true" selection-start-line="35" selection-start-column="22" selection-end-line="35" selection-end-column="22" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/client/list/shipmentList.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="399">
           <caret line="21" column="0" lean-forward="true" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/list/shipmentList.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="228">
-          <caret line="12" column="43" lean-forward="true" selection-start-line="11" selection-start-column="20" selection-end-line="12" selection-end-column="43" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/list/deviceList.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="389">
-          <caret line="46" column="19" lean-forward="true" selection-start-line="46" selection-start-column="19" selection-end-line="46" selection-end-column="19" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/shipment.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="427">
-          <caret line="24" column="14" lean-forward="true" selection-start-line="24" selection-start-column="14" selection-end-line="24" selection-end-column="14" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/shipment.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="228">
-          <caret line="75" column="13" lean-forward="true" selection-start-line="75" selection-start-column="4" selection-end-line="75" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -934,14 +849,145 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="342">
           <caret line="18" column="24" lean-forward="true" selection-start-line="18" selection-start-column="24" selection-end-line="18" selection-end-column="24" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/client/code/cdFunction.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="190">
-          <caret line="34" column="43" lean-forward="true" selection-start-line="34" selection-start-column="43" selection-end-line="34" selection-end-column="43" />
+        <state relative-caret-position="323">
+          <caret line="21" column="21" lean-forward="true" selection-start-line="21" selection-start-column="21" selection-end-line="21" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/shipment.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="171">
+          <caret line="72" column="3" lean-forward="true" selection-start-line="72" selection-start-column="3" selection-end-line="72" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/shipment.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="427">
+          <caret line="24" column="14" lean-forward="false" selection-start-line="24" selection-start-column="14" selection-end-line="24" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/list/deviceDetail.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="646">
+          <caret line="34" column="26" lean-forward="true" selection-start-line="34" selection-start-column="26" selection-end-line="34" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/serverRouter.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1805">
+          <caret line="10" column="0" lean-forward="true" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/list/indentList.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="484">
+          <caret line="31" column="31" lean-forward="true" selection-start-line="31" selection-start-column="31" selection-end-line="31" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/list/payList.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="494">
+          <caret line="35" column="13" lean-forward="false" selection-start-line="35" selection-start-column="13" selection-end-line="35" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/list/payWarn.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="554">
+          <caret line="51" column="24" lean-forward="true" selection-start-line="51" selection-start-column="24" selection-end-line="51" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/list/pppWarn.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="402">
+          <caret line="29" column="13" lean-forward="false" selection-start-line="29" selection-start-column="13" selection-end-line="29" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/report/report.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="57">
+          <caret line="3" column="6" lean-forward="true" selection-start-line="3" selection-start-column="6" selection-end-line="3" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/locale/bootstrap-table-fixed-columns.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="244">
+          <caret line="81" column="38" lean-forward="false" selection-start-line="81" selection-start-column="26" selection-end-line="81" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/list/deviceList.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="104">
+          <caret line="31" column="69" lean-forward="true" selection-start-line="31" selection-start-column="69" selection-end-line="31" selection-end-column="69" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/list/shipmentList.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="478">
+          <caret line="40" column="26" lean-forward="true" selection-start-line="40" selection-start-column="26" selection-end-line="40" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/list/deviceDetail.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="437">
+          <caret line="71" column="38" lean-forward="true" selection-start-line="71" selection-start-column="38" selection-end-line="71" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/excelRouter.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="38">
+          <caret line="2" column="48" lean-forward="true" selection-start-line="2" selection-start-column="48" selection-end-line="2" selection-end-column="48" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/main.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="152">
+          <caret line="8" column="63" lean-forward="true" selection-start-line="8" selection-start-column="63" selection-end-line="8" selection-end-column="63" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/list/deviceList.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="209">
+          <caret line="11" column="43" lean-forward="true" selection-start-line="11" selection-start-column="43" selection-end-line="11" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/report/report.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="15" column="28" lean-forward="true" selection-start-line="15" selection-start-column="28" selection-end-line="15" selection-end-column="28" />
           <folding />
         </state>
       </provider>

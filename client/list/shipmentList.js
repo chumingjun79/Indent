@@ -45,6 +45,7 @@ Template.shipmentlist.onRendered(function(){
 
 Template.shipmentlist.events({
 	'click button#btn_refresh': function(evt, tpl){
-		tpl.$('#tb_list').bootstrapTable('refresh', {url: '/shipmentlist/get'});
+		tpl.$('#tb_list').bootstrapTable('refresh', {url: __meteor_runtime_config__.ROOT_URL+
+			'shipmentlist/get'});
 	},
 });

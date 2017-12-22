@@ -7,7 +7,8 @@ Template.report.helpers({
 Template.report.events({
     'click button#btn_refresh': function(evt, tpl){
         $('#btn_refresh').button('loading');
-        HTTP.get('/report/excel?filename='+ this.filename, {}, function(err, result){
+        HTTP.get(__meteor_runtime_config__.ROOT_URL+
+            'report/excel?filename='+ this.filename, {}, function(err, result){
             $('#btn_refresh').button('reset');
             $('#btn_refresh').dequeue();
             if (err) {
@@ -16,6 +17,7 @@ Template.report.events({
         });
     },
     'click button#btn_down': function(evt, tpl){
-        downloadByIframe('/down/excel?downfile='+ this.filename +'.xlsx');
+        downloadByIframe(__meteor_runtime_config__.ROOT_URL+
+            'down/excel?downfile='+ this.filename +'.xlsx');
     },
 });

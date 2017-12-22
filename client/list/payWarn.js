@@ -26,7 +26,8 @@ Template.paywarn.onRendered(function(){
 
 Template.paywarn.events({
 	'click button#btn_refresh': function(evt, tpl){
-		tpl.$('#tb_list').bootstrapTable('refresh', {url: '/paywarn/get'});
+		tpl.$('#tb_list').bootstrapTable('refresh', {url: __meteor_runtime_config__.ROOT_URL+
+            'paywarn/get'});
 	},
 	'click button#btn_info': function(evt, tpl){
 		var selectedData = tpl.$('#tb_list').bootstrapTable('getAllSelections');
@@ -43,12 +44,15 @@ Template.paywarn.events({
     'click button#btn_toexcel': function(evt, tpl){
         var data = tpl.$('#tb_list').bootstrapTable('getData');
         var postData = {data: data};
-        HTTP.post('/paywarn/excel?filename=paywarn_temp.xlsx&downfile=paywarn.xlsx', postData, function(err, result){
-            if (err) {
-                Bert.alert(err, 'danger');
-            } else {
-                downloadByIframe('/down/excel?downfile=paywarn.xlsx');
-            };
+        HTTP.post(__meteor_runtime_config__.ROOT_URL+
+            'export/excel?filename=paywarn_temp.xlsx&downfile=paywarn.xlsx', postData,
+            function(err, result){
+                if (err) {
+                    Bert.alert(err, 'danger');
+                } else {
+                    downloadByIframe(__meteor_runtime_config__.ROOT_URL+
+                        'down/excel?downfile=paywarn.xlsx');
+                };
         });
     },
 });

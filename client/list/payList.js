@@ -32,7 +32,8 @@ Template.paylist.onRendered(function(){
 
 Template.paylist.events({
 	'click button#btn_refresh': function(evt, tpl){
-		tpl.$('#tb_list').bootstrapTable('refresh', {url: '/paylist/get'});
+		tpl.$('#tb_list').bootstrapTable('refresh', {url: __meteor_runtime_config__.ROOT_URL+
+			'paylist/get'});
 	},
 	'click button#btn_info': function(evt, tpl){
 		var selectedData = tpl.$('#tb_list').bootstrapTable('getAllSelections');

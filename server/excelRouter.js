@@ -10,7 +10,7 @@ Router.route('/down/excel', {where: 'server'}).get(function(){
         res.end("request downfile not defined!");
     };
     var currFile = path.normalize(process.env.HOME+'/indent/excel/'+fileName);
-    //console.log(currFile);
+    console.log(currFile);
 
     fs.exists(currFile, function(exist) {
         if(exist) {
@@ -25,7 +25,7 @@ Router.route('/down/excel', {where: 'server'}).get(function(){
     });
 });
 
-Router.route('/paywarn/excel', {where: 'server'}).post(function(){
+Router.route('/export/excel', {where: 'server'}).post(function(){
     //console.log(this.request.body);
     //console.log('dirname:'+__dirname);
     //console.log('filename:'+__filename);

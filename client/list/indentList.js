@@ -28,7 +28,8 @@ Template.indentlist.onRendered(function(){
 
 Template.indentlist.events({
 	'click button#btn_refresh': function(evt, tpl){
-		tpl.$('#tb_indentlist').bootstrapTable('refresh', {url: '/indentlist/get'});
+		tpl.$('#tb_indentlist').bootstrapTable('refresh', {url: __meteor_runtime_config__.ROOT_URL+
+			'indentlist/get'});
 	},
 	'click button#btn_info': function(evt, tpl){
 		var selectedData = tpl.$('#tb_indentlist').bootstrapTable('getSelections');

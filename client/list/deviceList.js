@@ -53,19 +53,22 @@ Template.devicelist.onRendered(function(){
 
 Template.devicelist.events({
 	'click button#btn_refresh': function(evt, tpl){
-        tpl.$('#tb_list').bootstrapTable('refresh', {url: '/devicelist/get'});
+        tpl.$('#tb_list').bootstrapTable('refresh', {url:__meteor_runtime_config__.ROOT_URL+
+            'devicelist/get'});
 	},
     'click button#btn_toexcel': function(evt, tpl){
         chumjConfirm('确认要导出查询数据吗？', function(result){
             if (result){
                 var data = tpl.$('#tb_list').bootstrapTable('getData');
                 var postData = {data: data};
-                HTTP.post('/paywarn/excel?filename=devicelist_temp.xlsx&downfile=devicelist.xlsx',
+                HTTP.post(__meteor_runtime_config__.ROOT_URL+
+                    'export/excel?filename=devicelist_temp.xlsx&downfile=devicelist.xlsx',
                     postData, function(err, result){
                         if (err) {
                             Bert.alert(err, 'danger');
                         } else {
-                            downloadByIframe('/down/excel?downfile=devicelist.xlsx');
+                            downloadByIframe(__meteor_runtime_config__.ROOT_URL+
+                                'down/excel?downfile=devicelist.xlsx');
                         };
                     });
             };

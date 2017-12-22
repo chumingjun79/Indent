@@ -26,7 +26,8 @@ Template.pppwarn.onRendered(function(){
 
 Template.pppwarn.events({
 	'click button#btn_refresh': function(evt, tpl){
-		tpl.$('#tb_list').bootstrapTable('refresh', {url: '/pppwarn/get'});
+		tpl.$('#tb_list').bootstrapTable('refresh', {url: __meteor_runtime_config__.ROOT_URL+
+			'pppwarn/get'});
 	},
 	'click button#btn_info': function(evt, tpl){
 		var selectedData = tpl.$('#tb_list').bootstrapTable('getAllSelections');

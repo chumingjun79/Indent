@@ -4,8 +4,6 @@ Template.devicedetail.onRendered(function(){
         pageSize: 10,
         pageList: [5, 10, 20],
         pagination: true, //是否显示分页
-        fixedColumns: true, //是否冻结列
-        fixedNumber: 4, //冻结列的数量
 		queryParams:
 			function (params) {
 				temp = {
@@ -76,19 +74,22 @@ Template.devicedetail.onRendered(function(){
 
 Template.devicedetail.events({
 	'click button#btn_refresh': function(evt, tpl){
-		tpl.$('#tb_list').bootstrapTable('refresh', {url: '/devicedetail/get'});
+		tpl.$('#tb_list').bootstrapTable('refresh', {url: __meteor_runtime_config__.ROOT_URL+
+            'devicedetail/get'});
 	},
     'click button#btn_toexcel': function(evt, tpl){
 	    chumjConfirm('确认要导出查询数据吗？', function(result){
 	        if (result){
                 var data = tpl.$('#tb_list').bootstrapTable('getData');
                 var postData = {data: data};
-                HTTP.post('/paywarn/excel?filename=devicedetail_temp.xlsx&downfile=devicedetail.xlsx',
+                HTTP.post(__meteor_runtime_config__.ROOT_URL+
+                    'export/excel?filename=devicedetail_temp.xlsx&downfile=devicedetail.xlsx',
                     postData, function(err, result){
                         if (err) {
                             Bert.alert(err, 'danger');
                         } else {
-                            downloadByIframe('/down/excel?downfile=devicedetail.xlsx');
+                            downloadByIframe(__meteor_runtime_config__.ROOT_URL+
+                                'down/excel?downfile=devicedetail.xlsx');
                         };
                     });
             };
