@@ -53,7 +53,7 @@ Template.devicelist.onRendered(function(){
 
 Template.devicelist.events({
 	'click button#btn_refresh': function(evt, tpl){
-        tpl.$('#tb_list').bootstrapTable('refresh', {url:__meteor_runtime_config__.ROOT_URL+
+        tpl.$('#tb_list').bootstrapTable('refresh', {url:RootUrl+
             'devicelist/get'});
 	},
     'click button#btn_toexcel': function(evt, tpl){
@@ -61,13 +61,13 @@ Template.devicelist.events({
             if (result){
                 var data = tpl.$('#tb_list').bootstrapTable('getData');
                 var postData = {data: data};
-                HTTP.post(__meteor_runtime_config__.ROOT_URL+
+                HTTP.post(RootUrl+
                     'export/excel?filename=devicelist_temp.xlsx&downfile=devicelist.xlsx',
                     postData, function(err, result){
                         if (err) {
                             Bert.alert(err, 'danger');
                         } else {
-                            downloadByIframe(__meteor_runtime_config__.ROOT_URL+
+                            downloadByIframe(RootUrl+
                                 'down/excel?downfile=devicelist.xlsx');
                         };
                     });

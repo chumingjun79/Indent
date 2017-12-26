@@ -26,7 +26,7 @@ Template.paywarn.onRendered(function(){
 
 Template.paywarn.events({
 	'click button#btn_refresh': function(evt, tpl){
-		tpl.$('#tb_list').bootstrapTable('refresh', {url: __meteor_runtime_config__.ROOT_URL+
+		tpl.$('#tb_list').bootstrapTable('refresh', {url: RootUrl+
             'paywarn/get'});
 	},
 	'click button#btn_info': function(evt, tpl){
@@ -44,13 +44,13 @@ Template.paywarn.events({
     'click button#btn_toexcel': function(evt, tpl){
         var data = tpl.$('#tb_list').bootstrapTable('getData');
         var postData = {data: data};
-        HTTP.post(__meteor_runtime_config__.ROOT_URL+
+        HTTP.post(RootUrl+
             'export/excel?filename=paywarn_temp.xlsx&downfile=paywarn.xlsx', postData,
             function(err, result){
                 if (err) {
                     Bert.alert(err, 'danger');
                 } else {
-                    downloadByIframe(__meteor_runtime_config__.ROOT_URL+
+                    downloadByIframe(RootUrl+
                         'down/excel?downfile=paywarn.xlsx');
                 };
         });

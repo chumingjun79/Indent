@@ -101,20 +101,55 @@ chumjInput = function(caption, inputHtml, inputClass, alertValue, callback){
 
 //实现无“闪现”下载文件
 downloadByIframe = function(url){
-    var iframe = document.getElementById("myIframe");
-    if(iframe){
-        iframe.src = url;
-    }else{
-        iframe = document.createElement("iframe");
-        iframe.style.display = "none";
-        iframe.src = url;
-        iframe.id = "myIframe";
-        document.body.appendChild(iframe);
-    };
-    iframe.onload = function(){
-        var xinxi = document.getElementById("myIframe").contentWindow.document.body.innerText;
-        if (xinxi){
-            Bert.alert(xinxi, 'danger');
+    if (Meteor.isCordova){
+        var fileTransfer = new FileTransfer();
+        var fileURL = 'cdvfile://localhost/persistent/indent_down.xlsx';
+
+        fileTransfer.download(
+            url,
+            fileURL,
+            function(entry) {
+                Bert.alert("下载成功，请到文件管理器根目录下查看indent_down.xlsx文件", 'info');
+                console.log("download complete: " + entry.toURL());
+                cordova.plugins.fileOpener2.open(
+                    fileURL,
+                    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                    {
+                        error : function(e) {
+                            console.log('Error status: ' + e.status + ' - Error message: ' + e.message);
+                        },
+                        success : function () {
+                            console.log('file opened successfully');
+                        }
+                    }
+                );
+            },
+            function(error) {
+                console.log("download error source " + error.source);
+                console.log("download error target " + error.target);
+                console.log("download error code" + error.code);
+            },
+            false,
+            {}
+        );
+    } else {
+        var iframe = document.getElementById("myIframe");
+        if (iframe) {
+            iframe.src = url;
+        } else {
+            iframe = document.createElement("iframe");
+            iframe.style.display = "none";
+            iframe.src = url;
+            iframe.id = "myIframe";
+            document.body.appendChild(iframe);
+        }
+        ;
+        iframe.onload = function () {
+            var xinxi = document.getElementById("myIframe").contentWindow.document.body.innerText;
+            if (xinxi) {
+                Bert.alert(xinxi, 'danger');
+            }
+            ;
         };
     };
 };
