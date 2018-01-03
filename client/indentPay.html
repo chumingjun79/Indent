@@ -128,8 +128,8 @@
             </div>
         </div>
 
-		<div class="tab-pane fade" id="deposit"><!--定金信息-->
-            <table id="deposit" class="table table-hover table-condensed">
+		<div class="tab-pane fade" id="deposit" style="overflow:scroll"><!--定金信息-->
+            <table id="deposit" class="table table-hover table-condensed" style="min-width:800px">
                 <thead>
                     <tr>
                         <th class="text-center">定金比例</th>
@@ -152,8 +152,8 @@
             </table>
 		</div>
 
-        <div class="tab-pane fade" id="receivable"><!--应收款项-->
-            <table id="receivable" class="table table-hover table-condensed">
+        <div class="tab-pane fade" id="receivable" style="overflow:scroll"><!--应收款项-->
+            <table id="receivable" class="table table-hover table-condensed" style="min-width:800px">
                 <thead>
                     <tr>
                         <th class="text-center">应收金额</th>
@@ -176,8 +176,8 @@
             </table>
         </div>
 
-		<div class="tab-pane fade" id="ppp"><!--PPP-->
-            <table id="ppp" class="table table-hover table-condensed">
+		<div class="tab-pane fade" id="ppp" style="overflow:scroll"><!--PPP-->
+            <table id="ppp" class="table table-hover table-condensed" style="min-width:800px">
                 <thead>
                     <tr>
                         <th class="text-center">设备型号</th>
@@ -238,14 +238,14 @@
         <td><input class="form-control datepicker" id="sktxr" data-index="{{index}}"
                    value="{{sktxr}}" readonly>
         </td>
-        <td>
+        <td style="width:15%">
             <select class="form-control" id="sklx" data-index="{{index}}">
                 {{#each paytypes}}
                     <option value="{{name}}" {{isSelected ../sklx name}}>{{name}}</option>
                 {{/each}}
             </select>
         </td>
-        <td><input class="checkbox-cmj" id="sksfsk" data-index="{{index}}"
+        <td style="width:5%"><input class="checkbox-cmj" id="sksfsk" data-index="{{index}}"
                    type="checkbox" checked={{sksfsk}}>
         </td>
         <td><input class="form-control" id="skbz" data-index="{{index}}" value="{{skbz}}"></td>
@@ -267,7 +267,7 @@
         <td><input class="form-control datepicker" id="pptxr" data-index="{{index}}"
                    value="{{pptxr}}" readonly>
         </td>
-        <td>
+        <td style="width:15%">
             <select class="form-control" id="ppmmjb" data-index="{{index}}">
                 <option value="0级密码" {{isSelected ppmmjb "0级密码"}}>0级密码</option>
                 <option value="1级密码" {{isSelected ppmmjb "1级密码"}}>1级密码</option>
@@ -281,7 +281,7 @@
                 <option value="9级密码" {{isSelected ppmmjb "9级密码"}}>9级密码</option>
             </select>
         </td>
-        <td><input class="checkbox-cmj" id="ppsfgb" data-index="{{index}}"
+        <td style="width:5%"><input class="checkbox-cmj" id="ppsfgb" data-index="{{index}}"
                    type="checkbox" checked={{ppsfgb}}>
         </td>
         <td><input class="form-control" id="ppbz" data-index="{{index}}" value="{{ppbz}}"></td>

@@ -1,3 +1,5 @@
+import { Meteor } from 'meteor/meteor';
+
 Meteor.startup(function(){
     if (ItemCollection.find().count() === 0){
         ItemCollection.insert({name: '一般空调'});
@@ -12,6 +14,7 @@ Meteor.startup(function(){
     if (OfficeCollection.find().count() === 0){
         OfficeCollection.insert({area: '工业项目组', office: '工业项目组'});
         OfficeCollection.insert({area: '新产品推进室', office: '新产品推进室'});
+        OfficeCollection.insert({area: '华北区', office: '北京'});
         OfficeCollection.insert({area: '华北区', office: '石家庄'});
         OfficeCollection.insert({area: '华北区', office: '太原'});
         OfficeCollection.insert({area: '华北区', office: '天津'});
@@ -75,19 +78,7 @@ Meteor.startup(function(){
             username: username,
             password: password,
         };
-        //调用accounts-password包中的createUser方法来创建用户
-        var userId = Accounts.createUser(options);
-        if (userId){
-            //console.log(userId);
-            var obj = {
-                userid: userId,
-                username: 'admin',
-                listOther: true,
-                editIndent: true,
-                listIndent: true,
-                userManage: true
-            };
-            Meteor.call('upsertUserRole', obj); //创建用户权限
-        };
+        //调用accounts-password包中的createUser方法来创建用
+        Accounts.createUser(options);
     };
 });
