@@ -61,7 +61,7 @@ Router.route('/indentlist', function(){
 });
 
 Router.route('/devicedetail', function(){
-    checkSystemRole(this, 'devicedetail', '订单设备明细');
+    checkSystemRole(this, 'devicedetail', '订单明细查询');
 });
 
 Router.route('/shipment', function(){

@@ -7,8 +7,8 @@ importIndent = function(workSheets){
         ddbh: '',
         xmmc: '',
         xmfl: '',
+        khmc: '',
         lxr: '',
-        lxdh: '',
         dxm: false,
         device: [],
         remark: '',
@@ -60,7 +60,7 @@ importIndent = function(workSheets){
             data['device'][dds-1]['bsc'] = trim(toString(item[11]));
             data['device'][dds-1]['fzr'] = trim(toString(item[15]));
             data['device'][dds-1]['ygbh'] = trim(toString(item[16]));
-            if (toNumber(item[14]) != 0) {
+            if (toNumber(item[14]) !== 0) {
                 data['device'][dds-1]['shipment'].push({fhnd:'2017', fhyf:0, fhsl:0, fhje:0});
                 data['device'][dds-1]['shipment'][0]['fhsl'] = toDecimal(item[12],2);
                 data['device'][dds-1]['shipment'][0]['fhje'] = toDecimal(item[14],2);
@@ -136,8 +136,8 @@ Router.route('/importindent', {where: 'server'}).get(function(){
 });
 
 importCost = function(workSheets){
-    var tcxs, tcjs, fysc, fyyj, fykc, fyqt;
-    var ddh, cpfl, bsc, sbzje;
+    let tcxs, tcjs, fysc, fyyj, fykc, fyqt;
+    let ddh, cpfl, bsc, fzr, sbzje, khmc;
 
     workSheets.forEach((item, index)=>{
         if (index > 0) //第一行是标题，所以跳过
@@ -152,30 +152,18 @@ importCost = function(workSheets){
             fyyj = toDecimal(item[9],2);
             fykc = toDecimal(item[10],2);
             bsc = trim(toString(item[11]));
+            fzr = trim(toString(item[12]));
+            khmc = trim(toString(item[13]));
 
-            var flag = false;
-            var data = IndentCollection.findOne({'ddbh': ddh});
-            if (data){
-                var modifier = {$set: {'sbzje': sbzje}};
+            if (tcxs!==0 || tcjs!==0 || fysc!==0 || fyqt!==0 || fyyj!==0 || fykc!==0) {
+                var flag = false;
+                var data = IndentCollection.findOne({'ddbh': ddh});
+                if (data) {
+                    var modifier = {$set: {'sbzje':sbzje, 'khmc':khmc}};
 
-                for(var i=0; i<data.device.length; i++){
-                    if (data.device[i].bsc === bsc && data.device[i].cpfl === cpfl){
-                        modifier['$set']['device.' + i + '.tcxs'] = tcxs;
-                        modifier['$set']['device.' + i + '.tcjs'] = tcjs;
-                        modifier['$set']['device.' + i + '.fysc'] = fysc;
-                        modifier['$set']['device.' + i + '.fyqt'] = fyqt;
-                        modifier['$set']['device.' + i + '.fyyj'] = fyyj;
-                        modifier['$set']['device.' + i + '.fykc'] = fykc;
-
-                        IndentCollection.update({'_id': data._id}, modifier);
-                        i = data.device.length; //退出循环
-                        flag = true;
-                    };
-                };
-                //如果失败，基本上都是产品类型不一致造成的，所以去掉这个条件再次更新数据
-                if (!flag){
-                    for(var i=0; i<data.device.length; i++){
-                        if (data.device[i].bsc === bsc){
+                    for (var i = 0; i < data.device.length; i++) {
+                        if (data.device[i].bsc === bsc && data.device[i].fzr === fzr &&
+                            data.device[i].cpfl === cpfl) {
                             modifier['$set']['device.' + i + '.tcxs'] = tcxs;
                             modifier['$set']['device.' + i + '.tcjs'] = tcjs;
                             modifier['$set']['device.' + i + '.fysc'] = fysc;
@@ -186,16 +174,50 @@ importCost = function(workSheets){
                             IndentCollection.update({'_id': data._id}, modifier);
                             i = data.device.length; //退出循环
                             flag = true;
-                        };
-                    };
-                };
-                if (!flag){
-                    console.log(ddh+ ' is not cost!');
-                };
-            }else{
-                console.log(ddh+ ' is not find!');
-            };
-        };
+                        }
+                    }
+                    //如果失败，基本上都是产品类型或负责人不一致造成的，所以去掉这个条件再次更新数据
+                    if (!flag) {
+                        for (var i = 0; i < data.device.length; i++) {
+                            if (data.device[i].bsc === bsc && data.device[i].cpfl === cpfl) {
+                                modifier['$set']['device.' + i + '.tcxs'] = tcxs;
+                                modifier['$set']['device.' + i + '.tcjs'] = tcjs;
+                                modifier['$set']['device.' + i + '.fysc'] = fysc;
+                                modifier['$set']['device.' + i + '.fyqt'] = fyqt;
+                                modifier['$set']['device.' + i + '.fyyj'] = fyyj;
+                                modifier['$set']['device.' + i + '.fykc'] = fykc;
+
+                                IndentCollection.update({'_id': data._id}, modifier);
+                                i = data.device.length; //退出循环
+                                flag = true;
+                            }
+                        }
+
+                        if (!flag) {
+                            for (var i = 0; i < data.device.length; i++) {
+                                if (data.device[i].bsc === bsc) {
+                                    modifier['$set']['device.' + i + '.tcxs'] = tcxs;
+                                    modifier['$set']['device.' + i + '.tcjs'] = tcjs;
+                                    modifier['$set']['device.' + i + '.fysc'] = fysc;
+                                    modifier['$set']['device.' + i + '.fyqt'] = fyqt;
+                                    modifier['$set']['device.' + i + '.fyyj'] = fyyj;
+                                    modifier['$set']['device.' + i + '.fykc'] = fykc;
+
+                                    IndentCollection.update({'_id': data._id}, modifier);
+                                    i = data.device.length; //退出循环
+                                    flag = true;
+                                }
+                            }
+                        }
+                    }
+                    if (!flag) {
+                        console.log(ddh + ' is not cost!');
+                    }
+                } else {
+                    console.log(ddh + ' is not find!');
+                }
+            }
+        }
     });
 };
 

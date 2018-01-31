@@ -10,7 +10,8 @@ Template.indentlist.onRendered(function(){
 					limit: params.limit,
 					offset: params.offset,
 					ddbh: $("#ddbh").val(),
-					xmmc: $("#xmmc").val()
+					xmmc: $("#xmmc").val(),
+                    khmc: $("#khmc").val(),
 				};
 				return temp;
 			},
@@ -20,6 +21,7 @@ Template.indentlist.onRendered(function(){
 			{field: 'kjnd', title: '订单年度', halign: 'center' },
 			{field: 'kjyf', title: '订单月份', halign: 'center' },
 			{field: 'xmmc', title: '项目名称', halign: 'center' },
+            {field: 'khmc', title: '客户名称', halign: 'center' },
 			{field: 'htzje', title: '合同总金额', halign: 'center' },
 			{field: 'username', title: '录入人员', halign: 'center' },
 		]

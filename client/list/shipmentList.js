@@ -1,30 +1,36 @@
 Template.shipmentlist.onRendered(function(){
 	$('#tb_list').bootstrapTable({
         sidePagination: "client", //分页方式：client客户端分页，server服务端分页
-        pageSize: 10,
-        pageList: [5, 10, 20],
+        pageSize: 20,
+        pageList: [10, 20, 'All'],
         pagination: true, //是否显示分页
 		queryParams:
 			function (params) {
 				temp = {
 					ddbh: $("#ddbh").val(),
-					cpfl: $("#cpfl").val(),
+                    xmmc: $("#xmmc").val(),
 					fhnd: $("#fhnd").val(),
 					fhyf: $("#fhyf").val(),
+                    cpfl: $("#cpfl").val(),
+                    bsc: $("#bsc").val(),
+                    fzr: $("#fzr").val(),
+                    khmc: $("#khmc").val(),
 				};
 				return temp;
 			},
 		columns: [
-			{field: 'ddbh', title: '订单编号', halign: 'center' },
-			{field: 'xmmc', title: '项目名称', halign: 'center' },
 			{field: 'fhnd', title: '发货年度', halign: 'center' },
 			{field: 'fhyf', title: '发货月份', halign: 'center' },
+            {field: 'ddbh', title: '订单编号', halign: 'center' },
+            {field: 'xmmc', title: '项目名称', halign: 'center' },
 			{field: 'cpfl', title: '产品分类', halign: 'center' },
 			{field: 'sbxh', title: '设备型号', halign: 'center' },
 			{field: 'bsc', title: '办事处', halign: 'center' },
 			{field: 'fzr', title: '负责人', halign: 'center' },
+            {field: 'ygbh', title: '员工编号', halign: 'center' },
 			{field: 'fhsl', title: '发货数量', halign: 'center'},
 			{field: 'fhje', title: '发货金额', halign: 'center'},
+            {field: 'khmc', title: '客户名称', halign: 'center'},
 		],
         onLoadSuccess: function(data){
 			//console.log(data);
@@ -48,4 +54,23 @@ Template.shipmentlist.events({
 		tpl.$('#tb_list').bootstrapTable('refresh', {url: RootUrl+
 			'shipmentlist/get'});
 	},
+    'click button#btn_toexcel': function(evt, tpl){
+        chumjConfirm('确认要导出查询数据吗？', function(result){
+            if (result){
+                var data = tpl.$('#tb_list').bootstrapTable('getData');
+                var postData = {data: data};
+                HTTP.post(RootUrl+
+                    'export/excel?filename=shipmentlist_temp.xlsx&downfile=shipmentlist.xlsx',
+                    postData, function(err, result){
+                        if (err) {
+                            Bert.alert(err, 'danger');
+                        } else {
+                            downloadByIframe(RootUrl+
+                                'down/excel?downfile=shipmentlist.xlsx');
+                        };
+                    });
+            };
+        });
+
+    },
 });

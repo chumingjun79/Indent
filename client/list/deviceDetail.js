@@ -1,8 +1,8 @@
 Template.devicedetail.onRendered(function(){
 	$('#tb_list').bootstrapTable({
         sidePagination: "client", //分页方式：client客户端分页，server服务端分页
-        pageSize: 10,
-        pageList: [5, 10, 20],
+        pageSize: 20,
+        pageList: [10, 20, 'All'],
         pagination: true, //是否显示分页
 		queryParams:
 			function (params) {
@@ -14,6 +14,7 @@ Template.devicedetail.onRendered(function(){
                     cpfl: $("#cpfl").val(),
                     bsc: $("#bsc").val(),
                     fzr: $("#fzr").val(),
+                    khmc: $("#khmc").val(),
 				};
 				return temp;
 			},
@@ -38,10 +39,13 @@ Template.devicedetail.onRendered(function(){
             {field: 'fyqt', title: '费用（其他）', halign: 'center'},
             {field: 'fyyj', title: '样机费', halign: 'center'},
             {field: 'fykc', title: '考察礼品费', halign: 'center'},
+            {field: 'fhsl', title: '发货数量', halign: 'center'},
+            {field: 'fhje', title: '发货金额', halign: 'center'},
+            {field: 'khmc', title: '客户名称', halign: 'center'},
 		],
         onLoadSuccess: function(data){
 			//console.log(data);
-            var sl=0, je=0, htzje=0, zbjj=0, tcxs=0, tcjs=0, fysc=0, fyqt=0, fyyj=0, fykc=0;
+            let sl=0, je=0, htzje=0, zbjj=0, tcxs=0, tcjs=0, fysc=0, fyqt=0, fyyj=0, fykc=0, fhsl=0, fhje=0;
             for (var i in data) {
                 sl += parseFloat(data[i].sbsl);
                 je += parseFloat(data[i].sbje);
@@ -53,6 +57,8 @@ Template.devicedetail.onRendered(function(){
                 fyqt += parseFloat(data[i].fyqt);
                 fyyj += parseFloat(data[i].fyyj);
                 fykc += parseFloat(data[i].fykc);
+                fhsl += parseFloat(data[i].fhsl);
+                fhje += parseFloat(data[i].fhje);
             };
             $('#slhj')[0].innerHTML = '设备数量合计：'+ toDecimal(sl, 2);
             $('#jehj')[0].innerHTML = '设备金额合计：'+ toDecimal(je, 2);
@@ -64,6 +70,8 @@ Template.devicedetail.onRendered(function(){
             $('#fyqt')[0].innerHTML = '费用（其他）合计：'+ toDecimal(fyqt, 2);
             $('#fyyj')[0].innerHTML = '样机费合计：'+ toDecimal(fyyj, 2);
             $('#fykc')[0].innerHTML = '考察礼品费合计：'+ toDecimal(fykc, 2);
+            $('#fhsl')[0].innerHTML = '发货数量合计：'+ toDecimal(fhsl, 2);
+            $('#fhje')[0].innerHTML = '发货金额合计：'+ toDecimal(fhje, 2);
 		},
 	});
 
