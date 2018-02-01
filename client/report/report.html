@@ -9,13 +9,16 @@
         <div class="panel-body">
             <form role="form" class="form-horizontal">
                 <div class="form-group">
-                    <label class="control-label col-sm-6">
-                        报表下载地址：
-                        <a href="/down/excel?downfile={{this.filename}}.xlsx">
-                            {{this.title}}
-                        </a>
-                    </label>
-                    <div class="col-sm-6">
+                    <label class="control-label col-sm-2">报表年度</label>
+                    <div class="col-sm-2">
+                        <input class="form-control" id="kjnd">
+                    </div>
+                    <label class="control-label col-sm-1">报表月份</label>
+                    <div class="col-sm-2">
+                        <input class="form-control" id="kjyf">
+                    </div>
+
+                    <div class="col-sm-4">
                         <button id="btn_refresh" type="button" class="btn btn-success"
                                 data-loading-text="Loading...">
                             <span class="fa fa-bar-chart" aria-hidden="true"></span> 生成报表

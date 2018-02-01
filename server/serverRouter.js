@@ -184,7 +184,7 @@ Router.route('/devicedetail/get', {where: 'server'}).get(function(){
                 fyyj:"$_id.fyyj", fykc:"$_id.fykc", tszbjj:"$_id.tszbjj",
                 fhsl:"$fhsl", fhje:"$fhje" }},
         {$match:sql},
-        {$sort:{kjnd:1,kjyf:1,ddbh:1}}
+        {$sort:{kjnd:1,kjyf:1,ddbh:1,htzje:-1}}
     ]);
     //console.log(getData);
     if ( getData ) {

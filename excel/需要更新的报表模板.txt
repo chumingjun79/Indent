@@ -8,6 +8,6 @@ productreport_temp.xlsx --- 每月更新，更新内容是上一年度YTDTotal中的公式
 
 averagemf_temp.xlsx --- 每月更新，更新内容是各子项中公式的位置
 
-monthcost_temp.xlsx --- 每年更新
+monthcost_temp.xlsx --- 每年更新，更新内容是年份和最下面的目标值
 
 officecost_temp.xlsx --- 每年更新
