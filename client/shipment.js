@@ -10,6 +10,7 @@ Template.shipment.onRendered(function(){
             {radio: true },
             {field: 'ddbh', title: '订单编号', halign: 'center' },
             {field: 'xmmc', title: '项目名称', halign: 'center' },
+            {field: 'remark', title: '备注', halign: 'center' },
         ],
         onCheck: function(row){
             $('#tb_device').bootstrapTable('uncheckAll');

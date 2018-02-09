@@ -157,7 +157,7 @@ Router.route('/devicedetail/get', {where: 'server'}).get(function(){
     };
     //console.log(sql);
 
-    let getData = IndentCollection.aggregate([
+    /*let getData = IndentCollection.aggregate([
         {$match:ddoption},
         {$unwind:{path:"$device", includeArrayIndex:"arrayIndex"}},
         {$project:{kjnd:1, kjyf:1, ddbh:1, xmmc:1, khmc:1,
@@ -183,6 +183,20 @@ Router.route('/devicedetail/get', {where: 'server'}).get(function(){
                 tcxs:"$_id.tcxs", tcjs:"$_id.tcjs", fysc:"$_id.fysc", fyqt:"$_id.fyqt",
                 fyyj:"$_id.fyyj", fykc:"$_id.fykc", tszbjj:"$_id.tszbjj",
                 fhsl:"$fhsl", fhje:"$fhje" }},
+        {$match:sql},
+        {$sort:{kjnd:1,kjyf:1,ddbh:1,htzje:-1}}
+    ]);*/
+    let getData = IndentCollection.aggregate([
+        {$match:ddoption},
+        {$unwind:{path:"$device", includeArrayIndex:"arrayIndex"}},
+        {$project:{kjnd:1, kjyf:1, ddbh:1, xmmc:1, khmc:1,
+                htzje:{$cond:[{$eq:["$arrayIndex",0]},"$htzje",0]},
+                cpfl:"$device.cpfl", sbxh:"$device.sbxh",
+                bsc:"$device.bsc", fzr:"$device.fzr", ygbh:"$device.ygbh",
+                sbxs:"$device.sbxs", sbsl:"$device.sbsl", sbje:"$device.sbje",
+                tcxs:"$device.tcxs", tcjs:"$device.tcjs", fysc:"$device.fysc", fyqt:"$device.fyqt",
+                fyyj:"$device.fyyj", fykc:"$device.fykc", tszbjj:"$device.tszbjj",
+                fhsl:{$sum:"$device.shipment.fhsl"}, fhje:{$sum:"$device.shipment.fhje"} }},
         {$match:sql},
         {$sort:{kjnd:1,kjyf:1,ddbh:1,htzje:-1}}
     ]);
