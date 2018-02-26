@@ -42,6 +42,7 @@ Template.devicedetail.onRendered(function(){
             {field: 'fhsl', title: '发货数量', halign: 'center'},
             {field: 'fhje', title: '发货金额', halign: 'center'},
             {field: 'khmc', title: '客户名称', halign: 'center'},
+            {field: 'dxm', title: '大项目个人业绩50%', halign: 'center' },
 		],
         onLoadSuccess: function(data){
 			//console.log(data);
