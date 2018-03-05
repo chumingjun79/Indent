@@ -23,6 +23,7 @@ Template.shipmentlist.onRendered(function(){
 			{field: 'fhyf', title: '发货月份', halign: 'center' },
             {field: 'ddbh', title: '订单编号', halign: 'center' },
             {field: 'xmmc', title: '项目名称', halign: 'center' },
+            {field: 'xmfl', title: '项目分类', halign: 'center' },
 			{field: 'cpfl', title: '产品分类', halign: 'center' },
 			{field: 'sbxh', title: '设备型号', halign: 'center' },
 			{field: 'bsc', title: '办事处', halign: 'center' },
@@ -31,6 +32,7 @@ Template.shipmentlist.onRendered(function(){
 			{field: 'fhsl', title: '发货数量', halign: 'center'},
 			{field: 'fhje', title: '发货金额', halign: 'center'},
             {field: 'khmc', title: '客户名称', halign: 'center'},
+            {field: 'dxm', title: '大项目个人业绩50%', halign: 'center' },
 		],
         onLoadSuccess: function(data){
 			//console.log(data);

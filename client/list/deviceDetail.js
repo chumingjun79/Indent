@@ -23,6 +23,7 @@ Template.devicedetail.onRendered(function(){
             {field: 'kjyf', title: '月份', halign: 'center' },
 			{field: 'ddbh', title: '订单编号', halign: 'center' },
 			{field: 'xmmc', title: '项目名称', halign: 'center' },
+            {field: 'xmfl', title: '项目分类', halign: 'center' },
 			{field: 'cpfl', title: '产品分类', halign: 'center' },
 			{field: 'sbxh', title: '设备型号', halign: 'center' },
 			{field: 'bsc', title: '办事处', halign: 'center' },

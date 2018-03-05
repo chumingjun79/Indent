@@ -258,7 +258,7 @@ getReportData = function(report, kjnd, kjyf){
 
         getData = IndentCollection.aggregate([
             {$unwind:"$device"},
-            {$match:{kjnd:String(kjnd), "device.sbxs":{$gt:0} }},
+            {$match:{kjnd:String(kjnd), kjyf:{$lte:Number(kjyf)}, "device.sbxs":{$gt:0} }},
             {$project:{cpfl:"$device.cpfl", xs:"$device.sbxs",
                 jingjia:{$subtract:["$device.sbje","$device.tszbjj"]}}},
             {$project:{cpfl:"$cpfl", jingjia:"$jingjia", mianjia:{$divide:["$jingjia","$xs"]}}},
