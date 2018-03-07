@@ -28,18 +28,51 @@ Template.indentlist.onRendered(function(){
 	});
 });
 
+function getSelection(tpl){
+    let selectedData = tpl.$('#tb_indentlist').bootstrapTable('getSelections');
+    if (selectedData.length === 0){
+        Bert.alert('请先选中想要操作的订单', 'info');
+        return '';
+    };
+    return selectedData[0]._id;
+}
+
+function toPayment(tpl, filename){
+    let selected = getSelection(tpl);
+    if (selected === '') return;
+
+    let option = {};
+    option.kjnd = selected;
+    option.kjyf = '';
+
+    let downFile = filename+'_'+ Meteor.user().username + '.xlsx';
+    HTTP.get(RootUrl+
+        'report/excel?filename='+filename+'&downfile='+ downFile,
+        {params: option}, function(err, result){
+            if (err) {
+                Bert.alert(err, 'danger');
+            } else {
+                downloadByIframe(RootUrl+
+                    'down/excel?downfile='+ downFile);
+            };
+        });
+}
+
 Template.indentlist.events({
 	'click button#btn_refresh': function(evt, tpl){
 		tpl.$('#tb_indentlist').bootstrapTable('refresh', {url: RootUrl+
 			'indentlist/get'});
 	},
 	'click button#btn_info': function(evt, tpl){
-		var selectedData = tpl.$('#tb_indentlist').bootstrapTable('getSelections');
-		if (selectedData.length === 0){
-			Bert.alert('请先选择要查看详细信息的订单', 'info');
-			return;
-		};
-		Session.set('selectedIndentId', selectedData[0]._id);
+		let selected = getSelection(tpl);
+		if (selected === '') return;
+		Session.set('selectedIndentId', selected);
 		Router.go('/indentinfo');
 	},
+	'click button#btn_paymentStatus': function(evt, tpl){
+        toPayment(tpl, 'paymentStatus');
+	},
+    'click button#btn_paymentDetail': function(evt, tpl){
+        toPayment(tpl, 'paymentDetail');
+    },
 });

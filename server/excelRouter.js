@@ -9,7 +9,7 @@ Router.route('/down/excel', {where: 'server'}).get(function(){
         res.setHeader("Content-type","text/plain;charset=UTF-8");
         res.end("request downfile not defined!");
     };
-    let currFile = path.normalize(process.env.HOME+'/indent/excel/'+fileName);
+    let currFile = path.normalize(process.env.HOME+'/indent/excel/down/'+fileName);
     //console.log(currFile);
 
     fs.exists(currFile, function(exist) {
@@ -56,7 +56,7 @@ Router.route('/export/excel', {where: 'server'}).post(function(){
             //console.log(data);
 
             ejsExcel.renderExcel(exlBuf, data).then(function(exlBuf2) {
-                let file = path.normalize(process.env.HOME+'/indent/excel/'+ downFile);
+                let file = path.normalize(process.env.HOME+'/indent/excel/down/'+ downFile);
                 fs.writeFileSync(file, exlBuf2);
 
                 res.statusCode = 200;
@@ -271,6 +271,22 @@ getReportData = function(report, kjnd, kjyf){
         };
 
         return resData;
+    case 'paymentStatus': //导出报销一览表，这里的kjnd变量里存放的是_id
+        getData = IndentCollection.aggregate([
+            {$unwind:"$device"},
+            {$match:{_id:String(kjnd)}},
+            {$project:{xmmc:"$xmmc", ddbh:"$ddbh", htzje:"$htzje", fyqt:"$device.fyqt"}},
+        ]);
+
+        return getData[0];
+    case 'paymentDetail': //导出报销明细表，这里的kjnd变量里存放的是_id
+        getData = IndentCollection.aggregate([
+            {$unwind:"$device"},
+            {$match:{_id:String(kjnd)}},
+            {$project:{xmmc:"$xmmc", ddbh:"$ddbh", fykc:"$device.fykc"}},
+        ]);
+
+        return getData[0];
     };
 };
 
@@ -280,7 +296,7 @@ Router.route('/report/excel', {where: 'server'}).get(function(){
     let fs = require("fs");
     let path = require("path");
 
-    let fileName = req.query.filename + '.xlsx';
+    let downFile = req.query.downfile;
     let tempFile = req.query.filename + '_temp.xlsx';
     let data = getReportData(req.query.filename, req.query.kjnd, req.query.kjyf);
     //console.log('%j', data);
@@ -290,7 +306,7 @@ Router.route('/report/excel', {where: 'server'}).get(function(){
         if(exist) {
             let exlBuf = fs.readFileSync(currFile);
             ejsExcel.renderExcel(exlBuf, data).then(function(exlBuf2) {
-                let file = path.normalize(process.env.HOME+'/indent/excel/'+ fileName);
+                let file = path.normalize(process.env.HOME+'/indent/excel/down/'+ downFile);
                 fs.writeFileSync(file, exlBuf2);
 
                 res.statusCode = 200;

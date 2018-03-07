@@ -90,16 +90,17 @@ Template.devicedetail.events({
     'click button#btn_toexcel': function(evt, tpl){
 	    chumjConfirm('确认要导出查询数据吗？', function(result){
 	        if (result){
-                var data = tpl.$('#tb_list').bootstrapTable('getData');
-                var postData = {data: data};
+                let data = tpl.$('#tb_list').bootstrapTable('getData');
+                let postData = {data: data};
+                let downFile = 'devicedetail_'+ Meteor.user().username + '.xlsx';
                 HTTP.post(RootUrl+
-                    'export/excel?filename=devicedetail_temp.xlsx&downfile=devicedetail.xlsx',
+                    'export/excel?filename=devicedetail_temp.xlsx&downfile='+ downFile,
                     postData, function(err, result){
                         if (err) {
                             Bert.alert(err, 'danger');
                         } else {
                             downloadByIframe(RootUrl+
-                                'down/excel?downfile=devicedetail.xlsx');
+                                'down/excel?downfile='+ downFile);
                         };
                     });
             };

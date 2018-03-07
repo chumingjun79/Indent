@@ -41,18 +41,4 @@ Template.paywarn.events({
 		Session.set('payIndentBh', ddbh);
 		Router.go('/indentPay');
 	},
-    'click button#btn_toexcel': function(evt, tpl){
-        var data = tpl.$('#tb_list').bootstrapTable('getData');
-        var postData = {data: data};
-        HTTP.post(RootUrl+
-            'export/excel?filename=paywarn_temp.xlsx&downfile=paywarn.xlsx', postData,
-            function(err, result){
-                if (err) {
-                    Bert.alert(err, 'danger');
-                } else {
-                    downloadByIframe(RootUrl+
-                        'down/excel?downfile=paywarn.xlsx');
-                };
-        });
-    },
 });
