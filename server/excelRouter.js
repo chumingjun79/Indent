@@ -273,17 +273,16 @@ getReportData = function(report, kjnd, kjyf){
         return resData;
     case 'paymentStatus': //导出报销一览表，这里的kjnd变量里存放的是_id
         getData = IndentCollection.aggregate([
-            {$unwind:"$device"},
             {$match:{_id:String(kjnd)}},
-            {$project:{xmmc:"$xmmc", ddbh:"$ddbh", htzje:"$htzje", fyqt:"$device.fyqt"}},
+            {$project:{xmmc:"$xmmc", ddbh:"$ddbh", htzje:"$htzje", fyqt:{$sum:"$device.fyqt"}}},
         ]);
 
+        //console.log('%j', getData[0]);
         return getData[0];
     case 'paymentDetail': //导出报销明细表，这里的kjnd变量里存放的是_id
         getData = IndentCollection.aggregate([
-            {$unwind:"$device"},
             {$match:{_id:String(kjnd)}},
-            {$project:{xmmc:"$xmmc", ddbh:"$ddbh", fykc:"$device.fykc"}},
+            {$project:{xmmc:"$xmmc", ddbh:"$ddbh", fykc:{$sum:"$device.fykc"}}},
         ]);
 
         return getData[0];

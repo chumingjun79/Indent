@@ -359,10 +359,10 @@ Template.indent.onRendered(function(){
 Template.showIndent.helpers({
     getUserRole: function(){
 		//判断单据是否为当前用户所有
-		var tempUserid = LocalIndent.findOne(Session.get('selectedIndentId')).username;
+		/*let tempUserid = LocalIndent.findOne(Session.get('selectedIndentId')).username;
 		if ( tempUserid !== '' && tempUserid !== Meteor.user().username ){
 			return false;
-		};
+		};*/
         return true;
     },
 });
