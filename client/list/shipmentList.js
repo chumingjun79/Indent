@@ -29,6 +29,7 @@ Template.shipmentlist.onRendered(function(){
 			{field: 'bsc', title: '办事处', halign: 'center' },
 			{field: 'fzr', title: '负责人', halign: 'center' },
             {field: 'ygbh', title: '员工编号', halign: 'center' },
+            {field: 'sbxs', title: '设备系数', halign: 'center' },
 			{field: 'fhsl', title: '发货数量', halign: 'center'},
 			{field: 'fhje', title: '发货金额', halign: 'center'},
             {field: 'khmc', title: '客户名称', halign: 'center'},

@@ -208,7 +208,7 @@ getReportData = function(report, kjnd, kjyf){
 
         getData = IndentCollection.aggregate([
             {$unwind:"$device"},
-            {$match:{kjnd: String(kjnd)}},
+            {$match:{kjnd: String(kjnd), kjyf:{$lte:Number(kjyf)}}},
             {$group:{_id: '$kjyf', sbje:{$sum:"$device.sbje"}, tcxs:{$sum:"$device.tcxs"},
                 tcjs:{$sum:"$device.tcjs"}, fysc:{$sum:"$device.fysc"}, fyqt:{$sum:"$device.fyqt"},
                 fycgkcyj:{$sum:{$add:["$device.fykc","$device.fyyj"]}}}}
@@ -228,7 +228,7 @@ getReportData = function(report, kjnd, kjyf){
 
         getData = IndentCollection.aggregate([
             {$unwind:"$device"},
-            {$match:{kjnd: String(kjnd)}},
+            {$match:{kjnd: String(kjnd), kjyf:{$lte:Number(kjyf)}}},
             {$group:{_id: '$device.bsc', sbje:{$sum:"$device.sbje"},
                 fyhj:{$sum:{$add:["$device.tcxs","$device.tcjs",
                 "$device.fysc","$device.fyqt","$device.fykc","$device.fyyj"]}}}}
