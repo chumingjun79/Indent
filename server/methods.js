@@ -126,6 +126,15 @@ Meteor.methods({
         modifier['$set'][deviceProperty] = data;
         return IndentCollection.update({"_id": id}, modifier);
     },
+    'updateIndentCommission': function(id, index, data){
+        if (emptyString(id)) {
+            throw new Meteor.Error(403, "传入的id不允许为空");
+        };
+        var deviceProperty = 'device.' + index + '.commission';
+        var modifier = {$set: {}};
+        modifier['$set'][deviceProperty] = data;
+        return IndentCollection.update({"_id": id}, modifier);
+    },
 	'deleteIndent': function(data){
 		if (emptyString(data.id)) {
 			throw new Meteor.Error(403, "传入的id不允许为空");

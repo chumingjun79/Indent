@@ -1,6 +1,6 @@
 importIndent = function(workSheets){
-    var dqBh = '', syBh = '';
-    var indent = {
+    let dqBh = '', syBh = '';
+    let indent = {
         username: 'daixiuqin',
         kjnd: '',
         kjyf: '',
@@ -29,7 +29,7 @@ importIndent = function(workSheets){
         htzje: 0,
         skzje: 0
     };
-    var data, dds = 1;
+    let data, dds = 1;
 
     workSheets.forEach((item, index)=>{
         if (index > 0) //第一行是标题，所以跳过
@@ -84,9 +84,9 @@ insertIndent = function(data){
 };
 /*
 importIndent1 = function(workSheets){
-    var xhl = '', xh = '';
-    var dds = 1;
-    var data = '';
+    let xhl = '', xh = '';
+    let dds = 1;
+    let data = '';
 
     workSheets.forEach((item, index)=>{
         if (index > 0) //第一行是标题，所以跳过
@@ -94,7 +94,7 @@ importIndent1 = function(workSheets){
             //console.log('%s', item);
             xhl = item[15];
             if (xhl != '') {
-                var i = xhl.indexOf('型号');
+                let i = xhl.indexOf('型号');
                 if (i > 0) {
                     xh = xhl.substring(i);
                     data = data + xh + '\n';
@@ -107,20 +107,20 @@ importIndent1 = function(workSheets){
         };
     });
 
-    var fs = require("fs");
-    var path = require("path");
-    var currFile = path.normalize(process.env.HOME+'/indent/excel/111.txt');
+    let fs = require("fs");
+    let path = require("path");
+    let currFile = path.normalize(process.env.HOME+'/indent/excel/111.txt');
     fs.writeFileSync(currFile, data);
 };
 */
 Router.route('/importindent', {where: 'server'}).get(function(){
-    var req = this.request, res = this.response;
-    var fs = require("fs");
-    var path = require("path");
-    var currFile = path.normalize(process.env.HOME+'/indent/excel/importIndent.xlsx');
-    var ejsExcel = require('ejsExcel');
+    let req = this.request, res = this.response;
+    let fs = require("fs");
+    let path = require("path");
+    let currFile = path.normalize(process.env.HOME+'/indent/excel/importIndent.xlsx');
+    let ejsExcel = require('ejsExcel');
 
-    var exBuf = fs.readFileSync(currFile);
+    let exBuf = fs.readFileSync(currFile);
     ejsExcel.getExcelArr(exBuf).then(exlJson=>{
 
         importIndent(exlJson[0]);
@@ -156,12 +156,12 @@ importCost = function(workSheets){
             khmc = trim(toString(item[13]));
 
             if (tcxs!==0 || tcjs!==0 || fysc!==0 || fyqt!==0 || fyyj!==0 || fykc!==0) {
-                var flag = false;
-                var data = IndentCollection.findOne({'ddbh': ddh});
+                let flag = false;
+                let data = IndentCollection.findOne({'ddbh': ddh});
                 if (data) {
-                    var modifier = {$set: {'sbzje':sbzje, 'khmc':khmc}};
+                    let modifier = {$set: {'sbzje':sbzje, 'khmc':khmc}};
 
-                    for (var i = 0; i < data.device.length; i++) {
+                    for (let i = 0; i < data.device.length; i++) {
                         if (data.device[i].bsc === bsc && data.device[i].fzr === fzr &&
                             data.device[i].cpfl === cpfl) {
                             modifier['$set']['device.' + i + '.tcxs'] = tcxs;
@@ -178,7 +178,7 @@ importCost = function(workSheets){
                     }
                     //如果失败，基本上都是产品类型或负责人不一致造成的，所以去掉这个条件再次更新数据
                     if (!flag) {
-                        for (var i = 0; i < data.device.length; i++) {
+                        for (let i = 0; i < data.device.length; i++) {
                             if (data.device[i].bsc === bsc && data.device[i].cpfl === cpfl) {
                                 modifier['$set']['device.' + i + '.tcxs'] = tcxs;
                                 modifier['$set']['device.' + i + '.tcjs'] = tcjs;
@@ -194,7 +194,7 @@ importCost = function(workSheets){
                         }
 
                         if (!flag) {
-                            for (var i = 0; i < data.device.length; i++) {
+                            for (let i = 0; i < data.device.length; i++) {
                                 if (data.device[i].bsc === bsc) {
                                     modifier['$set']['device.' + i + '.tcxs'] = tcxs;
                                     modifier['$set']['device.' + i + '.tcjs'] = tcjs;
@@ -222,13 +222,13 @@ importCost = function(workSheets){
 };
 
 Router.route('/importcost', {where: 'server'}).get(function(){
-    var req = this.request, res = this.response;
-    var fs = require("fs");
-    var path = require("path");
-    var currFile = path.normalize(process.env.HOME+'/indent/excel/importCost.xlsx');
-    var ejsExcel = require('ejsExcel');
+    let req = this.request, res = this.response;
+    let fs = require("fs");
+    let path = require("path");
+    let currFile = path.normalize(process.env.HOME+'/indent/excel/importCost.xlsx');
+    let ejsExcel = require('ejsExcel');
 
-    var exBuf = fs.readFileSync(currFile);
+    let exBuf = fs.readFileSync(currFile);
     ejsExcel.getExcelArr(exBuf).then(exlJson=>{
         importCost(exlJson[0]);
         res.statusCode = 200;
@@ -243,12 +243,12 @@ Router.route('/importcost', {where: 'server'}).get(function(){
 });
 
 importWorker = function(workSheets){
-    var worker = {
+    let worker = {
         ygbm: '',
         ygxm: '',
         ygbh: ''
     };
-    var data;
+    let data;
 
     workSheets.forEach((item, index)=>{
         data = cloneObject(worker);
@@ -265,15 +265,77 @@ importWorker = function(workSheets){
 };
 
 Router.route('/importworker', {where: 'server'}).get(function(){
-    var req = this.request, res = this.response;
-    var fs = require("fs");
-    var path = require("path");
-    var currFile = path.normalize(process.env.HOME+'/indent/excel/importWorker.xlsx');
-    var ejsExcel = require('ejsExcel');
+    let req = this.request, res = this.response;
+    let fs = require("fs");
+    let path = require("path");
+    let currFile = path.normalize(process.env.HOME+'/indent/excel/importWorker.xlsx');
+    let ejsExcel = require('ejsExcel');
 
-    var exBuf = fs.readFileSync(currFile);
+    let exBuf = fs.readFileSync(currFile);
     ejsExcel.getExcelArr(exBuf).then(exlJson=>{
         importWorker(exlJson[0]);
+        res.statusCode = 200;
+        res.setHeader("Content-type","text/html");
+        res.end("worker data import OK!");
+    }).catch(error=>{
+        console.log(error);
+        res.statusCode = 500;
+        res.setHeader("Content-type","text/html");
+        res.end(error);
+    });
+});
+
+importCommission = function(workSheets){
+    let tcxs, tcjs, fysc, fyyj, fykc, fyqt;
+    let ddh, cpfl, bsc, fzr, sbzje, khmc;
+
+    workSheets.forEach((item, index)=>{
+        if (index > 0) //第一行是标题，所以跳过
+        {
+            ddh = trim(toString(item[0])); //取得当前订单号
+            bsc = trim(toString(item[1]));
+            skbl = toString(toDecimal(item[4],2)*100) + '%';
+            ffry = trim(toString(item[5]));
+            ffje = toDecimal(item[6],2);
+
+            let flag = false;
+            let data = IndentCollection.findOne({'ddbh': ddh});
+            if (data) {
+                let id = data._id;
+
+                for (let i = 0; i < data.device.length; i++) {
+                    if (data.device[i].bsc === bsc && data.device[i].fzr === ffry) {
+                        let commission = [{ffsj:'20171201', skbl:skbl, ffbsc: bsc, ffry:ffry, ffje:ffje}];
+                        let deviceProperty = 'device.' + i + '.commission';
+                        let modifier = {$set: {}};
+                        modifier['$set'][deviceProperty] = commission;
+                        IndentCollection.update({"_id": id}, modifier);
+
+                        i = data.device.length; //退出循环
+                        flag = true;
+                    }
+                }
+
+                if (!flag) {
+                    console.log(ddh + ' is not commission!');
+                }
+            } else {
+                console.log(ddh + ' is not find!');
+            }
+        }
+    });
+};
+
+Router.route('/importcommission', {where: 'server'}).get(function(){
+    let req = this.request, res = this.response;
+    let fs = require("fs");
+    let path = require("path");
+    let currFile = path.normalize(process.env.HOME+'/indent/excel/importCommission.xlsx');
+    let ejsExcel = require('ejsExcel');
+
+    let exBuf = fs.readFileSync(currFile);
+    ejsExcel.getExcelArr(exBuf).then(exlJson=>{
+        importCommission(exlJson[0]);
         res.statusCode = 200;
         res.setHeader("Content-type","text/html");
         res.end("worker data import OK!");

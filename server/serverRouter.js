@@ -209,6 +209,102 @@ Router.route('/devicedetail/get', {where: 'server'}).get(function(){
     };
 });
 
+Router.route('/commissiontotal/get', {where: 'server'}).get(function(){
+    let request = this.request.query;
+    let ddbh = trim(request.ddbh);
+    let xmmc = trim(request.xmmc);
+    let kjnd = trim(request.kjnd);
+    let kjyf = trim(request.kjyf);
+
+    let ddoption = {};
+    if (ddbh !== ""){
+        ddoption["ddbh"] = {$regex: ddbh};
+    };
+    if (xmmc !== ""){
+        ddoption["xmmc"] = {$regex: xmmc};
+    };
+    if (kjnd !== ""){
+        ddoption["kjnd"] = kjnd;
+    };
+    if (kjyf !== ""){
+        ddoption["kjyf"] = Number(kjyf);
+    };
+
+    let getData = IndentCollection.aggregate([
+        {$match:ddoption},
+        {$unwind:"$device"},
+        {$project:{ddbh:1, xmmc:1,
+                xstc:{$sum:"$device.tcxs"}, ffje:{$sum:"$device.commission.ffje"} }},
+        {$group:{_id:{ddbh:"$ddbh", xmmc:"$xmmc"},
+                xstc:{$sum:"$xstc"}, ffje:{$sum:"$ffje"} }},
+        {$project:{_id:0, ddbh:"$_id.ddbh", xmmc:"$_id.xmmc",
+                xstc:"$xstc", ffje:"$ffje" }},
+        {$sort:{ddbh:1}}
+    ]);
+    //console.log(getData);
+    if ( getData ) {
+        this.response.statusCode = 200;
+        this.response.end(JSON.stringify( getData ));
+    };
+});
+
+Router.route('/commissiondetail/get', {where: 'server'}).get(function(){
+    let request = this.request.query;
+    let ddbh = trim(request.ddbh);
+    let xmmc = trim(request.xmmc);
+    let kjnd = trim(request.kjnd);
+    let kjyf = trim(request.kjyf);
+    let ffsjb = trim(request.ffsjb);
+    let ffsje = trim(request.ffsje);
+    let ffry = trim(request.ffry);
+
+    let ddoption = {};
+    if (ddbh !== ""){
+        ddoption["ddbh"] = {$regex: ddbh};
+    };
+    if (xmmc !== ""){
+        ddoption["xmmc"] = {$regex: xmmc};
+    };
+    if (kjnd !== ""){
+        ddoption["kjnd"] = kjnd;
+    };
+    if (kjyf !== ""){
+        ddoption["kjyf"] = Number(kjyf);
+    };
+
+    let sql = {};
+    if (ffsjb !== ""){
+        sql["ffsj"] = {$gte: ffsjb};
+    };
+    if (ffsje !== ""){
+        sql["ffsj"] = {$lte: ffsje};
+    };
+    if (ffry !== ""){
+        sql["ffry"] = {$regex: ffry};
+    };
+    //console.log(sql);
+
+    let getData = IndentCollection.aggregate([
+        {$match:ddoption},
+        {$unwind:"$device"},
+        {$project:{ddbh:1, xmmc:1,
+                bsc:"$device.bsc", fzr:"$device.fzr", xstc:"$device.tcxs",
+                commission:"$device.commission" }},
+        {$unwind:{path:"$commission", preserveNullAndEmptyArrays:true}},
+        {$project:{ddbh:1, xmmc:1, bsc:1, fzr:1, xstc:1,
+                ffsj:"$commission.ffsj", skbl:"$commission.skbl",
+                ffje:"$commission.ffje", ffry:"$commission.ffry",
+                ffbsc:"$commission.ffbsc"}},
+        {$match:sql},
+        {$sort:{ddbh:1}}
+    ]);
+    //console.log(getData);
+    if ( getData ) {
+        this.response.statusCode = 200;
+        this.response.end(JSON.stringify( getData ));
+    };
+});
+
 Router.route('/paywarn/get', {where: 'server'}).get(function(){
     let request = this.request.query;
     let ddbh = trim(request.ddbh);

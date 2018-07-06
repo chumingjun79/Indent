@@ -134,6 +134,18 @@ Router.route('/pppwarn', function(){
     checkSystemRole(this, 'pppwarn', 'PPP到期查询');
 });
 
+Router.route('/commissiontotal', function(){
+    checkSystemRole(this, 'commissiontotal', '提成发放汇总');
+});
+
+Router.route('/commissiondetail', function(){
+    checkSystemRole(this, 'commissiondetail', '提成发放明细');
+});
+
+Router.route('/commission', function(){
+    checkSystemRole(this, 'commission', '提成发放');
+});
+
 Router.route('/systeminfo', function(){
     checkSystemRole(this, 'systeminfo', '系统信息');
 });
