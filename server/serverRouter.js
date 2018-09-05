@@ -190,9 +190,9 @@ Router.route('/devicedetail/get', {where: 'server'}).get(function(){
     ]);*/
     let getData = IndentCollection.aggregate([
         {$match:ddoption},
-        {$unwind:{path:"$device", includeArrayIndex:"arrayIndex"}},
+        {$unwind:{path:"$device", includeArrayIndex:"arrayIndex", preserveNullAndEmptyArrays:true}},
         {$project:{kjnd:1, kjyf:1, ddbh:1, xmmc:1, xmfl:1, khmc:1, dxm:1,
-                htzje:{$cond:[{$eq:["$arrayIndex",0]},"$htzje",0]},
+                htzje:{$cond:[{$eq:["$arrayIndex",0]}, "$htzje", {$cond:[{$eq:["$arrayIndex",null]},"$htzje", 0]} ]},
                 cpfl:"$device.cpfl", sbxh:"$device.sbxh",
                 bsc:"$device.bsc", fzr:"$device.fzr", ygbh:"$device.ygbh",
                 sbxs:"$device.sbxs", sbsl:"$device.sbsl", sbje:"$device.sbje",
