@@ -35,8 +35,8 @@ Template.commissiontotal.onRendered(function(){
 			//console.log(data);
             let tchj=0, ffhj=0;
             for (var i in data) {
-                tchj += parseFloat(data[i].xstc);
-                ffhj += parseFloat(data[i].ffje);
+                tchj += toDecimal(data[i].xstc, 2);
+                ffhj += toDecimal(data[i].ffje, 2);
             };
             $('#tcxshj')[0].innerHTML = '提成总额合计：'+ toDecimal(tchj, 2);
             $('#ffjehj')[0].innerHTML = '支付总额合计：'+ toDecimal(ffhj, 2);

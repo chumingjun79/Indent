@@ -35,7 +35,7 @@ Template.commissiondetail.onRendered(function(){
             for (let i in data) {
                 let ffje = data[i].ffje;
                 if (ffje != null){
-                    ffhj += parseFloat(ffje);
+                    ffhj += toDecimal(ffje, 2);
                 }
             }
             $('#ffjehj')[0].innerHTML = '发放金额合计：'+ toDecimal(ffhj, 2);

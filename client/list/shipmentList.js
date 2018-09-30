@@ -39,8 +39,8 @@ Template.shipmentlist.onRendered(function(){
 			//console.log(data);
             var sl = 0, je = 0;
             for (var i in data) {
-                sl += parseFloat(data[i].fhsl);
-                je += parseFloat(data[i].fhje);
+                sl += toDecimal(data[i].fhsl, 2);
+                je += toDecimal(data[i].fhje, 2);
             };
             $('#slhj')[0].innerHTML = '发货数量合计：'+ toDecimal(sl, 2);
             $('#jehj')[0].innerHTML = '发货金额合计：'+ toDecimal(je, 2);
