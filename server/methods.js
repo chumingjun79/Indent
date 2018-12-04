@@ -139,7 +139,18 @@ Meteor.methods({
 		if (emptyString(data.id)) {
 			throw new Meteor.Error(403, "传入的id不允许为空");
 		};
-		var getData = IndentCollection.findOne({"_id": data.id});
+
+        let getData = IndentCollection.aggregate([
+            {$match:{"_id": data.id}},
+            {$unwind:"$device"},
+            {$unwind:"$device.shipment"}
+        ]);
+        //console.log('%j', getData);
+        if (getData.length > 0){
+            throw new Meteor.Error(403, "订单已经发货，不允许删除");
+        }
+
+		getData = IndentCollection.findOne({"_id": data.id});
 		if (getData){
             if (getData.skzje > 0){
                 throw new Meteor.Error(403, "订单已经收款，不允许删除");

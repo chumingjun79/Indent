@@ -263,6 +263,11 @@ Template.device.events({
 	'click button#btn-del': function(evt, tpl){
 		var index = evt.currentTarget.getAttribute('data-index');
 	    var devices = Template.parentData(1).device;
+	    if (devices[index].shipment.length > 0) {
+            Bert.alert("当前订单有发货记录，无法删除", 'danger');
+	    	return;
+		}
+
 	    $('.xj[data-index="'+ index +'"]').val(0); //先设为零，避免出现删除后统计的错误
 	    devices.splice(index, 1);
 	    var modifier = {$set: {'device': devices}};
