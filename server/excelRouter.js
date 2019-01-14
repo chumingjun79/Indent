@@ -105,7 +105,7 @@ getReportData = function(report, kjnd, kjyf){
 
         getData = IndentCollection.aggregate([
             {$unwind:"$device"},
-            {$match:{kjnd: String(kjnd)}},
+            {$match:{kjnd: String(kjnd), kjyf:{$lte: Number(kjyf)}}},
             {$group:{_id: 'sum',sum_value:{$sum:"$device.sbje"}}}
         ]);
         if (getData[0]) {
@@ -115,7 +115,7 @@ getReportData = function(report, kjnd, kjyf){
         getData = IndentCollection.aggregate([
             {$unwind:"$device"},
             {$unwind:"$device.shipment"},
-            {$match:{'device.shipment.fhnd': String(kjnd)}},
+            {$match:{'device.shipment.fhnd': String(kjnd), 'device.shipment.fhyf':{$lte: Number(kjyf)}}},
             {$group:{_id: 'sum',sum_value:{$sum:"$device.shipment.fhje"}}}
         ]);
         if (getData[0]) {
@@ -128,7 +128,7 @@ getReportData = function(report, kjnd, kjyf){
 
         getData = IndentCollection.aggregate([
             {$unwind:"$device"},
-            {$match:{kjnd: String(kjnd)}},
+            {$match:{kjnd: String(kjnd), kjyf:{$lte: Number(kjyf)}}},
             {$group:{_id: '$kjyf',sum_value:{$sum:"$device.sbje"}}}
         ]);
         for (let i=0; i<getData.length; i++){
@@ -136,7 +136,7 @@ getReportData = function(report, kjnd, kjyf){
         };
 
         getData = IndentCollection.aggregate([
-            {$match:{kjnd: String(kjnd)}},
+            {$match:{kjnd: String(kjnd), kjyf:{$lte: Number(kjyf)}}},
             {$group:{_id: '$kjyf',sum_value:{$sum:"$htzje"}}}
         ]);
         for (i=0; i<getData.length; i++){
@@ -146,7 +146,7 @@ getReportData = function(report, kjnd, kjyf){
         getData = IndentCollection.aggregate([
             {$unwind:"$device"},
             {$unwind:"$device.shipment"},
-            {$match:{'device.shipment.fhnd': String(kjnd)}},
+            {$match:{'device.shipment.fhnd': String(kjnd), 'device.shipment.fhyf':{$lte: Number(kjyf)}}},
             {$group:{_id:'$device.shipment.fhyf',sum_value:{$sum:"$device.shipment.fhje"}}}
         ]);
         for (let i=0; i<getData.length; i++){
@@ -159,7 +159,7 @@ getReportData = function(report, kjnd, kjyf){
 
         getData = IndentCollection.aggregate([
             {$unwind:"$device"},
-            {$match:{kjnd: String(kjnd)}},
+            {$match:{kjnd: String(kjnd), kjyf:{$lte: Number(kjyf)}}},
             {$group:{_id: '$device.bsc',sum_value:{$sum:"$device.sbje"}}}
         ]);
         for (let i=0; i<getData.length; i++){
@@ -169,7 +169,7 @@ getReportData = function(report, kjnd, kjyf){
         getData = IndentCollection.aggregate([
             {$unwind:"$device"},
             {$unwind:"$device.shipment"},
-            {$match:{"device.shipment.fhnd": String(kjnd)}},
+            {$match:{"device.shipment.fhnd": String(kjnd), 'device.shipment.fhyf':{$lte: Number(kjyf)}}},
             {$group:{_id: '$device.bsc',sum_value:{$sum:"$device.shipment.fhje"}}}
         ]);
         for (let i=0; i<getData.length; i++){
@@ -182,7 +182,7 @@ getReportData = function(report, kjnd, kjyf){
 
         getData = IndentCollection.aggregate([
             {$unwind:"$device"},
-            {$match:{kjnd: String(kjnd)}},
+            {$match:{kjnd: String(kjnd), kjyf:{$lte: Number(kjyf)}}},
             {$group:{_id:{yuefen:"$kjyf", chanpin:'$device.cpfl'}, sum_value:{$sum:"$device.sbje"}}}
         ]);
         for (let i=0; i<getData.length; i++){
@@ -193,7 +193,7 @@ getReportData = function(report, kjnd, kjyf){
 
         getData = IndentCollection.aggregate([
             {$unwind:"$device"},
-            {$match:{kjnd: String(kjnd)}},
+            {$match:{kjnd: String(kjnd), kjyf:{$lte: Number(kjyf)}}},
             {$group:{_id:{yuefen:"$kjyf", chanpin:'$device.cpfl'}, sum_value:{$sum:"$device.sbsl"}}}
         ]);
         for (let i=0; i<getData.length; i++){
@@ -296,11 +296,19 @@ Router.route('/report/excel', {where: 'server'}).get(function(){
     let path = require("path");
 
     let downFile = req.query.downfile;
-    let tempFile = req.query.filename + '_temp.xlsx';
+    let tempFile, currFile;
+    if (req.query.filename === 'paymentStatus' || req.query.filename === 'paymentDetail')
+    {
+        tempFile = req.query.filename + '_temp.xlsx';
+        currFile = path.normalize(process.env.HOME+'/indent/excel/'+ tempFile);
+    } else {
+        tempFile = req.query.filename + '_' + req.query.kjyf + '.xlsx';
+        currFile = path.normalize(process.env.HOME+'/indent/excel/'+ req.query.kjnd + '/' + tempFile);
+    }
+
     let data = getReportData(req.query.filename, req.query.kjnd, req.query.kjyf);
     //console.log('%j', data);
 
-    let currFile = path.normalize(process.env.HOME+'/indent/excel/'+ tempFile);
     fs.exists(currFile, function(exist) {
         if(exist) {
             let exlBuf = fs.readFileSync(currFile);
@@ -319,7 +327,7 @@ Router.route('/report/excel', {where: 'server'}).get(function(){
         }else{
             res.statusCode = 404;
             res.setHeader("Content-type","text/plain;charset=utf-8");
-            res.end(currFile+" not found!");
+            res.end('对不起，系统不提供'+ req.query.kjnd + '年度'+ req.query.kjyf + '月份的报表');
         };
     });
 });
