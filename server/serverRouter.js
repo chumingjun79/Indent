@@ -129,6 +129,7 @@ Router.route('/devicedetail/get', {where: 'server'}).get(function(){
     let kjyf = trim(request.kjyf);
     let bsc = trim(request.bsc);
     let fzr = trim(request.fzr);
+    let xmfl = trim(request.xmfl);
 
     let ddoption = {};
     if (ddbh !== ""){
@@ -156,6 +157,9 @@ Router.route('/devicedetail/get', {where: 'server'}).get(function(){
     };
     if (fzr !== ""){
         sql["fzr"] = {$regex: fzr};
+    };
+    if (xmfl !== ""){
+        sql["xmfl"] = {$regex: xmfl};
     };
     //console.log(sql);
 

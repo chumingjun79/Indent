@@ -357,6 +357,11 @@ Template.indent.onRendered(function(){
 					notEmpty: {message: '项目名称不允许为空'},
 				}
 			},
+            xmfl: {
+                validators: {
+                    notEmpty: {message: '项目分类不允许为空'},
+                }
+            },
 		}
 	});
 });

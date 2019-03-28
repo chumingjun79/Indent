@@ -155,7 +155,15 @@ getReportData = function(report, kjnd, kjyf){
 
         return resData;
     case 'officereport':
-        resData = [{}, {}];
+        resData = [{}, {}, {}, {}];
+        //先初始化办事处
+        getData = OfficeCollection.find({}).fetch();
+        for (let i=0; i<getData.length; i++){
+            resData[0][String(getData[i].office)] = 0;
+            resData[1][String(getData[i].office)] = 0;
+            resData[2][String(getData[i].office)] = 0;
+            resData[3][String(getData[i].office)] = 0;
+        }
 
         getData = IndentCollection.aggregate([
             {$unwind:"$device"},
@@ -164,7 +172,7 @@ getReportData = function(report, kjnd, kjyf){
         ]);
         for (let i=0; i<getData.length; i++){
             resData[0][String(getData[i]._id)] = Math.round(getData[i].sum_value)/10000;
-        };
+        }
 
         getData = IndentCollection.aggregate([
             {$unwind:"$device"},
@@ -174,7 +182,33 @@ getReportData = function(report, kjnd, kjyf){
         ]);
         for (let i=0; i<getData.length; i++){
             resData[1][String(getData[i]._id)] = Math.round(getData[i].sum_value)/10000;
-        };
+        }
+
+        getData = IndentCollection.aggregate([
+            {$unwind:"$device"},
+            {$match:{kjnd: String(kjnd), kjyf:{$lte:Number(kjyf)}, "device.cpfl":'DCLC' }},
+            {$group:{_id:{bsc:"$device.bsc"}, sbsl:{$sum:"$device.sbsl"} }}
+        ]);
+        for (let i=0; i<getData.length; i++){
+            resData[2][String(getData[i]._id.bsc)] = resData[2][String(getData[i]._id.bsc)]+getData[i].sbsl;
+        }
+
+        getData = IndentCollection.aggregate([
+            {$unwind:"$device"},
+            {$match:{kjnd: String(kjnd), kjyf:{$lte:Number(kjyf)}, "device.cpfl":'Modular' }},
+            {$group:{_id:{bsc:"$device.bsc", sbxh:"$device.sbxh"}, sbsl:{$sum:"$device.sbsl"} }}
+        ]);
+        for (let i=0; i<getData.length; i++){
+            resData[3][String(getData[i]._id.bsc)] = 0;
+        }
+        for (let i=0; i<getData.length; i++){
+            if (String(getData[i]._id.sbxh).indexOf('130') !== -1) //130的模块机需要折算成两台
+            {
+                resData[3][String(getData[i]._id.bsc)] = resData[3][String(getData[i]._id.bsc)]+getData[i].sbsl*2;
+            } else {
+                resData[3][String(getData[i]._id.bsc)] = resData[3][String(getData[i]._id.bsc)]+getData[i].sbsl;
+            }
+        }
 
         return resData;
     case 'productreport':
@@ -225,6 +259,12 @@ getReportData = function(report, kjnd, kjyf){
         return resData;
     case 'officecost':
         resData = [{}, {}];
+        //先初始化办事处
+        getData = OfficeCollection.find({}).fetch();
+        for (let i=0; i<getData.length; i++){
+            resData[0][String(getData[i].office)] = 0;
+            resData[1][String(getData[i].office)] = 0;
+        }
 
         getData = IndentCollection.aggregate([
             {$unwind:"$device"},
@@ -286,6 +326,51 @@ getReportData = function(report, kjnd, kjyf){
         ]);
 
         return getData[0];
+    case 'officemodular':
+        resData = [{}, {}, {}, {}];
+
+        getData = IndentCollection.aggregate([
+            {$unwind:"$device"},
+            {$match:{kjnd: String(kjnd), kjyf:{$lte:Number(kjyf)}, "device.cpfl":'Modular' }},
+            {$group:{_id:{bsc:"$device.bsc", sbxh:"$device.sbxh"},
+                    sbsl:{$sum:"$device.sbsl"}, sbje:{$sum:"$device.sbje"} }}
+        ]);
+        for (let i=0; i<getData.length; i++){
+            resData[0][String(getData[i]._id.bsc)] = 0;
+            resData[1][String(getData[i]._id.bsc)] = 0;
+        }
+        for (let i=0; i<getData.length; i++){
+            if (String(getData[i]._id.sbxh).indexOf('130') !== -1) //130的模块机需要折算成两台
+            {
+                resData[0][String(getData[i]._id.bsc)] = resData[0][String(getData[i]._id.bsc)]+getData[i].sbsl*2;
+            } else {
+                resData[0][String(getData[i]._id.bsc)] = resData[0][String(getData[i]._id.bsc)]+getData[i].sbsl;
+            }
+            resData[1][String(getData[i]._id.bsc)] = resData[1][String(getData[i]._id.bsc)]+getData[i].sbje;
+        }
+
+        getData = IndentCollection.aggregate([
+            {$unwind:"$device"},
+            {$unwind:"$device.shipment"},
+            {$match:{"device.shipment.fhnd": String(kjnd), 'device.shipment.fhyf':{$lte: Number(kjyf)}, "device.cpfl":'Modular' }},
+            {$group:{_id:{bsc:'$device.bsc', sbxh:'$device.sbxh'},
+                    fhsl:{$sum:"$device.shipment.fhsl"}, fhje:{$sum:"$device.shipment.fhje"} }}
+        ]);
+        for (let i=0; i<getData.length; i++){
+            resData[2][String(getData[i]._id.bsc)] = 0;
+            resData[3][String(getData[i]._id.bsc)] = 0;
+        }
+        for (let i=0; i<getData.length; i++){
+            if (String(getData[i]._id.sbxh).indexOf('130') !== -1) //130的模块机需要折算成两台
+            {
+                resData[2][String(getData[i]._id.bsc)] = resData[2][String(getData[i]._id.bsc)]+getData[i].fhsl*2;
+            } else {
+                resData[2][String(getData[i]._id.bsc)] = resData[2][String(getData[i]._id.bsc)]+getData[i].fhsl;
+            }
+            resData[3][String(getData[i]._id.bsc)] = resData[3][String(getData[i]._id.bsc)]+getData[i].fhje;
+        }
+
+        return resData;
     };
 };
 

@@ -15,6 +15,7 @@ Template.devicedetail.onRendered(function(){
                     bsc: $("#bsc").val(),
                     fzr: $("#fzr").val(),
                     khmc: $("#khmc").val(),
+                    xmfl: $("#xmfl").val(),
 				};
 				return temp;
 			},
