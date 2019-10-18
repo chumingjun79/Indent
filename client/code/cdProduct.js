@@ -1,10 +1,12 @@
+import * as gfunc from '../lib/globalFunction';
+
 Template.cdproduct.helpers({
 	products: function(){
 		return ProductCollection.find({}, {sort:{type:1, product:1}});
 	},
 });
 
-productInput = function(caption, opt, callback){
+function productInput(caption, opt, callback){
     $.confirm({
         title: caption,
         content: '' +
@@ -104,7 +106,7 @@ Template.cdproductBody.events({
         if (obj){
             value = obj[0].innerText;
         };
-        chumjConfirm('确实要删除【'+ value +'】吗？', function(result){
+        gfunc.chumjConfirm('确实要删除【'+ value +'】吗？', function(result){
             if (result){
                 Meteor.call('deleteProduct', index, function(err, result){
                     if (err){

@@ -29,6 +29,10 @@ Template.loginForm.events({
             }
         });
     },
+    'keypress #pass': function(evt, tpl){
+        if (evt.keyCode !== 13) return;
+        $('#denglu').click();
+    },
 });
 
 Template.loginForm.onRendered(function(){

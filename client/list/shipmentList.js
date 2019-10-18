@@ -1,3 +1,6 @@
+import * as func from '../../lib/func/function';
+import * as gfunc from '../lib/globalFunction';
+
 Template.shipmentlist.onRendered(function(){
 	$('#tb_list').bootstrapTable({
         sidePagination: "client", //分页方式：client客户端分页，server服务端分页
@@ -39,11 +42,11 @@ Template.shipmentlist.onRendered(function(){
 			//console.log(data);
             var sl = 0, je = 0;
             for (var i in data) {
-                sl += toDecimal(data[i].fhsl, 2);
-                je += toDecimal(data[i].fhje, 2);
+                sl += func.toDecimal(data[i].fhsl, 2);
+                je += func.toDecimal(data[i].fhje, 2);
             };
-            $('#slhj')[0].innerHTML = '发货数量合计：'+ toDecimal(sl, 2);
-            $('#jehj')[0].innerHTML = '发货金额合计：'+ toDecimal(je, 2);
+            $('#slhj')[0].innerHTML = '发货数量合计：'+ func.toDecimal(sl, 2);
+            $('#jehj')[0].innerHTML = '发货金额合计：'+ func.toDecimal(je, 2);
 		},
 	});
 
@@ -58,7 +61,7 @@ Template.shipmentlist.events({
 			'shipmentlist/get'});
 	},
     'click button#btn_toexcel': function(evt, tpl){
-        chumjConfirm('确认要导出查询数据吗？', function(result){
+        gfunc.chumjConfirm('确认要导出查询数据吗？', function(result){
             if (result){
                 let data = tpl.$('#tb_list').bootstrapTable('getData');
                 let postData = {data: data};
@@ -69,7 +72,7 @@ Template.shipmentlist.events({
                         if (err) {
                             Bert.alert(err, 'danger');
                         } else {
-                            downloadByIframe(RootUrl+
+                            gfunc.downloadByIframe(RootUrl+
                                 'down/excel?downfile='+ downFile);
                         };
                     });

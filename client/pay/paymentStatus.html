@@ -1,0 +1,177 @@
+<template name="paymentStatus">    
+    <form class="form-horizontal" role="form">
+        <div class="panel panel-default ">
+            <div class="panel-heading" align="center">
+                <h3><span class="label label-default">利润表报销</span></h3>
+            </div>
+
+            <!--查询订单界面-->
+            <div class="panel-body">
+                <form role="form" class="form-horizontal">
+                    <div class="form-group">
+                        <label class="control-label col-sm-1" for="ddbh">订单号</label>
+                        <div class="col-sm-2">
+                            <input class="form-control" id="ddbh">
+                        </div>
+        
+                        <label class="control-label col-sm-1" for="xmmc">项目名称</label>
+                        <div class="col-sm-2">
+                            <input class="form-control" id="xmmc">
+                        </div>
+        
+                        <label class="control-label col-sm-1" for="khmc">客户名称</label>
+                        <div class="col-sm-2">
+                            <input class="form-control" id="khmc">
+                        </div>
+        
+                        <div class="col-sm-2">
+                            <button id="btn_find" type="button" class="btn btn-primary">
+                                <span class="fa fa-refresh" aria-hidden="true"></span> 查询
+                            </button>
+                        </div>
+                    </div>            
+                </form>
+                <table id="tb_indentlist" class="table table-bordered"></table>	
+                <label class="control-label text-info col-sm-3">订单中费用限额合计：{{zfxehj}}</label>
+                
+                {{#with selectedIndent}}
+                    {{> paymentStatusEdit}}
+                {{/with}}                
+            </div>
+
+            <!--录入收款和支付界面-->
+            <div class="panel-body">
+                <!--收款界面-->
+                <div class="col-sm-5 well">
+                    <table id="cash" class="table table-hover table-condensed">
+                        <thead>
+                            <tr>
+                                <th class="text-center">收款日期</th>
+                                <th class="text-center">收款金额</th>
+                                <th class="text-center">百分比</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#with selectedIndent}}
+                                {{#each withIndex cash}}
+                                    {{> paymentStatusCash}}
+                                {{/each}}
+                            {{/with}}
+                        </tbody>
+        
+                        <button class="btn btn-success" id="add-cash" type="button" {{powerDisable "paymentStatusPowerXyb"}}>
+                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                        </button>                        
+                    </table>
+                    <label class="control-label text-info" id="skjeflhz"></label>
+                </div>     
+
+                <!--支付界面-->
+                <div class="col-sm-7 well">
+                    <table id="receivable" class="table table-hover table-condensed">
+                        <thead>
+                            <tr>
+                                <th class="text-center">支付日期</th>
+                                <th class="text-center">支付金额</th>
+                                <th class="text-center">百分比</th>
+                                <th class="text-center">备注</th>
+                                <th class="text-center">审核</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#with selectedIndent}}
+                                {{#each withIndex dealerPay}}
+                                    {{> paymentStatusDealerPay}}
+                                {{/each}}
+                            {{/with}}
+                        </tbody>
+        
+                        <button class="btn btn-success" id="add-dealerPay" type="button" {{powerDisable "paymentStatusPowerXyb"}}>
+                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                        </button>
+                    </table>
+                    <label class="control-label text-info" id="zfjeflhz"></label>
+                </div>
+            </div>
+        </div>
+    </form>    
+    {{> paymentStatusHandle}}
+</template>
+
+<template name="paymentStatusEdit">
+    <label class="control-label col-sm-2">
+        <input type="checkbox" id="zjbyxzf" checked={{zjbyxzf}} 
+            {{powerDisable "paymentStatusPowerZjb"}}> 允许支付费用
+    </label>
+    <div class="col-sm-2">
+        <input class="form-control" id="zjbyxzfxe" value="{{zjbyxzfxe}}" {{powerDisable "paymentStatusPowerZjb"}}>
+    </div>
+
+    <label class="control-label col-sm-1" for="zjbyxzfbz">备注</label>
+    <div class="col-sm-2">
+        <input class="form-control" id="zjbyxzfbz" value="{{zjbyxzfbz}}" style="color:red"
+            {{powerDisable "paymentStatusPowerZjb"}}>
+    </div>
+</template>
+
+<template name="paymentStatusHandle">
+    <div class="panel">
+        <div class="panel-heading" align="center">
+            <button class="btn btn-success" id="baocundd">
+                <span class="glyphicon glyphicon-save" aria-hidden="true"></span> 保存
+            </button>
+        </div>
+    </div>
+</template>
+
+<template name="paymentStatusCash">
+    <tr>
+        <td>
+            <input class="form-control datepicker" id="skrq" data-index="{{index}}"  value="{{skrq}}" 
+                {{powerDisable "paymentStatusPowerXyb"}}>
+        </td>        
+        <td>
+            <input class="form-control" id="skje" data-index="{{index}}" value="{{skje}}" 
+                {{powerDisable "paymentStatusPowerXyb"}}>
+        </td>
+        <td style="width:30%">
+            <input class="form-control" id="skbfb" data-index="{{index}}" value="{{skbfb}}" disabled>
+        </td>
+        <td>
+            <button id="del-cash" type="button" class="btn btn-danger" data-index="{{index}}" {{powerDisable "paymentStatusPowerXyb"}}>
+                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+            </button>
+        </td>
+    </tr>
+</template>
+
+<template name="paymentStatusDealerPay">
+	<tr>
+		<td>
+            <input class="form-control datepicker" id="zfrq" data-index="{{index}}"  value="{{zfrq}}" 
+                {{powerDisable "paymentStatusPowerXyb"}} {{checkDisable zjbsh}}>
+        </td>        
+        <td>
+            <input class="form-control" id="zfje" data-index="{{index}}" value="{{zfje}}" 
+                {{powerDisable "paymentStatusPowerXyb"}} {{checkDisable zjbsh}}>
+        </td>
+        <td style="width:20%">
+            <input class="form-control" id="zfbfb" data-index="{{index}}" value="{{zfbfb}}" disabled>
+        </td>
+        <td>
+            <input class="form-control" id="zfbz" data-index="{{index}}" value="{{zfbz}}" 
+                {{powerDisable "paymentStatusPowerXyb"}} {{checkDisable zjbsh}}>
+        </td>
+
+        <td style="width:10%">
+            <input class="checkbox-cmj" id="zjbsh" data-index="{{index}}" type="checkbox" checked={{zjbsh}} 
+                {{powerDisable "paymentStatusPowerZjb"}}>
+        </td>
+        <td>
+            <button id="del-dealerPay" type="button" class="btn btn-danger" data-index="{{index}}" 
+                {{powerDisable "paymentStatusPowerXyb"}} {{checkDisable zjbsh}}>
+                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+            </button>
+        </td>
+	</tr>
+</template>

@@ -1,3 +1,5 @@
+import * as func from '../../lib/func/function';
+
 Template.paylist.onRendered(function(){
 	$('#tb_list').bootstrapTable({
         sidePagination: "server", //分页方式：client客户端分页，server服务端分页
@@ -26,7 +28,7 @@ Template.paylist.onRendered(function(){
 			{field: 'skzje', title: '收款总金额', halign: 'center' },
 			{field: 'skbl', title: '收款比例%', halign: 'center',
 				formatter : function(value, row, index){
-					return toDecimal(row.skzje / row.htzje, 2)*100;
+					return func.toDecimal(row.skzje / row.htzje, 2)*100;
 				} },
 		]
 	});

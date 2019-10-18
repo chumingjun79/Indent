@@ -1,0 +1,49 @@
+<template name="paymentStatusCashList">
+	<div class="panel panel-default">
+        <div class="panel-heading" align="center">
+            <h3><span class="label label-default">利润表收款明细</span></h3>
+        </div>
+        <div class="panel-body">
+        	<form role="form" class="form-horizontal">
+				<div class="form-group">
+					<label class="control-label col-sm-1">收款日期起</label>
+					<div class="col-sm-2">
+						<input class="form-control datepicker" id="skrqb" placeholder="格式：YYYY-MM-DD">
+					</div>
+					<label class="control-label col-sm-1">收款日期止</label>
+					<div class="col-sm-2">
+						<input class="form-control datepicker" id="skrqe" placeholder="格式：YYYY-MM-DD">
+					</div>
+					<label class="control-label col-sm-1">订单号</label>
+					<div class="col-sm-2">
+						<input class="form-control" id="ddbh">
+					</div>
+					<label class="control-label col-sm-1">项目名称</label>
+					<div class="col-sm-2">
+						<input class="form-control" id="xmmc">
+					</div>
+                </div>
+                <div class="form-group">                    
+                    <label class="control-label col-sm-1">客户名称</label>
+                    <div class="col-sm-2">
+                        <input class="form-control" id="khmc">
+					</div>
+
+                    <div class="col-sm-2 col-sm-offset-1">
+                        <button id="btn_refresh" type="button" class="btn btn-primary">
+                            <span class="fa fa-refresh" aria-hidden="true"></span> 查询
+                        </button>
+                    </div>
+                </div>
+			</form>
+        </div>
+
+		<div class="panel-body">
+			<table id="tb_list" class="table table-bordered table-striped text-nowrap"></table>
+		</div>
+
+        <div class="panel-body">
+            <label class="control-label text-info col-sm-3" id="ffjehj"></label>
+        </div>
+	</div>
+</template>

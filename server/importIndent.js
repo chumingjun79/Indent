@@ -1,4 +1,6 @@
-importIndent = function(workSheets){
+import * as func from '../lib/func/function';
+
+function importIndent(workSheets){
     let dqBh = '', syBh = '';
     let indent = {
         username: 'daixiuqin',
@@ -42,28 +44,28 @@ importIndent = function(workSheets){
             };
             if (dds === 1) { //说明当前订单位于首行
                 data = cloneObject(indent); //初始化新订单
-                data['kjnd'] = trim(toString(item[0]));
-                data['kjyf'] = toNumber(trim(toString(item[1])));
-                data['ddbh'] = trim(toString(item[2]));
-                data['xmmc'] = trim(toString(item[3]));
-                data['htzje'] = toDecimal(item[8],2);
+                data['kjnd'] = func.trim(toString(item[0]));
+                data['kjyf'] = toNumber(func.trim(toString(item[1])));
+                data['ddbh'] = func.trim(toString(item[2]));
+                data['xmmc'] = func.trim(toString(item[3]));
+                data['htzje'] = func.toDecimal(item[8],2);
             };
 
             data['device'].push({cpfl:'', sbxh:'', bsc:'', fzr:'', ygbh:'', sbxs:0, sbsl:0, sbje:0,
                 tcxs:0, tcjs:0, fysc:0, fyqt:0, fyyj:0, fykc:0, tszbjj:0, shipment:[]});
-            data['device'][dds-1]['sbxh'] = trim(toString(item[4]));
-            data['device'][dds-1]['cpfl'] = trim(toString(item[5]));
-            data['device'][dds-1]['sbsl'] = toDecimal(item[6],1);
-            data['device'][dds-1]['sbje'] = toDecimal(item[7],2);
-            data['device'][dds-1]['tszbjj'] = toDecimal(item[9],2);
-            data['device'][dds-1]['sbxs'] = toDecimal(item[10],4);
-            data['device'][dds-1]['bsc'] = trim(toString(item[11]));
-            data['device'][dds-1]['fzr'] = trim(toString(item[15]));
-            data['device'][dds-1]['ygbh'] = trim(toString(item[16]));
+            data['device'][dds-1]['sbxh'] = func.trim(toString(item[4]));
+            data['device'][dds-1]['cpfl'] = func.trim(toString(item[5]));
+            data['device'][dds-1]['sbsl'] = func.toDecimal(item[6],1);
+            data['device'][dds-1]['sbje'] = func.toDecimal(item[7],2);
+            data['device'][dds-1]['tszbjj'] = func.toDecimal(item[9],2);
+            data['device'][dds-1]['sbxs'] = func.toDecimal(item[10],4);
+            data['device'][dds-1]['bsc'] = func.trim(toString(item[11]));
+            data['device'][dds-1]['fzr'] = func.trim(toString(item[15]));
+            data['device'][dds-1]['ygbh'] = func.trim(toString(item[16]));
             if (toNumber(item[14]) !== 0) {
                 data['device'][dds-1]['shipment'].push({fhnd:'2017', fhyf:0, fhsl:0, fhje:0});
-                data['device'][dds-1]['shipment'][0]['fhsl'] = toDecimal(item[12],2);
-                data['device'][dds-1]['shipment'][0]['fhje'] = toDecimal(item[14],2);
+                data['device'][dds-1]['shipment'][0]['fhsl'] = func.toDecimal(item[12],2);
+                data['device'][dds-1]['shipment'][0]['fhje'] = func.toDecimal(item[14],2);
             };
 
             syBh = dqBh; //保存上一编号
@@ -74,7 +76,7 @@ importIndent = function(workSheets){
     insertIndent(data);
 };
 
-insertIndent = function(data){
+function insertIndent(data){
     try {
         IndentCollection.insert(data);
     } catch(err){
@@ -83,7 +85,7 @@ insertIndent = function(data){
     };
 };
 /*
-importIndent1 = function(workSheets){
+function importIndent1(workSheets){
     let xhl = '', xh = '';
     let dds = 1;
     let data = '';
@@ -135,25 +137,25 @@ Router.route('/importindent', {where: 'server'}).get(function(){
     });
 });
 
-importCost = function(workSheets){
+function importCost(workSheets){
     let tcxs, tcjs, fysc, fyyj, fykc, fyqt;
     let ddh, cpfl, bsc, fzr, sbzje, khmc;
 
     workSheets.forEach((item, index)=>{
         if (index > 0) //第一行是标题，所以跳过
         {
-            ddh = trim(toString(item[0])); //取得当前订单号
-            cpfl = trim(toString(item[2]));
-            sbzje = toDecimal(item[3],2);
-            tcxs = toDecimal(item[5],2);
-            tcjs = toDecimal(item[6],2);
-            fysc = toDecimal(item[7],2);
-            fyqt = toDecimal(item[8],2);
-            fyyj = toDecimal(item[9],2);
-            fykc = toDecimal(item[10],2);
-            bsc = trim(toString(item[11]));
-            fzr = trim(toString(item[12]));
-            khmc = trim(toString(item[13]));
+            ddh = func.trim(toString(item[0])); //取得当前订单号
+            cpfl = func.trim(toString(item[2]));
+            sbzje = func.toDecimal(item[3],2);
+            tcxs = func.toDecimal(item[5],2);
+            tcjs = func.toDecimal(item[6],2);
+            fysc = func.toDecimal(item[7],2);
+            fyqt = func.toDecimal(item[8],2);
+            fyyj = func.toDecimal(item[9],2);
+            fykc = func.toDecimal(item[10],2);
+            bsc = func.trim(toString(item[11]));
+            fzr = func.trim(toString(item[12]));
+            khmc = func.trim(toString(item[13]));
 
             if (tcxs!==0 || tcjs!==0 || fysc!==0 || fyqt!==0 || fyyj!==0 || fykc!==0) {
                 let flag = false;
@@ -242,7 +244,7 @@ Router.route('/importcost', {where: 'server'}).get(function(){
     });
 });
 
-importWorker = function(workSheets){
+function importWorker(workSheets){
     let worker = {
         ygbm: '',
         ygxm: '',
@@ -252,9 +254,9 @@ importWorker = function(workSheets){
 
     workSheets.forEach((item, index)=>{
         data = cloneObject(worker);
-        data['ygbm'] = trim(toString(item[0]));
-        data['ygxm'] = trim(toString(item[1]));
-        data['ygbh'] = trim(toString(item[2]));
+        data['ygbm'] = func.trim(toString(item[0]));
+        data['ygxm'] = func.trim(toString(item[1]));
+        data['ygbh'] = func.trim(toString(item[2]));
 
         try {
             WorkerCollection.insert(data);
@@ -285,18 +287,18 @@ Router.route('/importworker', {where: 'server'}).get(function(){
     });
 });
 
-importCommission = function(workSheets){
+function importCommission(workSheets){
     let tcxs, tcjs, fysc, fyyj, fykc, fyqt;
     let ddh, cpfl, bsc, fzr, sbzje, khmc;
 
     workSheets.forEach((item, index)=>{
         if (index > 0) //第一行是标题，所以跳过
         {
-            ddh = trim(toString(item[0])); //取得当前订单号
-            bsc = trim(toString(item[1]));
-            skbl = toString(toDecimal(item[4],2)*100) + '%';
-            ffry = trim(toString(item[5]));
-            ffje = toDecimal(item[6],2);
+            ddh = func.trim(toString(item[0])); //取得当前订单号
+            bsc = func.trim(toString(item[1]));
+            skbl = toString(func.toDecimal(item[4],2)*100) + '%';
+            ffry = func.trim(toString(item[5]));
+            ffje = func.toDecimal(item[6],2);
 
             let flag = false;
             let data = IndentCollection.findOne({'ddbh': ddh});

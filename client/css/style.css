@@ -63,17 +63,17 @@ label {
 
 .checkbox-cmj {
 	width: 100%;
-	height: 24px;
+	height: 20px;
 }
 
-.col-cmj-10, .col-cmj-12, .col-cmj-15, .col-cmj-20 {
+.col-cmj-10, .col-cmj-12, .col-cmj-14, .col-cmj-15, .col-cmj-20 {
 	position: relative;
 	min-height: 1px;
 	padding-right: 15px;
 	padding-left: 15px;
 }
 @media (min-width: 768px) {
-	.col-cmj-10, .col-cmj-12, .col-cmj-15, .col-cmj-20 {
+	.col-cmj-10, .col-cmj-12, .col-cmj-14, .col-cmj-15, .col-cmj-20 {
 		float: left;
 	}
 	.col-cmj-10 {
@@ -81,6 +81,9 @@ label {
 	}
 	.col-cmj-12 {
 		width: 12%;
+	}
+	.col-cmj-14 {
+		width: 14%;
 	}
 	.col-cmj-15 {
 		width: 15%;

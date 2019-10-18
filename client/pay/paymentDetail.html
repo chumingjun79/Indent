@@ -1,0 +1,154 @@
+<template name="paymentDetail">    
+    <form class="form-horizontal" role="form">
+        <div class="panel panel-default ">
+            <div class="panel-heading" align="center">
+                <h3><span class="label label-default">费用表报销</span></h3>
+            </div>
+
+            <!--查询订单界面-->
+            <div class="panel-body">
+                <form role="form" class="form-horizontal">
+                    <div class="form-group">
+                        <label class="control-label col-sm-1" for="ddbh">订单号</label>
+                        <div class="col-sm-2">
+                            <input class="form-control" id="ddbh">
+                        </div>
+        
+                        <label class="control-label col-sm-1" for="xmmc">项目名称</label>
+                        <div class="col-sm-2">
+                            <input class="form-control" id="xmmc">
+                        </div>
+        
+                        <label class="control-label col-sm-1" for="khmc">客户名称</label>
+                        <div class="col-sm-2">
+                            <input class="form-control" id="khmc">
+                        </div>
+        
+                        <div class="col-sm-2">
+                            <button id="btn_find" type="button" class="btn btn-primary">
+                                <span class="fa fa-refresh" aria-hidden="true"></span> 查询
+                            </button>
+                        </div>
+                    </div>            
+                </form>
+                <table id="tb_indentlist" class="table table-bordered"></table>	
+                <label class="control-label text-info col-sm-3">订单中费用限额合计：{{zfxehj}}</label>
+            </div>
+
+            <!--录入额度和费用界面-->
+            <div class="panel-body">
+                <!--限额信息-->
+                <div class="col-sm-4 well">
+                    <table id="quota" class="table table-hover table-condensed">
+                        <thead>
+                            <tr>
+                                <th class="text-center">费用类别</th>
+                                <th class="text-center">费用限额</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#with selectedIndent}}
+                                {{#each withIndex quota}}
+                                    {{> paymentDetailQuota}}
+                                {{/each}}
+                            {{/with}}
+                        </tbody>
+        
+                        <button class="btn btn-success" id="add-quota" type="button" {{powerDisable "paymentDetailPowerZjb"}}>
+                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                        </button>                        
+                    </table>
+                    <label class="control-label text-info">费用限额合计：{{bscfyxehj}} ，余额：{{bscfyxeye}}</label>
+                </div>     
+
+                <!--办事处费用-->
+                <div class="col-sm-8 well">
+                    <table id="receivable" class="table table-hover table-condensed">
+                        <thead>
+                            <tr>
+                                <th class="text-center">支付日期</th>
+                                <th class="text-center">费用类别</th>
+                                <th class="text-center">支付金额</th>
+                                <th class="text-center">备注</th>
+                                <th class="text-center">审核</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#with selectedIndent}}
+                                {{#each withIndex officePay}}
+                                    {{> paymentDetailOfficePay}}
+                                {{/each}}
+                            {{/with}}
+                        </tbody>
+        
+                        <button class="btn btn-success" id="add-officePay" type="button" {{powerDisable "paymentDetailPowerXyb"}}>
+                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                        </button>
+                    </table>
+                    <label class="control-label text-info" id="bsczfjeflhz"></label>
+                </div>
+            </div>
+        </div>
+    </form>    
+    {{> paymentDetailHandle}}
+</template>
+
+<template name="paymentDetailHandle">
+    <div class="panel">
+        <div class="panel-heading" align="center">
+            <button class="btn btn-success" id="baocundd">
+                <span class="glyphicon glyphicon-save" aria-hidden="true"></span> 保存
+            </button>
+        </div>
+    </div>
+</template>
+
+<template name="paymentDetailQuota">
+    <tr>
+        <td style="width:50%">
+            <select class="form-control" id="edfylb" data-index="{{index}}" {{powerDisable "paymentDetailPowerZjb"}}>
+                {{#each costtypes}}
+                    <option value="{{name}}" {{isSelected ../edfylb name}}>{{name}}</option>
+                {{/each}}
+            </select>
+        </td>
+        <td>
+            <input class="form-control" id="edfyxe" data-index="{{index}}" value="{{edfyxe}}" {{powerDisable "paymentDetailPowerZjb"}}>
+        </td>
+        <td>
+            <button id="del-quota" type="button" class="btn btn-danger" data-index="{{index}}" {{powerDisable "paymentDetailPowerZjb"}}>
+                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+            </button>
+        </td>
+    </tr>
+</template>
+
+<template name="paymentDetailOfficePay">
+	<tr>
+		<td>
+            <input class="form-control datepicker" id="zfrq" data-index="{{index}}"  value="{{zfrq}}" 
+                {{powerDisable "paymentDetailPowerXyb"}} {{checkDisable zjbsh}}>
+        </td>
+        <td style="width:25%">
+            <input class="form-control" id="fylb" data-index="{{index}}" value="{{fylb}}" disabled>
+        </td>
+        <td>
+            <input class="form-control" id="zfje" data-index="{{index}}" value="{{zfje}}" 
+                {{powerDisable "paymentDetailPowerXyb"}} {{checkDisable zjbsh}}>
+        </td>
+        <td>
+            <input class="form-control" id="zfbz" data-index="{{index}}" value="{{zfbz}}" 
+                {{powerDisable "paymentDetailPowerXyb"}} {{checkDisable zjbsh}}>
+        </td>
+        <td style="width:10%">
+            <input class="checkbox-cmj" id="zjbsh" data-index="{{index}}" type="checkbox" checked={{zjbsh}} 
+                {{powerDisable "paymentDetailPowerZjb"}}>
+        </td>
+        <td>
+            <button id="del-officePay" type="button" class="btn btn-danger" data-index="{{index}}" 
+                {{powerDisable "paymentDetailPowerXyb"}} {{checkDisable zjbsh}}>
+                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+            </button>
+        </td>
+	</tr>
+</template>

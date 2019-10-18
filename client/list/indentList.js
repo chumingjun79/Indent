@@ -37,27 +37,6 @@ function getSelection(tpl){
     return selectedData[0]._id;
 }
 
-function toPayment(tpl, filename){
-    let selected = getSelection(tpl);
-    if (selected === '') return;
-
-    let option = {};
-    option.kjnd = selected;
-    option.kjyf = '';
-
-    let downFile = filename+'_'+ Meteor.user().username + '.xlsx';
-    HTTP.get(RootUrl+
-        'report/excel?filename='+filename+'&downfile='+ downFile,
-        {params: option}, function(err, result){
-            if (err) {
-                Bert.alert(err, 'danger');
-            } else {
-                downloadByIframe(RootUrl+
-                    'down/excel?downfile='+ downFile);
-            };
-        });
-}
-
 Template.indentlist.events({
 	'click button#btn_refresh': function(evt, tpl){
 		tpl.$('#tb_indentlist').bootstrapTable('refresh', {url: RootUrl+
@@ -69,10 +48,4 @@ Template.indentlist.events({
 		Session.set('selectedIndentId', selected);
 		Router.go('/indentinfo');
 	},
-	'click button#btn_paymentStatus': function(evt, tpl){
-        toPayment(tpl, 'paymentStatus');
-	},
-    'click button#btn_paymentDetail': function(evt, tpl){
-        toPayment(tpl, 'paymentDetail');
-    },
 });

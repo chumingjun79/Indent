@@ -1,3 +1,5 @@
+import * as gfunc from './lib/globalFunction';
+
 Template.setrole.helpers({
     'getUserName': function(){
         return Session.get('setRoleUserName');
@@ -15,7 +17,7 @@ Template.setrole.onCreated(function(){
 Template.setrole.events({
     'click button#btn-init': function(evt, tpl){
         evt.preventDefault();
-        chumjConfirm("确实要初始化全部权限吗？", function(result){
+        gfunc.chumjConfirm("确实要初始化全部权限吗？", function(result){
             if (result){
                 var obj = {
                     userid: Session.get('setRoleUserId'),
@@ -44,14 +46,14 @@ Template.setrole.events({
 
         var temp = '';
         FunctionCollection.find({}, {sort:{gnmc:1}}).forEach((data) => {
-            if (gnmclist.indexOf(data.gnmc) === -1) {
+            if (gnmclist.indexOf(data.gnmc + ',') === -1) {
                 temp = temp + '<option value="' + data.gnmc + '">' + data.gnmc + '</option>';
             };
         });
         var select = '<select class="form-control col-sm-6" id="select">' +
             temp + '</select>';
 
-        chumjInput('选择', select, '#select', '必须选择一项内容', function(result, value){
+        gfunc.chumjInput('选择', select, '#select', '必须选择一项内容', function(result, value){
             if (result){
                 var data = FunctionCollection.findOne({gnmc: value});
                 var role = {};

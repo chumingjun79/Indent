@@ -1,4 +1,5 @@
-import './indent.js';
+import * as func from '../lib/func/function';
+import * as gfunc from './lib/globalFunction';
 
 var shipments = [], indentId = '', deviceindex = 0;
 
@@ -74,7 +75,7 @@ Tracker.autorun(function(){
     };
 });
 
-shipmentInput = function(caption, opt, callback){
+function shipmentInput(caption, opt, callback){
     $.confirm({
         title: caption,
         content: '' +
@@ -143,7 +144,7 @@ shipmentInput = function(caption, opt, callback){
 
 Template.shipment.events({
     'click button#btn-find': function(evt, tpl){
-        var ddbh = trim($('#ddbh').val());
+        var ddbh = func.trim($('#ddbh').val());
         if (ddbh){
             Meteor.subscribe('indentFromBh', {id: ddbh});
             Session.set('shipmentBh', ddbh);
@@ -220,7 +221,7 @@ Template.shipment.events({
             return;
         };
 
-        chumjConfirm('确实要删除选中的发货信息吗？', function(result){
+        gfunc.chumjConfirm('确实要删除选中的发货信息吗？', function(result){
             if (result){
                 shipments.splice(index, 1);
 

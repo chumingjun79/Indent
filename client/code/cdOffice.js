@@ -1,10 +1,12 @@
+import * as gfunc from '../lib/globalFunction';
+
 Template.cdoffice.helpers({
 	offices: function(){
 		return OfficeCollection.find({}, {sort:{area:1, office:1}});
 	},
 });
 
-officeInput = function(caption, opt, callback){
+function officeInput(caption, opt, callback){
     $.confirm({
         title: caption,
         content: '' +
@@ -104,7 +106,7 @@ Template.cdofficeBody.events({
         if (obj){
             value = obj[0].innerText;
         };
-        chumjConfirm('确实要删除【'+ value +'】吗？', function(result){
+        gfunc.chumjConfirm('确实要删除【'+ value +'】吗？', function(result){
             if (result){
                 Meteor.call('deleteOffice', index, function(err, result){
                     if (err){

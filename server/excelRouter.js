@@ -1,3 +1,5 @@
+import * as func from '../lib/func/function';
+
 //下载excel通用路由，需要指定downfile
 Router.route('/down/excel', {where: 'server'}).get(function(){
     let req = this.request, res = this.response;
@@ -75,7 +77,7 @@ Router.route('/export/excel', {where: 'server'}).post(function(){
     });
 });
 
-getReportData = function(report, kjnd, kjyf){
+function getReportData(report, kjnd, kjyf){
     let resData, getData, chanpin;
 
     switch (report){
@@ -89,7 +91,7 @@ getReportData = function(report, kjnd, kjyf){
             {$group:{_id: 'sum',sum_value:{$sum:"$device.sbje"}}}
         ]);
         if (getData[0]) {
-            resData.qnsbje = toDecimal(getData[0].sum_value, 0);
+            resData.qnsbje = func.toDecimal(getData[0].sum_value, 0);
         }
 
         //获取截止到去年年底的发货金额
@@ -100,7 +102,7 @@ getReportData = function(report, kjnd, kjyf){
             {$group:{_id: 'sum',sum_value:{$sum:"$device.shipment.fhje"}}}
         ]);
         if (getData[0]) {
-            resData.qnfhje = toDecimal(getData[0].sum_value, 0);
+            resData.qnfhje = func.toDecimal(getData[0].sum_value, 0);
         }
 
         getData = IndentCollection.aggregate([
@@ -109,7 +111,7 @@ getReportData = function(report, kjnd, kjyf){
             {$group:{_id: 'sum',sum_value:{$sum:"$device.sbje"}}}
         ]);
         if (getData[0]) {
-            resData.jnsbje = toDecimal(getData[0].sum_value, 0);
+            resData.jnsbje = func.toDecimal(getData[0].sum_value, 0);
         }
 
         getData = IndentCollection.aggregate([
@@ -119,7 +121,7 @@ getReportData = function(report, kjnd, kjyf){
             {$group:{_id: 'sum',sum_value:{$sum:"$device.shipment.fhje"}}}
         ]);
         if (getData[0]) {
-            resData.jnfhje = toDecimal(getData[0].sum_value, 0);
+            resData.jnfhje = func.toDecimal(getData[0].sum_value, 0);
         }
 
         return resData;
@@ -222,7 +224,7 @@ getReportData = function(report, kjnd, kjyf){
         for (let i=0; i<getData.length; i++){
             chanpin = getData[i]._id.chanpin;
             if (chanpin === 'A-C') chanpin = 'AC'; //ejsExcel中字段名带有'-'的话会报错
-            resData[0][chanpin + String(getData[i]._id.yuefen)] = toDecimal(getData[i].sum_value, 2);
+            resData[0][chanpin + String(getData[i]._id.yuefen)] = func.toDecimal(getData[i].sum_value, 2);
         };
 
         getData = IndentCollection.aggregate([
@@ -233,7 +235,7 @@ getReportData = function(report, kjnd, kjyf){
         for (let i=0; i<getData.length; i++){
             chanpin = getData[i]._id.chanpin;
             if (chanpin === 'A-C') chanpin = 'AC'; //ejsExcel中字段名带有'-'的话会报错
-            resData[1][chanpin + String(getData[i]._id.yuefen)] = toDecimal(getData[i].sum_value, 3);
+            resData[1][chanpin + String(getData[i]._id.yuefen)] = func.toDecimal(getData[i].sum_value, 3);
         };
 
         return resData;
@@ -293,7 +295,7 @@ getReportData = function(report, kjnd, kjyf){
         for (let i=0; i<getData.length; i++){
             chanpin = getData[i]._id;
             if (chanpin === 'A-C') chanpin = 'AC'; //ejsExcel中字段名带有'-'的话会报错
-            resData[0][chanpin] = toDecimal(getData[i].jjhj / getData[i].mjhj, 4);
+            resData[0][chanpin] = func.toDecimal(getData[i].jjhj / getData[i].mjhj, 4);
         };
 
         getData = IndentCollection.aggregate([
@@ -307,7 +309,7 @@ getReportData = function(report, kjnd, kjyf){
         for (let i=0; i<getData.length; i++){
             chanpin = getData[i]._id;
             if (chanpin === 'A-C') chanpin = 'AC'; //ejsExcel中字段名带有'-'的话会报错
-            resData[1][chanpin] = toDecimal(getData[i].jjhj / getData[i].mjhj, 4);
+            resData[1][chanpin] = func.toDecimal(getData[i].jjhj / getData[i].mjhj, 4);
         };
 
         return resData;

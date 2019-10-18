@@ -1,7 +1,9 @@
-import './indent.js';
+import * as func from '../lib/func/function';
+import * as gfunc from './lib/globalFunction';
+import {updateLocalIndent} from './lib/localCollection';
 
 //本地数据集获取数据
-LocalIndentPay = function(){
+function LocalIndentPay(){
     var id = Session.get('payIndentId');
     if (id == ''){id = 'none'};
     LocalIndent.upsert(Session.get('payIndentId'),
@@ -21,7 +23,7 @@ Tracker.autorun(function(){
 });
 
 //自动计算收款总金额
-setIndentSkzje = function(){
+function setIndentSkzje(){
     //$('[id=djsfsd]').each(function(index, element){alert($(this)[0].checked)})
     //$('[id=djsfsd]').each(function(index, element){alert(element.checked)});
 
@@ -114,19 +116,19 @@ Template.indentpay.events({
     },
     'mousedown .datepicker': function(){
         $('.datepicker').datepicker('destroy');
-        setDatePicker();
+        gfunc.setDatePicker();
         $('.datepicker').datepicker('show');
     },
 });
 
 Template.payHandle.events({
 	'click button#baocundd': function(evt, tpl){
-        resetBootstrapValidator('.form-horizontal');
-        if (!touchBootstrapValidator('.form-horizontal')){
+        gfunc.resetBootstrapValidator('.form-horizontal');
+        if (!gfunc.touchBootstrapValidator('.form-horizontal')){
             return; //错误的话退出
         };
 
-		chumjConfirm("确实要保存订单吗？", function(result){
+		gfunc.chumjConfirm("确实要保存订单吗？", function(result){
 			if (result){
 				var id = Session.get('payIndentId');
 				Meteor.call('updateIndentPay', id, LocalIndent.findOne(id),
@@ -169,7 +171,7 @@ Template.deposit.events({
 
         var property = 'deposit.' + index + '.' + field;
         var modifier = {$set: {}};
-        var value = trim(evt.currentTarget.value);
+        var value = func.trim(evt.currentTarget.value);
         if (field==='djsfsd'){
             modifier['$set'][property] = evt.currentTarget.checked;
         }
@@ -209,7 +211,7 @@ Template.pay.events({
 
         var property = 'pay.' + index + '.' + field;
         var modifier = {$set: {}};
-        var value = trim(evt.currentTarget.value);
+        var value = func.trim(evt.currentTarget.value);
         if (field==='sksfsk'){
             modifier['$set'][property] = evt.currentTarget.checked;
         }
@@ -217,7 +219,7 @@ Template.pay.events({
             modifier['$set'][property] = (field === 'skysje') ? Number(value) : value;
         };
         if (field==='skdqr'){
-            setDatePicker();
+            gfunc.setDatePicker();
             $('[data-index='+ index +'][id=sktxr]').datepicker('update', addDay(strToDate(value), -7));
         };
 
@@ -247,7 +249,7 @@ Template.ppp.events({
 
         var property = 'ppp.' + index + '.' + field;
         var modifier = {$set: {}};
-        var value = trim(evt.currentTarget.value);
+        var value = func.trim(evt.currentTarget.value);
         if (field==='ppsfgb'){
             modifier['$set'][property] = evt.currentTarget.checked;
         }
@@ -255,7 +257,7 @@ Template.ppp.events({
             modifier['$set'][property] = value;
         };
         if (field==='ppdqr'){
-            setDatePicker();
+            gfunc.setDatePicker();
             $('[data-index='+ index +'][id=pptxr]').datepicker('update', addDay(strToDate(value), -7));
         };
 

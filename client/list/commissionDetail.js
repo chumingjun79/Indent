@@ -1,3 +1,6 @@
+import * as func from '../../lib/func/function';
+import * as gfunc from '../lib/globalFunction';
+
 Template.commissiondetail.onRendered(function(){
 	$('#tb_list').bootstrapTable({
         sidePagination: "client", //分页方式：client客户端分页，server服务端分页
@@ -35,10 +38,10 @@ Template.commissiondetail.onRendered(function(){
             for (let i in data) {
                 let ffje = data[i].ffje;
                 if (ffje != null){
-                    ffhj += toDecimal(ffje, 2);
+                    ffhj += func.toDecimal(ffje, 2);
                 }
             }
-            $('#ffjehj')[0].innerHTML = '发放金额合计：'+ toDecimal(ffhj, 2);
+            $('#ffjehj')[0].innerHTML = '发放金额合计：'+ func.toDecimal(ffhj, 2);
 		},
 	});
 
@@ -56,7 +59,7 @@ Template.commissiondetail.events({
             'commissiondetail/get'});
 	},
     'click button#btn_toexcel': function(evt, tpl){
-	    chumjConfirm('确认要导出查询数据吗？', function(result){
+	    gfunc.chumjConfirm('确认要导出查询数据吗？', function(result){
 	        if (result){
                 let data = tpl.$('#tb_list').bootstrapTable('getData');
                 let postData = {data: data};
@@ -67,7 +70,7 @@ Template.commissiondetail.events({
                         if (err) {
                             Bert.alert(err, 'danger');
                         } else {
-                            downloadByIframe(RootUrl+
+                            gfunc.downloadByIframe(RootUrl+
                                 'down/excel?downfile='+ downFile);
                         };
                     });

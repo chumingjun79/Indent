@@ -1,10 +1,12 @@
+import * as gfunc from '../lib/globalFunction';
+
 Template.cdworker.helpers({
 	workers: function(){
 		return WorkerCollection.find({}, {sort:{ygbm:1, ygxm:1}});
 	},
 });
 
-workerInput = function(caption, opt, callback){
+function workerInput(caption, opt, callback){
     $.confirm({
         title: caption,
         content: '' +
@@ -115,7 +117,7 @@ Template.cdworkerBody.events({
         if (obj){
             value = obj[0].innerText;
         };
-        chumjConfirm('确实要删除【'+ value +'】吗？', function(result){
+        gfunc.chumjConfirm('确实要删除【'+ value +'】吗？', function(result){
             if (result){
                 Meteor.call('deleteWorker', index, function(err, result){
                     if (err){

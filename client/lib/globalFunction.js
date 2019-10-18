@@ -1,5 +1,5 @@
 //设置日期控件格式
-setDatePicker = function(){
+export function setDatePicker(){
     $('.datepicker').datepicker({
         language: "zh-CN",
         format: "yyyy-mm-dd",
@@ -10,13 +10,13 @@ setDatePicker = function(){
 };
 
 //重置验证控件的状态
-resetBootstrapValidator = function(formClassName){
+export function resetBootstrapValidator(formClassName){
     var bootstrapValidator = $(formClassName).data('bootstrapValidator');
     bootstrapValidator.resetForm(false);
 };
 
 //手动触发验证，验证错误的话返回false
-touchBootstrapValidator = function(formClassName){
+export function touchBootstrapValidator(formClassName){
     var bootstrapValidator = $(formClassName).data('bootstrapValidator');
     bootstrapValidator.validate();
     return bootstrapValidator.isValid();
@@ -24,7 +24,7 @@ touchBootstrapValidator = function(formClassName){
 
 //根据jquery-confirm控件而来，设置了一些默认参数。
 //caption:标题
-chumjConfirm = function(caption, callback){
+export function chumjConfirm(caption, callback){
     $.confirm({
         icon: 'fa fa-question-circle-o',
         title: '提示',
@@ -54,7 +54,7 @@ chumjConfirm = function(caption, callback){
 //根据jquery-confirm控件而来，这里只针对一个控件，如果是多个的话需要参照这个函数再扩展。
 //caption:标题，inputHtml:自定义控件的html语句，inputClass:返回值控件的类名或ID
 //alertValue:警示提示信息
-chumjInput = function(caption, inputHtml, inputClass, alertValue, callback){
+export function chumjInput(caption, inputHtml, inputClass, alertValue, callback){
     $.confirm({
         title: caption,
         content: '' +
@@ -100,7 +100,7 @@ chumjInput = function(caption, inputHtml, inputClass, alertValue, callback){
 };
 
 //实现无“闪现”下载文件
-downloadByIframe = function(url){
+export function downloadByIframe(url){
     if (Meteor.isCordova){
         var fileTransfer = new FileTransfer();
         var fileURL = 'cdvfile://localhost/persistent/indent_down.xlsx';

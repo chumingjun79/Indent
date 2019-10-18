@@ -1,3 +1,5 @@
+import * as gfunc from '../lib/globalFunction';
+
 Template.report.onRendered(function(){
     let date = new Date();
     $('#kjnd').val(date.getFullYear());
@@ -20,7 +22,7 @@ Template.report.events({
                 if (err) {
                     Bert.alert(err, 'danger');
                 } else {
-                    downloadByIframe(RootUrl+
+                    gfunc.downloadByIframe(RootUrl+
                         'down/excel?downfile='+ downFile);
                 };
             });

@@ -1,3 +1,6 @@
+import * as func from '../../lib/func/function';
+import * as gfunc from '../lib/globalFunction';
+
 Template.devicedetail.onRendered(function(){
 	$('#tb_list').bootstrapTable({
         sidePagination: "client", //分页方式：client客户端分页，server服务端分页
@@ -50,31 +53,31 @@ Template.devicedetail.onRendered(function(){
 			//console.log(data);
             let sl=0, je=0, htzje=0, zbjj=0, tcxs=0, tcjs=0, fysc=0, fyqt=0, fyyj=0, fykc=0, fhsl=0, fhje=0;
             for (var i in data) {
-                sl += toDecimal(data[i].sbsl, 2);
-                je += toDecimal(data[i].sbje, 2);
-                htzje += toDecimal(data[i].htzje, 2);
-                zbjj += toDecimal(data[i].tszbjj, 2);
-                tcxs += toDecimal(data[i].tcxs, 2);
-                tcjs += toDecimal(data[i].tcjs, 2);
-                fysc += toDecimal(data[i].fysc, 2);
-                fyqt += toDecimal(data[i].fyqt, 2);
-                fyyj += toDecimal(data[i].fyyj, 2);
-                fykc += toDecimal(data[i].fykc, 2);
-                fhsl += toDecimal(data[i].fhsl, 2);
-                fhje += toDecimal(data[i].fhje, 2);
+                sl += func.toDecimal(data[i].sbsl, 2);
+                je += func.toDecimal(data[i].sbje, 2);
+                htzje += func.toDecimal(data[i].htzje, 2);
+                zbjj += func.toDecimal(data[i].tszbjj, 2);
+                tcxs += func.toDecimal(data[i].tcxs, 2);
+                tcjs += func.toDecimal(data[i].tcjs, 2);
+                fysc += func.toDecimal(data[i].fysc, 2);
+                fyqt += func.toDecimal(data[i].fyqt, 2);
+                fyyj += func.toDecimal(data[i].fyyj, 2);
+                fykc += func.toDecimal(data[i].fykc, 2);
+                fhsl += func.toDecimal(data[i].fhsl, 2);
+                fhje += func.toDecimal(data[i].fhje, 2);
             };
-            $('#slhj')[0].innerHTML = '设备数量合计：'+ toDecimal(sl, 2);
-            $('#jehj')[0].innerHTML = '设备金额合计：'+ toDecimal(je, 2);
-            $('#zbjj')[0].innerHTML = '调试质保加价合计：'+ toDecimal(zbjj, 2);
-            $('#htzje')[0].innerHTML = '合同总金额合计：'+ toDecimal(htzje, 2);
-            $('#tcxs')[0].innerHTML = '提成（销售员）合计：'+ toDecimal(tcxs, 2);
-            $('#tcjs')[0].innerHTML = '提成（技术支持）合计：'+ toDecimal(tcjs, 2);
-            $('#fysc')[0].innerHTML = '费用（市场推广）合计：'+ toDecimal(fysc, 2);
-            $('#fyqt')[0].innerHTML = '费用（其他）合计：'+ toDecimal(fyqt, 2);
-            $('#fyyj')[0].innerHTML = '样机费合计：'+ toDecimal(fyyj, 2);
-            $('#fykc')[0].innerHTML = '考察礼品费合计：'+ toDecimal(fykc, 2);
-            $('#fhsl')[0].innerHTML = '发货数量合计：'+ toDecimal(fhsl, 2);
-            $('#fhje')[0].innerHTML = '发货金额合计：'+ toDecimal(fhje, 2);
+            $('#slhj')[0].innerHTML = '设备数量合计：'+ func.toDecimal(sl, 2);
+            $('#jehj')[0].innerHTML = '设备金额合计：'+ func.toDecimal(je, 2);
+            $('#zbjj')[0].innerHTML = '调试质保加价合计：'+ func.toDecimal(zbjj, 2);
+            $('#htzje')[0].innerHTML = '合同总金额合计：'+ func.toDecimal(htzje, 2);
+            $('#tcxs')[0].innerHTML = '提成（销售员）合计：'+ func.toDecimal(tcxs, 2);
+            $('#tcjs')[0].innerHTML = '提成（技术支持）合计：'+ func.toDecimal(tcjs, 2);
+            $('#fysc')[0].innerHTML = '费用（市场推广）合计：'+ func.toDecimal(fysc, 2);
+            $('#fyqt')[0].innerHTML = '费用（其他）合计：'+ func.toDecimal(fyqt, 2);
+            $('#fyyj')[0].innerHTML = '样机费合计：'+ func.toDecimal(fyyj, 2);
+            $('#fykc')[0].innerHTML = '考察礼品费合计：'+ func.toDecimal(fykc, 2);
+            $('#fhsl')[0].innerHTML = '发货数量合计：'+ func.toDecimal(fhsl, 2);
+            $('#fhje')[0].innerHTML = '发货金额合计：'+ func.toDecimal(fhje, 2);
 		},
 	});
 
@@ -89,7 +92,7 @@ Template.devicedetail.events({
             'devicedetail/get'});
 	},
     'click button#btn_toexcel': function(evt, tpl){
-	    chumjConfirm('确认要导出查询数据吗？', function(result){
+	    gfunc.chumjConfirm('确认要导出查询数据吗？', function(result){
 	        if (result){
                 let data = tpl.$('#tb_list').bootstrapTable('getData');
                 let postData = {data: data};
@@ -100,7 +103,7 @@ Template.devicedetail.events({
                         if (err) {
                             Bert.alert(err, 'danger');
                         } else {
-                            downloadByIframe(RootUrl+
+                            gfunc.downloadByIframe(RootUrl+
                                 'down/excel?downfile='+ downFile);
                         };
                     });

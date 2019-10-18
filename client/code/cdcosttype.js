@@ -1,22 +1,22 @@
 import * as gfunc from '../lib/globalFunction';
 
-Template.cditem.helpers({
-	items: function(){
-		return ItemCollection.find();
+Template.cdcosttype.helpers({
+	costtypes: function(){
+		return CostTypeCollection.find();
 	},
 });
 
-Template.cditem.events({
+Template.cdcosttype.events({
     'click button#add-code': function(evt, tpl){
-        var temp = '<input type="text" placeholder="请输入新的项目分类..." class="name form-control">';
+        var temp = '<input type="text" placeholder="请输入新的费用类别..." class="name form-control">';
 
-        gfunc.chumjInput('新增', temp, '.name', '必须输入项目分类', function(result, value){
+        gfunc.chumjInput('新增', temp, '.name', '必须输入费用类别', function(result, value){
             if (result){
                 var obj = {
                     id: '',
                     name: value,
                 };
-                Meteor.call('upsertItem', obj, function(err, result){
+                Meteor.call('upsertCostType', obj, function(err, result){
                     if (err){
                         Bert.alert(err.message, 'danger');
                     };
@@ -26,7 +26,7 @@ Template.cditem.events({
     },
 });
 
-Template.cditemBody.events({
+Template.cdcosttypeBody.events({
     'click button#edit-code': function(evt, tpl){
         var index = evt.currentTarget.getAttribute('data-index');
         var obj = $('#name[data-index="'+ index +'"]');
@@ -34,16 +34,16 @@ Template.cditemBody.events({
         if (obj){
             value = obj[0].innerText;
         };
-        var temp = '<input type="text" placeholder="请输入新的项目分类..." class="name form-control"'+
+        var temp = '<input type="text" placeholder="请输入新的费用类别..." class="name form-control"'+
             ' value="'+ value +'">';
 
-        gfunc.chumjInput('修改', temp, '.name', '必须输入项目分类', function(result, value){
+        gfunc.chumjInput('修改', temp, '.name', '必须输入费用类别', function(result, value){
             if (result){
                 var obj = {
                     id: index,
                     name: value,
                 };
-                Meteor.call('upsertItem', obj, function(err, result){
+                Meteor.call('upsertCostType', obj, function(err, result){
                     if (err){
                         Bert.alert(err.message, 'danger');
                     };
@@ -60,7 +60,7 @@ Template.cditemBody.events({
         };
         gfunc.chumjConfirm('确实要删除【'+ value +'】吗？', function(result){
             if (result){
-                Meteor.call('deleteItem', index, function(err, result){
+                Meteor.call('deleteCostType', index, function(err, result){
                     if (err){
                         Bert.alert(err.message, 'danger');
                     };

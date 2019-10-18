@@ -1,5 +1,5 @@
 //判断普通用户是否具有权限
-checkUserRole = function(roleName){
+export function checkUserRole(roleName){
 	var obj = UserRoleCollection.findOne({"_id": Meteor.userId()});
 	if (obj) {
 		for (var i=0; i<obj.roles.length; i++){
@@ -13,7 +13,7 @@ checkUserRole = function(roleName){
 };
 
 //判断权限的函数（先判断是否系统管理员，再判断普通用户的权限）
-checkSystemRole = function(obj, gnnm, gnmc){
+function checkSystemRole(obj, gnnm, gnmc){
     if (!Meteor.user()) return false;
     if (Meteor.user().username === 'admin'){
         obj.render(gnnm);
@@ -28,6 +28,15 @@ checkSystemRole = function(obj, gnnm, gnmc){
         };
     };
     return false;
+};
+
+//判断是否具有powerName对应的权限，如果有返回true，没有返回false
+export function checkPower(powerName){
+    if (Meteor.user().username === 'admin'){
+        return true;
+    } else {
+        return checkUserRole(powerName);
+    }; 
 };
 
 Router.configure({ layoutTemplate: 'layout' });
@@ -102,6 +111,26 @@ Router.route('/monthcost', function(){
 
 Router.route('/officecost', function(){
     checkSystemRole(this, 'officecost', '查看办事处费用率');
+});
+
+Router.route('/paymentStatus', function(){
+    checkSystemRole(this, 'paymentStatus', '利润表报销');
+});
+
+Router.route('/paymentStatusCashList', function(){
+    checkSystemRole(this, 'paymentStatusCashList', '查看利润表收款明细');
+});
+
+Router.route('/paymentStatusPayList', function(){
+    checkSystemRole(this, 'paymentStatusPayList', '查看利润表支付明细');
+});
+
+Router.route('/paymentDetail', function(){
+    checkSystemRole(this, 'paymentDetail', '费用表报销');
+});
+
+Router.route('/paymentDetailList', function(){
+    checkSystemRole(this, 'paymentDetailList', '查看费用表支付明细');
 });
 
 //用户管理
@@ -195,6 +224,14 @@ Router.route('/function', {
     },
 });
 
+Router.route('/costtype', {
+    waitOn: function(){
+        return Meteor.subscribe('costtype');
+    },
+    action: function(){
+        checkSystemRole(this, 'cdcosttype', '费用类别');
+    },
+});
 
 if (Meteor.isClient){
 	var requireLogin = function(){

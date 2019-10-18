@@ -1,8 +1,11 @@
+import * as func from '../lib/func/function';
+import * as check from '../lib/func/check';
+
 Router.route('/indentlist/get', {where: 'server'}).get(function(){
 	let request = this.request.query;
 	let limit = request.limit;
 	let offset = request.offset;
-	let ddbh = trim(request.ddbh);
+	let ddbh = func.trim(request.ddbh);
 	let xmmc = request.xmmc;
 	let khmc = request.khmc;
 
@@ -31,7 +34,7 @@ Router.route('/paylist/get', {where: 'server'}).get(function(){
     let request = this.request.query;
     let limit = request.limit;
     let offset = request.offset;
-    let ddbh = trim(request.ddbh);
+    let ddbh = func.trim(request.ddbh);
     let xmmc = request.xmmc;
     let khmc = request.khmc;
 
@@ -59,14 +62,14 @@ Router.route('/paylist/get', {where: 'server'}).get(function(){
 
 Router.route('/shipmentlist/get', {where: 'server'}).get(function(){
     let request = this.request.query;
-    let ddbh = trim(request.ddbh);
-    let fhnd = trim(request.fhnd);
-    let fhyf = trim(request.fhyf);
-    let xmmc = trim(request.xmmc);
-    let khmc = trim(request.khmc);
-    let cpfl = trim(request.cpfl);
-    let bsc = trim(request.bsc);
-    let fzr = trim(request.fzr);
+    let ddbh = func.trim(request.ddbh);
+    let fhnd = func.trim(request.fhnd);
+    let fhyf = func.trim(request.fhyf);
+    let xmmc = func.trim(request.xmmc);
+    let khmc = func.trim(request.khmc);
+    let cpfl = func.trim(request.cpfl);
+    let bsc = func.trim(request.bsc);
+    let fzr = func.trim(request.fzr);
 
     let ddoption = {};
     if (ddbh !== ""){
@@ -121,15 +124,15 @@ Router.route('/shipmentlist/get', {where: 'server'}).get(function(){
 
 Router.route('/devicedetail/get', {where: 'server'}).get(function(){
     let request = this.request.query;
-    let ddbh = trim(request.ddbh);
-    let xmmc = trim(request.xmmc);
-    let khmc = trim(request.khmc);
-    let cpfl = trim(request.cpfl);
-    let kjnd = trim(request.kjnd);
-    let kjyf = trim(request.kjyf);
-    let bsc = trim(request.bsc);
-    let fzr = trim(request.fzr);
-    let xmfl = trim(request.xmfl);
+    let ddbh = func.trim(request.ddbh);
+    let xmmc = func.trim(request.xmmc);
+    let khmc = func.trim(request.khmc);
+    let cpfl = func.trim(request.cpfl);
+    let kjnd = func.trim(request.kjnd);
+    let kjyf = func.trim(request.kjyf);
+    let bsc = func.trim(request.bsc);
+    let fzr = func.trim(request.fzr);
+    let xmfl = func.trim(request.xmfl);
 
     let ddoption = {};
     if (ddbh !== ""){
@@ -215,10 +218,10 @@ Router.route('/devicedetail/get', {where: 'server'}).get(function(){
 
 Router.route('/commissiontotal/get', {where: 'server'}).get(function(){
     let request = this.request.query;
-    let ddbh = trim(request.ddbh);
-    let xmmc = trim(request.xmmc);
-    let kjnd = trim(request.kjnd);
-    let kjyf = trim(request.kjyf);
+    let ddbh = func.trim(request.ddbh);
+    let xmmc = func.trim(request.xmmc);
+    let kjnd = func.trim(request.kjnd);
+    let kjyf = func.trim(request.kjyf);
 
     let ddoption = {};
     if (ddbh !== ""){
@@ -254,13 +257,13 @@ Router.route('/commissiontotal/get', {where: 'server'}).get(function(){
 
 Router.route('/commissiondetail/get', {where: 'server'}).get(function(){
     let request = this.request.query;
-    let ddbh = trim(request.ddbh);
-    let xmmc = trim(request.xmmc);
-    let kjnd = trim(request.kjnd);
-    let kjyf = trim(request.kjyf);
-    let ffsjb = trim(request.ffsjb);
-    let ffsje = trim(request.ffsje);
-    let ffry = trim(request.ffry);
+    let ddbh = func.trim(request.ddbh);
+    let xmmc = func.trim(request.xmmc);
+    let kjnd = func.trim(request.kjnd);
+    let kjyf = func.trim(request.kjyf);
+    let ffsjb = func.trim(request.ffsjb);
+    let ffsje = func.trim(request.ffsje);
+    let ffry = func.trim(request.ffry);
 
     let ddoption = {};
     if (ddbh !== ""){
@@ -309,12 +312,166 @@ Router.route('/commissiondetail/get', {where: 'server'}).get(function(){
     };
 });
 
+Router.route('/paymentDetailList/get', {where: 'server'}).get(function(){
+    let request = this.request.query;
+    let ddbh = func.trim(request.ddbh);
+    let xmmc = func.trim(request.xmmc);
+    let khmc = func.trim(request.khmc);
+    let zfrqb = func.trim(request.zfrqb);
+    let zfrqe = func.trim(request.zfrqe);
+    let zfbsc = func.trim(request.zfbsc);
+    let xszjbwsh = request.xszjbwsh;
+
+    let ddoption = {};
+    if (ddbh !== ""){
+        ddoption["ddbh"] = {$regex: ddbh};
+    };
+    if (xmmc !== ""){
+        ddoption["xmmc"] = {$regex: xmmc};
+    };
+    if (khmc !== ""){
+        ddoption["khmc"] = {$regex: khmc};
+    };
+
+    let sql = {}, rq = {};
+    if (zfrqb !== ""){
+        rq["$gte"] = zfrqb;
+    };
+    if (zfrqe !== ""){
+        rq["$lte"] = zfrqe;
+    };
+    if (!check.isObjectNull(rq)){
+        sql["zfrq"] = rq;
+    };
+    
+    if (zfbsc !== ""){
+        sql["zfbsc"] = {$regex: zfbsc};
+    };
+    if (xszjbwsh === "true"){
+        sql["zjbsh"] = false;
+    };
+        
+    //console.log(sql);
+    let getData = IndentCollection.aggregate([
+        {$match:ddoption},
+        {$unwind:"$officePay"},
+        {$project:{ddbh:1, xmmc:1, khmc:1,
+                zfbsc:"$officePay.zfbsc", zfrq:"$officePay.zfrq", fylb:"$officePay.fylb",
+                zfje:"$officePay.zfje", zfbz:"$officePay.zfbz", zjbsh:"$officePay.zjbsh" }},
+        {$match:sql},
+        {$sort:{ddbh:1}}
+    ]);
+    //console.log(getData);
+    if ( getData ) {
+        this.response.statusCode = 200;
+        this.response.end(JSON.stringify( getData ));
+    };
+});
+
+Router.route('/paymentStatusPayList/get', {where: 'server'}).get(function(){
+    let request = this.request.query;
+    let ddbh = func.trim(request.ddbh);
+    let xmmc = func.trim(request.xmmc);
+    let khmc = func.trim(request.khmc);
+    let zfrqb = func.trim(request.zfrqb);
+    let zfrqe = func.trim(request.zfrqe);
+    let xszjbwsh = request.xszjbwsh;
+
+    let ddoption = {};
+    if (ddbh !== ""){
+        ddoption["ddbh"] = {$regex: ddbh};
+    };
+    if (xmmc !== ""){
+        ddoption["xmmc"] = {$regex: xmmc};
+    };
+    if (khmc !== ""){
+        ddoption["khmc"] = {$regex: khmc};
+    };
+
+    let sql = {}, rq = {};
+    if (zfrqb !== ""){
+        rq["$gte"] = zfrqb;
+    };
+    if (zfrqe !== ""){
+        rq["$lte"] = zfrqe;
+    };
+    if (!check.isObjectNull(rq)){
+        sql["zfrq"] = rq;
+    };
+    
+    if (xszjbwsh === "true"){
+        sql["zjbsh"] = false;
+    };
+        
+    //console.log(sql);
+    let getData = IndentCollection.aggregate([
+        {$match:ddoption},
+        {$unwind:"$dealerPay"},
+        {$project:{ddbh:1, xmmc:1, khmc:1,
+                zfrq:"$dealerPay.zfrq", zfje:"$dealerPay.zfje", zfbz:"$dealerPay.zfbz", 
+                zfbfb:"$dealerPay.zfbfb", zjbsh:"$dealerPay.zjbsh" }},
+        {$match:sql},
+        {$sort:{ddbh:1}}
+    ]);
+    //console.log(getData);
+    if ( getData ) {
+        this.response.statusCode = 200;
+        this.response.end(JSON.stringify( getData ));
+    };
+});
+
+Router.route('/paymentStatusCashList/get', {where: 'server'}).get(function(){
+    let request = this.request.query;
+    let ddbh = func.trim(request.ddbh);
+    let xmmc = func.trim(request.xmmc);
+    let khmc = func.trim(request.khmc);
+    let skrqb = func.trim(request.skrqb);
+    let skrqe = func.trim(request.skrqe);
+
+    let ddoption = {};
+    if (ddbh !== ""){
+        ddoption["ddbh"] = {$regex: ddbh};
+    };
+    if (xmmc !== ""){
+        ddoption["xmmc"] = {$regex: xmmc};
+    };
+    if (khmc !== ""){
+        ddoption["khmc"] = {$regex: khmc};
+    };
+
+    let sql = {}, rq = {};
+    if (skrqb !== ""){
+        rq["$gte"] = skrqb;
+    };
+    if (skrqe !== ""){
+        rq["$lte"] = skrqe;
+    };
+    if (!check.isObjectNull(rq)){
+        sql["skrq"] = rq;
+    };
+            
+    //console.log(sql);
+    let getData = IndentCollection.aggregate([
+        {$match:ddoption},
+        {$unwind:"$cash"},
+        {$project:{ddbh:1, xmmc:1, khmc:1,
+                skrq:"$cash.skrq", skje:"$cash.skje", skbfb:"$cash.skbfb" }},
+        {$match:sql},
+        {$sort:{ddbh:1}}
+    ]);
+    //console.log(getData);
+    if ( getData ) {
+        this.response.statusCode = 200;
+        this.response.end(JSON.stringify( getData ));
+    };
+});
+
 Router.route('/paywarn/get', {where: 'server'}).get(function(){
     let request = this.request.query;
-    let ddbh = trim(request.ddbh);
+    let ddbh = func.trim(request.ddbh);
     let xmmc = request.xmmc;
 
-    let date = dateToStr(new Date()); //获取当天的日期
+    let date = func.dateToStr(new Date()); //获取当天的日期
     let sql = {sktxr:{$lte:date}, sksfsk:false};
     if (ddbh !== ""){
         sql["ddbh"] = {$regex: ddbh};
@@ -341,10 +498,10 @@ Router.route('/paywarn/get', {where: 'server'}).get(function(){
 
 Router.route('/pppwarn/get', {where: 'server'}).get(function(){
     let request = this.request.query;
-    let ddbh = trim(request.ddbh);
+    let ddbh = func.trim(request.ddbh);
     let xmmc = request.xmmc;
 
-    let date = dateToStr(new Date()); //获取当天的日期
+    let date = func.dateToStr(new Date()); //获取当天的日期
     let sql = {pptxr:{$lte:date}, ppsfgb:false};
     if (ddbh !== ""){
         sql["ddbh"] = {$regex: ddbh};

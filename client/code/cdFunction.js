@@ -1,10 +1,12 @@
+import * as gfunc from '../lib/globalFunction';
+
 Template.cdfunction.helpers({
 	functions: function(){
 		return FunctionCollection.find({}, {sort:{gndl:1, gnmc:1}});
 	},
 });
 
-functionInput = function(caption, opt, callback){
+function functionInput(caption, opt, callback){
     $.confirm({
         title: caption,
         content: '' +
@@ -88,7 +90,7 @@ Template.cdfunctionBody.events({
         if (obj){
             value = obj[0].innerText;
         };
-        chumjConfirm('确实要删除【'+ value +'】吗？', function(result){
+        gfunc.chumjConfirm('确实要删除【'+ value +'】吗？', function(result){
             if (result){
                 Meteor.call('deleteFunction', index, function(err, result){
                     if (err){

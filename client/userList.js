@@ -1,3 +1,5 @@
+import * as gfunc from './lib/globalFunction';
+
 Template.userlist.onRendered(function(){
     $('#tb_userlist').bootstrapTable({
         url: '/userlist/get',         	//请求后台的URL（*）
@@ -75,7 +77,7 @@ Template.userlist.events({
             Bert.alert('不能删除当前登录用户', 'info');
             return;
         }
-        chumjConfirm('确认要删除【'+name+'】吗？', function(result){
+        gfunc.chumjConfirm('确认要删除【'+name+'】吗？', function(result){
             if (result){
                 if (id == ''){
                     Bert.alert("用户ID为空，无法删除", 'danger');

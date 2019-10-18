@@ -1,3 +1,7 @@
+import * as func from '../lib/func/function';
+import * as gfunc from './lib/globalFunction';
+import {updateLocalIndent, changeLocalIndent} from './lib/localCollection';
+
 var tempIndent = {
     userid: '',
     username: '',
@@ -15,7 +19,7 @@ var tempIndent = {
     fysc: 0,
     fyqt: 0,
     fyyj: 0,
-    fykc: 0,
+	fykc: 0,
     remark: '',
 
     fktk: '',
@@ -35,13 +39,8 @@ var tempIndent = {
     skzje: 0
 };
 
-//更新本地数据集的通用函数
-updateLocalIndent = function(id, modifier){
-	LocalIndent.update({'_id': id}, modifier);
-};
-
 //本地数据集获取数据
-defaultLocalIndent = function(){
+function defaultLocalIndent(){
 	var id = Session.get('selectedIndentId');
 	if (id == ''){id = 'none'};
 	var newId = LocalIndent.upsert(Session.get('selectedIndentId'), 
@@ -52,7 +51,7 @@ defaultLocalIndent = function(){
 };
 
 //新建订单的函数
-newIndentfunc = function(){
+function newIndentfunc(){
     var date = new Date();
     tempIndent.kjnd = String(date.getFullYear());
     tempIndent.kjyf = date.getMonth()+1;
@@ -62,16 +61,16 @@ newIndentfunc = function(){
 };
 
 //遍历设备取得设备总金额
-getDeviceTotal = function(){
+function getDeviceTotal(){
 	var sum = 0;
     $('.xj').each(function(){
         sum += parseFloat(this.value);
     });
-    return toDecimal(sum, 0);
+    return func.toDecimal(sum, 0);
 };
 
 //自动计算合同总金额
-setIndentTotal = function(){
+function setIndentTotal(){
 	var sbzje = getDeviceTotal();
 
 	var modifier = {$set: {}};
@@ -80,7 +79,7 @@ setIndentTotal = function(){
 };
 
 //获取员工姓名或编号
-getWorkerInfo = function(info, xmOrBh){
+function getWorkerInfo(info, xmOrBh){
 	if (xmOrBh === 'xm'){
 		var getData = WorkerCollection.findOne({'ygxm':info});
 		if (getData){
@@ -99,6 +98,7 @@ Template.indent.onCreated(function(){
 		Meteor.subscribe('indentById', {id: Session.get('selectedIndentId')});
 		defaultLocalIndent();
 	});
+	
 	Meteor.subscribe('item');
 	Meteor.subscribe('product');
     Meteor.subscribe('office');
@@ -126,7 +126,7 @@ Template.indent.events({
 		}
 		else {
 			var value = evt.currentTarget.value;
-			modifier['$set'][field] = (field==='kjyf' || field==='htzje') ? Number(value) : trim(value);
+			modifier['$set'][field] = (field==='kjyf' || field==='htzje') ? Number(value) : func.trim(value);
 		};
 		updateLocalIndent(Session.get('selectedIndentId'), modifier);
 	},
@@ -134,6 +134,12 @@ Template.indent.events({
 		evt.stopImmediatePropagation(); //阻止事件传播
 		var modifier = {$set: {}};
 		modifier['$set']['remark'] = evt.currentTarget.value;
+		updateLocalIndent(Session.get('selectedIndentId'), modifier);
+	},
+	'change #fktk': function(evt, tpl){
+		evt.stopImmediatePropagation(); //阻止事件传播
+		var modifier = {$set: {}};
+		modifier['$set']['fktk'] = evt.currentTarget.value;
 		updateLocalIndent(Session.get('selectedIndentId'), modifier);
 	},
 	'change select': function(evt, tpl){
@@ -146,7 +152,7 @@ Template.indent.events({
 	},
 	'click button#btn-add': function(evt, tpl){
 		var obj = {cpfl:'', sbxh:'', bsc:'', fzr:'', ygbh:'', sbxs:0, sbsl:0, sbje:0,
-            tcxs:0, tcjs:0, fysc:0, fyqt:0, fyyj:0, fykc:0, tszbjj:0, shipment: []};
+            tcxs:0, tcjs:0, fysc:0, fyqt:0, fyyj:0, fykc:0, tszbjj:0, ftjfy:0, shipment: []};
         var getData = LocalIndent.find(Session.get('selectedIndentId')).fetch()[0].device;
         var len = getData.length;
         if (len > 0){
@@ -155,30 +161,40 @@ Template.indent.events({
             obj.ygbh = getData[len-1].ygbh;
             obj.cpfl = getData[len-1].cpfl;
             obj.sbxh = getData[len-1].sbxh;
-            obj.sbxs = getData[len-1].sbxs;
+			obj.sbxs = getData[len-1].sbxs;
+			obj.sbsl = getData[len-1].sbsl;
+			obj.sbje = getData[len-1].sbje;
+			obj.tcxs = getData[len-1].tcxs;
+			obj.tszbjj = getData[len-1].tszbjj;
         };
 		var modifier = {$push: {'device': obj}};
 		updateLocalIndent(Session.get('selectedIndentId'), modifier);
+		setTimeout(setIndentTotal, 100); //计算设备总金额和合同总金额
 	}
 });
 
 Template.indentHandle.events({
 	'click button#baocundd': function(evt, tpl){
-		resetBootstrapValidator('.form-horizontal');
-        if (!touchBootstrapValidator('.form-horizontal')){
+		gfunc.resetBootstrapValidator('.form-horizontal');
+        if (!gfunc.touchBootstrapValidator('.form-horizontal')){
             return; //错误的话退出
         };
 
 
-		chumjConfirm("确实要保存订单吗？", function(result){
+		gfunc.chumjConfirm("确实要保存订单吗？", function(result){
 			if (result){
 				//alert($(evt.currentTarget).attr('id'));
 				//alert($("#dxm").get(0).checked);
-				var id = Session.get('selectedIndentId');
-				var modifier = {
+				let id = Session.get('selectedIndentId');
+				if (changeLocalIndent(id)) {
+					Bert.alert('订单已经被其他用户修改，无法保存', 'danger');
+					return;
+				};
+
+				let modifier = {
 					$set: {
 						'userid': Meteor.userId(),
-						'username': Meteor.user().username
+						'username': Meteor.user().username,
 					}
 				};
 				updateLocalIndent(id, modifier); //先保存用户到本地数据集
@@ -191,9 +207,8 @@ Template.indentHandle.events({
 							//如果是新增的单据，则取得新增单据的ID
 							if (result.insertedId) {
 								Session.set('selectedIndentId', result.insertedId);
-							}
-						}
-						;
+							} else defaultLocalIndent();
+						};
 					});
 
 			};
@@ -201,11 +216,11 @@ Template.indentHandle.events({
 	},
 	'click button#xinzengdd': function(evt, tpl){
 		//新增订单
-        resetBootstrapValidator('.form-horizontal'); //重置一下验证状态
+        gfunc.resetBootstrapValidator('.form-horizontal'); //重置一下验证状态
         newIndentfunc();
 	},
 	'click button#shanchudd': function(evt, tpl){
-		chumjConfirm("确实要删除订单吗？", function(result){
+		gfunc.chumjConfirm("确实要删除订单吗？", function(result){
 			if (result){
 				if (Session.get('selectedIndentId') == ''){
                     Bert.alert("订单ID为空，无法删除");
@@ -236,9 +251,9 @@ Template.device.events({
 
 		var deviceProperty = 'device.' + index + '.' + field;
 		var modifier = {$set: {}};
-		var value = trim(evt.currentTarget.value);
+		var value = func.trim(evt.currentTarget.value);
 		modifier['$set'][deviceProperty] = ((field === 'cpfl')||(field === 'sbxh')||(field === 'bsc')
-            ||(field === 'fzr')||(field === 'ygbh')) ? trim(value) : Number(value);
+            ||(field === 'fzr')||(field === 'ygbh')) ? func.trim(value) : Number(value);
 		updateLocalIndent(Session.get('selectedIndentId'), modifier);
 
 		if (field === 'sbje'){
@@ -268,12 +283,35 @@ Template.device.events({
 	    	return;
 		}
 
-	    $('.xj[data-index="'+ index +'"]').val(0); //先设为零，避免出现删除后统计的错误
 	    devices.splice(index, 1);
 	    var modifier = {$set: {'device': devices}};
 	    updateLocalIndent(Session.get('selectedIndentId'), modifier);
 
-	    setIndentTotal(); //计算设备总金额和合同总金额
+	    setTimeout(setIndentTotal, 100); //计算设备总金额和合同总金额
+	},
+	'click button#btn-fcbl': function(evt, tpl){
+		var index = evt.currentTarget.getAttribute('data-index');
+		var device = Template.parentData(0);
+		if (!device) return;
+
+	    var temp = '<input type="text" placeholder="请输入分成比例..." class="name form-control">';
+        gfunc.chumjInput('计算', temp, '.name', '必须输入分成比例', function(result, value){
+            if (result){
+				let sbsl = func.toDecimal(device.sbsl*value, 2); 
+				let sbje = func.toDecimal(device.sbje*value, 2);
+				let tcxs = func.toDecimal(device.tcxs*value, 2);
+				let tszbjj = func.toDecimal(device.tszbjj*value, 2);
+
+                var modifier = {$set: {}};
+				modifier['$set']['device.' + index + '.sbsl'] = sbsl;
+				modifier['$set']['device.' + index + '.sbje'] = sbje;
+				modifier['$set']['device.' + index + '.tcxs'] = tcxs;
+				modifier['$set']['device.' + index + '.tszbjj'] = tszbjj;
+                updateLocalIndent(Session.get('selectedIndentId'), modifier);
+
+                setTimeout(setIndentTotal, 100); //计算设备总金额和合同总金额
+            };
+        });	    
 	},
 	'click span': function(evt, tpl){
         //OfficeCollection.find({}, {limit: 5}).forEach((post) =>{alert(`办事处: ${post.office}`);})
@@ -302,7 +340,7 @@ Template.device.events({
         var select = '<select class="form-control col-sm-6" id="select">' +
             temp + '</select>';
 
-        chumjInput('选择', select, '#select', '必须选择一项内容', function(result, value){
+		gfunc.chumjInput('选择', select, '#select', '必须选择一项内容', function(result, value){
             if (result){
                 var deviceProperty = 'device.' + index + '.' + id;
                 var modifier = {$set: {}};
@@ -329,7 +367,7 @@ Template.indentBody.helpers({
 });
 
 Template.indent.onRendered(function(){
-	setDatePicker();
+	gfunc.setDatePicker();
 
 	$('.form-horizontal').bootstrapValidator({
 		message: '输入的值不符合要求',

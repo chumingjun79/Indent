@@ -114,11 +114,23 @@
 
 	<!--标签页-->
 	<ul id="myTab" class="nav nav-tabs">
-		<li class="active"><a href="#devices" data-toggle="tab">设备列表</a></li>
+        <li class="active"><a href="#devices" data-toggle="tab">设备列表</a></li>
+        <li><a href="#payTerms" data-toggle="tab">付款条款</a></li>
 		<li><a href="#remark" data-toggle="tab">备注信息</a></li>
 	</ul>
 	<div class="tab-content">
-		<div class="tab-pane fade in active" id="devices"><!--设备列表-->
+        <div class="tab-pane fade in active" id="devices"><!--设备列表-->
+            <div class="panel-body"><!--标题-->
+                <span class="label label-default col-cmj-12">提成（销售员）</span>
+                <span class="label label-default col-cmj-12">提成（技术支持）</span>
+                <span class="label label-default col-cmj-12">费用（市场推广）</span>
+                <span class="label label-default col-cmj-12">费用（其他）</span>
+                <span class="label label-default col-cmj-12">样机费</span>
+                <span class="label label-default col-cmj-12">考察礼品费</span>
+                <span class="label label-default col-cmj-12">调试质保加价</span>
+                <span class="label label-default col-cmj-12">非统计费用</span>
+            </div>            
+
             <div class="list-group">
                 {{#each withIndex device}}
                     {{> device}}
@@ -128,6 +140,12 @@
                 <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
             </button>
 		</div>
+
+        <div class="tab-pane fade" id="payTerms"><!--付款条款-->
+            <div class="panel">
+                <textarea class="form-control" rows="5" id="fktk">{{fktk}}</textarea>
+            </div>
+        </div>
 
 		<div class="tab-pane fade" id="remark"><!--备注信息-->
 			<div class="panel">
@@ -190,40 +208,49 @@
             </div>
 
             <!--费用信息-->
-            <div class="form-group col-sm-2">
+            <div class="form-group col-cmj-15">
                 <input class="form-control" id="tcxs" data-index="{{index}}"
                        placeholder="提成（销售员）" value="{{tcxs}}">
             </div>
-            <div class="form-group col-sm-2">
+            <div class="form-group col-cmj-15">
                 <input class="form-control" id="tcjs" data-index="{{index}}"
                        placeholder="提成（技术支持）" value="{{tcjs}}">
             </div>
-            <div class="form-group col-sm-2">
+            <div class="form-group col-cmj-15">
                 <input class="form-control" id="fysc" data-index="{{index}}"
                        placeholder="费用（市场推广）" value="{{fysc}}">
             </div>
-            <div class="form-group col-sm-2">
+            <div class="form-group col-cmj-15">
                 <input class="form-control" id="fyqt" data-index="{{index}}"
                        placeholder="费用（其他）" value="{{fyqt}}">
             </div>
-            <div class="form-group col-sm-2">
+            <div class="form-group col-cmj-15">
                 <input class="form-control" id="fyyj" data-index="{{index}}"
                        placeholder="样机费" value="{{fyyj}}">
             </div>
-            <div class="form-group col-sm-2">
+            <div class="form-group col-cmj-15">
                 <input class="form-control" id="fykc" data-index="{{index}}"
                        placeholder="考察礼品费" value="{{fykc}}">
             </div>
 
             <!--调试质保加价-->
-            <div class="form-group col-sm-2">
+            <div class="form-group col-cmj-15">
                 <input class="form-control" id="tszbjj" data-index="{{index}}"
                        placeholder="调试质保加价" value="{{tszbjj}}">
             </div>
+            <div class="form-group col-cmj-15">
+                <input class="form-control" id="ftjfy" data-index="{{index}}"
+                    placeholder="非统计费用" value="{{ftjfy}}">
+            </div>
+            <div class="form-group">
+                <button id="btn-fcbl" type="button" class="btn btn-default" data-index="{{index}}">
+                    <span class="fa fa-percent" aria-hidden="true"></span>
+                </button>
 
-            <button id="btn-del" type="button" class="btn btn-danger" data-index="{{index}}">
-                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-            </button>
+                <button id="btn-del" type="button" class="btn btn-danger" data-index="{{index}}">
+                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                </button>
+            </div>
         </div>
     </a>
 </template>

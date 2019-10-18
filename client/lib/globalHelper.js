@@ -1,3 +1,5 @@
+import {checkPower} from '../lib/router';
+
 Template.registerHelper("goHome", function(){
     Router.go('/');
 });
@@ -21,6 +23,18 @@ Template.registerHelper("userObject", function() {
 		id: Meteor.user()._id,
 		username: Meteor.user().username,
 	}
+});
+
+Template.registerHelper("powerDisable", function(powerName){
+    return checkPower(powerName) ? '' : 'disabled';
+});
+
+Template.registerHelper("checkDisable", function(isCheck){
+    if (Meteor.user().username === 'admin'){
+        return '';
+    } else {
+        return isCheck ? 'disabled' : '';
+    };
 });
 
 //该函数的目的主要是为网格增加顺序号

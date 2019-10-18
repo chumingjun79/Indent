@@ -49,3 +49,7 @@ Meteor.publish('userRole', function(options){
 Meteor.publish('systemInfo', function(){
     return SystemInfoCollection.find({});
 });
+
+Meteor.publish('costtype', function(){
+    return CostTypeCollection.find({});
+});

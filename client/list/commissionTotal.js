@@ -1,3 +1,6 @@
+import * as func from '../../lib/func/function';
+import * as gfunc from '../lib/globalFunction';
+
 Template.commissiontotal.onRendered(function(){
 	$('#tb_list').bootstrapTable({
         sidePagination: "client", //分页方式：client客户端分页，server服务端分页
@@ -20,27 +23,27 @@ Template.commissiontotal.onRendered(function(){
 			{field: 'xmmc', title: '项目名称', halign: 'center' },
             {field: 'xstc', title: '提成总额', halign: 'center',
                 formatter: function (value, row, index) {
-                    return toDecimal(value, 2);
+                    return func.toDecimal(value, 2);
                 }},
             {field: 'ffje', title: '支付总额', halign: 'center',
                 formatter: function (value, row, index) {
-                    return toDecimal(value, 2);
+                    return func.toDecimal(value, 2);
                 }},
 			{field: 'wfye', title: '未付余额', halign: 'center',
 				formatter : function(value, row, index){
-					return toDecimal(row.xstc - row.ffje, 2);
+					return func.toDecimal(row.xstc - row.ffje, 2);
 				} },
 		],
         onLoadSuccess: function(data){
 			//console.log(data);
             let tchj=0, ffhj=0;
             for (var i in data) {
-                tchj += toDecimal(data[i].xstc, 2);
-                ffhj += toDecimal(data[i].ffje, 2);
+                tchj += func.toDecimal(data[i].xstc, 2);
+                ffhj += func.toDecimal(data[i].ffje, 2);
             };
-            $('#tcxshj')[0].innerHTML = '提成总额合计：'+ toDecimal(tchj, 2);
-            $('#ffjehj')[0].innerHTML = '支付总额合计：'+ toDecimal(ffhj, 2);
-            $('#wfjehj')[0].innerHTML = '未付余额合计：'+ toDecimal(tchj-ffhj, 2);
+            $('#tcxshj')[0].innerHTML = '提成总额合计：'+ func.toDecimal(tchj, 2);
+            $('#ffjehj')[0].innerHTML = '支付总额合计：'+ func.toDecimal(ffhj, 2);
+            $('#wfjehj')[0].innerHTML = '未付余额合计：'+ func.toDecimal(tchj-ffhj, 2);
 		},
 	});
 });
@@ -51,7 +54,7 @@ Template.commissiontotal.events({
             'commissiontotal/get'});
 	},
     'click button#btn_toexcel': function(evt, tpl){
-	    chumjConfirm('确认要导出查询数据吗？', function(result){
+	    gfunc.chumjConfirm('确认要导出查询数据吗？', function(result){
 	        if (result){
                 let data = tpl.$('#tb_list').bootstrapTable('getData');
                 let postData = {data: data};
@@ -62,7 +65,7 @@ Template.commissiontotal.events({
                         if (err) {
                             Bert.alert(err, 'danger');
                         } else {
-                            downloadByIframe(RootUrl+
+                            gfunc.downloadByIframe(RootUrl+
                                 'down/excel?downfile='+ downFile);
                         };
                     });

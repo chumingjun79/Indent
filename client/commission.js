@@ -1,4 +1,5 @@
-import './indent.js';
+import * as func from '../lib/func/function';
+import * as gfunc from './lib/globalFunction';
 
 var commissions = [], indentId = '', deviceindex = 0;
 
@@ -76,7 +77,7 @@ Tracker.autorun(function(){
     };
 });
 
-commissionInput = function(caption, opt, callback){
+function commissionInput(caption, opt, callback){
     $.confirm({
         title: caption,
         content: '' +
@@ -152,7 +153,7 @@ commissionInput = function(caption, opt, callback){
 
 Template.commission.events({
     'click button#btn-find': function(evt, tpl){
-        var ddbh = trim($('#ddbh').val());
+        var ddbh = func.trim($('#ddbh').val());
         if (ddbh){
             Meteor.subscribe('indentFromBh', {id: ddbh});
             Session.set('shipmentBh', ddbh);
@@ -169,7 +170,7 @@ Template.commission.events({
         }
 
         var date = new Date();
-        var opt = {ffsj:dateToStr1(date), skbl:'', ffbsc: data[0].bsc, ffry:data[0].fzr, ffje:0};
+        var opt = {ffsj:func.dateToStr1(date), skbl:'', ffbsc: data[0].bsc, ffry:data[0].fzr, ffje:0};
         commissionInput('新增', opt, function(result, obj){
             if (result){
                 var commission = {'ffsj': obj.ffsj, 'skbl': obj.skbl, 'ffbsc': obj.ffbsc,
@@ -230,7 +231,7 @@ Template.commission.events({
             return;
         };
 
-        chumjConfirm('确实要删除选中的发放信息吗？', function(result){
+        gfunc.chumjConfirm('确实要删除选中的发放信息吗？', function(result){
             if (result){
                 commissions.splice(index, 1);
 
