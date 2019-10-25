@@ -97,6 +97,11 @@ Template.paymentDetail.onRendered(function(){
             });           
         },
     });
+
+    if (Session.get('paymentId') !== '') {
+        $("#ddbh").val(Session.get('paymentId'));
+        $("#btn_find").click();
+    }; 
 });
 
 Template.paymentDetail.helpers({

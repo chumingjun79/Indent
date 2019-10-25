@@ -20,6 +20,7 @@ Template.paymentStatusPayList.onRendered(function(){
 				return temp;
 			},
 		columns: [
+            {radio: true },
 			{field: 'ddbh', title: '订单编号', halign: 'center' },
             {field: 'xmmc', title: '项目名称', halign: 'center' },
             {field: 'khmc', title: '客户名称', halign: 'center' },
@@ -43,6 +44,15 @@ Template.paymentStatusPayList.onRendered(function(){
 	});
 });
 
+function getSelection(tpl){
+    let selectedData = tpl.$('#tb_list').bootstrapTable('getSelections');
+    if (selectedData.length === 0){
+        Bert.alert('请先选中想要操作的订单', 'info');
+        return '';
+    };
+    return selectedData[0].ddbh;
+}
+
 Template.paymentStatusPayList.events({
 	'click button#btn_refresh': function(evt, tpl){
 		tpl.$('#tb_list').bootstrapTable('refresh', {url: RootUrl+
@@ -52,6 +62,11 @@ Template.paymentStatusPayList.events({
         $('.datepicker').datepicker('destroy');
         gfunc.setDatePicker();
         $('.datepicker').datepicker('show');
-    },    
-
+    },  
+    'click button#btn_info': function(evt, tpl){
+		let selected = getSelection(tpl);
+		if (selected === '') return;
+		Session.set('paymentId', selected);
+		Router.go('/paymentStatus');
+	},
 });

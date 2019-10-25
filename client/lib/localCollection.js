@@ -7,8 +7,11 @@ export function updateLocalIndent(id, modifier){
 
 //判断本地数据的保存时间是否与服务器上的不一致，如果不一致为true
 export function changeLocalIndent(id){
-    let savetime = LocalIndent.findOne(id).savetime;
-    let databasetime = IndentCollection.findOne(id).savetime;
+    let savetime, databasetime;
+    let local = LocalIndent.findOne(id);
+    savetime = local ? local.savetime : false;
+    let database = IndentCollection.findOne(id);
+    databasetime = database ? database.savetime : false;
     if (!databasetime) return false; 
     if (!savetime && databasetime) return true;
     return savetime - databasetime !== 0; 
