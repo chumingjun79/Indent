@@ -33,6 +33,10 @@
                 </form>
                 <table id="tb_indentlist" class="table table-bordered"></table>	
                 <label class="control-label text-info col-sm-3">订单中费用限额合计：{{zfxehj}}</label>
+                
+                {{#with selectedIndent}}
+                    {{> paymentDetailEdit}}
+                {{/with}}
             </div>
 
             <!--录入额度和费用界面-->
@@ -93,6 +97,19 @@
     {{> paymentDetailHandle}}
 </template>
 
+<template name="paymentDetailEdit">
+    <label class="control-label col-sm-2">
+        <input type="checkbox" id="zjbyxzf" checked={{zjbyxzf}} 
+            {{powerDisable "paymentDetailPowerZjb"}}> 允许支付费用
+    </label>
+
+    <label class="control-label col-sm-1" for="zjbyxzfbz">备注</label>
+    <div class="col-sm-2">
+        <input class="form-control" id="zjbyxzfbz" value="{{zjbyxzfbz}}" style="color:red"
+            {{powerDisable "paymentDetailPowerZjb"}}>
+    </div>
+</template>
+
 <template name="paymentDetailHandle">
     <div class="panel">
         <div class="panel-heading" align="center">
@@ -142,7 +159,7 @@
         </td>
         <td style="width:10%">
             <input class="checkbox-cmj" id="zjbsh" data-index="{{index}}" type="checkbox" checked={{zjbsh}} 
-                {{powerDisable "paymentDetailPowerZjb"}}>
+                {{powerDisable "paymentDetailPowerZjb"}} {{checkDisable zjbsh}}>
         </td>
         <td>
             <button id="del-officePay" type="button" class="btn btn-danger" data-index="{{index}}" 

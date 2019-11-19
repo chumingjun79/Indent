@@ -143,6 +143,10 @@ Template.paymentDetail.events({
         setTimeout(setIndentBscfyxehj, 100); //计算办事处费用限额合计
     },
     'click button#add-officePay': function(evt, tpl){
+        if (!$('#zjbyxzf')[0].checked) {
+            Bert.alert('暂不允许支付费用', 'danger');
+            return;
+        }
         let temp = '';
         let tempIndent = LocalIndent.findOne(Session.get('paymentId'));
         _.map(tempIndent.quota, function(value){
@@ -162,6 +166,19 @@ Template.paymentDetail.events({
         $('.datepicker').datepicker('destroy');
         gfunc.setDatePicker();
         $('.datepicker').datepicker('show');
+    },
+});
+
+
+Template.paymentDetailEdit.events({
+    'change input': function(evt, tpl){
+        evt.stopImmediatePropagation(); //阻止事件传播
+        let field = evt.currentTarget.id;
+        if (field===""){return}; //如果没有设置ID，则退出
+        let modifier = {$set: {}};
+        let value = func.trim(evt.currentTarget.value);
+        modifier['$set'][field] = (field === 'zjbyxzf') ? evt.currentTarget.checked : value;
+        updateLocalIndent(indentId, modifier);
     },
 });
 
