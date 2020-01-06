@@ -233,6 +233,15 @@ Router.route('/costtype', {
     },
 });
 
+Router.route('/deduct', {
+    waitOn: function(){
+        return Meteor.subscribe('deduct');
+    },
+    action: function(){
+        checkSystemRole(this, 'cddeduct', '提成比率');
+    },
+});
+
 if (Meteor.isClient){
 	var requireLogin = function(){
 		if (!Meteor.userId()) {

@@ -1,7 +1,7 @@
 import * as func from '../lib/func/function';
 import * as gfunc from './lib/globalFunction';
 
-var commissions = [], indentId = '', deviceindex = 0;
+var commissions = [], indentId = '', deviceindex = 0, commissionIndex = 0, tcje = 0, updateMode = '';
 
 Template.commission.onRendered(function(){
     $('#tb_indent').bootstrapTable({
@@ -40,7 +40,8 @@ Template.commission.onRendered(function(){
         ],
         onCheck: function(row, evt){
             $('#tb_commission').bootstrapTable('uncheckAll');
-            deviceindex = evt.data('index');
+            deviceindex = evt.data('index'); //这里取index是为了保存时更新数据
+            tcje = row.tcxs; //这里保存提成金额，是为了后面根据所选比例自动计算出所发提成
             commissions = row.commission;
             if (commissions == null){
                 commissions = [];
@@ -63,8 +64,16 @@ Template.commission.onRendered(function(){
     });
 });
 
+Template.commission.onCreated(function(){
+    Session.set('shipmentBh', '');
+    Session.set('skxx', []);
+
+	Meteor.subscribe('deduct');
+});
+
 Template.commission.onDestroyed(function(){
     Session.set('shipmentBh', '');
+    Session.set('skxx', []);
 });
 
 Tracker.autorun(function(){
@@ -77,78 +86,9 @@ Tracker.autorun(function(){
     };
 });
 
-function commissionInput(caption, opt, callback){
-    $.confirm({
-        title: caption,
-        content: '' +
-        '<form action="" class="formName">' +
-        '<div class="form-group">' +
-        '<label>请输入发放时间</label>' +
-        '<input type="text" id="ffsj" value="'+ opt.ffsj +'" class="form-control">' +
-        '<label>请输入收款比例</label>' +
-        '<input type="text" id="skbl" value="'+ opt.skbl +'" class="form-control">' +
-        '<label>请输入发放部门</label>' +
-        '<input type="text" id="ffbsc" value="'+ opt.ffbsc +'" class="form-control">' +
-        '<label>请输入受益人</label>' +
-        '<input type="text" id="ffry" value="'+ opt.ffry +'" class="form-control">' +
-        '<label>请输入发放金额</label>' +
-        '<input type="text" id="ffje" value="'+ opt.ffje +'" class="form-control">' +
-        '</div>' +
-        '</form>',
-        theme: 'modern',
-        type: 'blue',
-        buttons: {
-            formSubmit: {
-                text: '确定',
-                btnClass: 'btn-blue',
-                action: function () {
-                    var ffsj = this.$content.find('#ffsj').val();
-                    if(!ffsj){
-                        $.alert('请输入发放时间');
-                        return false;
-                    };
-                    var skbl = this.$content.find('#skbl').val();
-                    if(!skbl){
-                        $.alert('请输入收款比例');
-                        return false;
-                    };
-                    var ffbsc = this.$content.find('#ffbsc').val();
-                    if(!ffbsc){
-                        $.alert('请输入发放部门');
-                        return false;
-                    };
-                    var ffry = this.$content.find('#ffry').val();
-                    if(!ffry){
-                        $.alert('请输入受益人');
-                        return false;
-                    };
-                    var ffje = this.$content.find('#ffje').val();
-                    if(!ffje){
-                        $.alert('请输入发放金额');
-                        return false;
-                    };
-                    if(typeof callback == "function"){
-                        var opt = {'ffsj': ffsj, 'skbl': skbl, 'ffbsc': ffbsc, 'ffry': ffry, 'ffje': ffje};
-                        callback(true, opt);
-                    }
-                }
-            },
-            cancel: {
-                text: '取消',
-                action: function () {
-                }
-            },
-        },
-        onContentReady: function () {
-            // bind to events
-            var jc = this;
-            this.$content.find('form').on('submit', function (e) {
-                // if the user submits the form by pressing enter in the field.
-                e.preventDefault();
-                jc.$$formSubmit.trigger('click'); // reference the button and click it
-            });
-        }
-    });
+function commissionInput(mode){
+    updateMode = mode;
+    $('#myModal').modal('show');
 };
 
 Template.commission.events({
@@ -170,29 +110,20 @@ Template.commission.events({
         }
 
         var date = new Date();
-        var opt = {ffsj:func.dateToStr1(date), skbl:'', ffbsc: data[0].bsc, ffry:data[0].fzr, ffje:0};
-        commissionInput('新增', opt, function(result, obj){
-            if (result){
-                var commission = {'ffsj': obj.ffsj, 'skbl': obj.skbl, 'ffbsc': obj.ffbsc,
-                    'ffry': obj.ffry, 'ffje': Number(obj.ffje)};
+        var opt = {ffsj:func.dateToStr1(date), skbl:'<90%', ffbsc:data[0].bsc, ffry:data[0].fzr, ffje:0};
+        Session.set("skxx", opt);
 
-                commissions.push(commission);
-
-                Meteor.call('updateIndentCommission', indentId, deviceindex, commissions, function(err, result){
-                    if (err){
-                        Bert.alert(err.message, 'danger');
-                    };
-                });
-            };
-        });
+        commissionInput('Add');
     },
     'click button#btn-edit': function(evt, tpl){
         var data = $('#tb_commission').bootstrapTable('getSelections');
         if (data.length > 0){
+            commissionIndex = commissions.indexOf(data[0]); //保存数组的index
+            if (commissionIndex === -1) return;
+
             var opt = {'ffsj':data[0].ffsj, 'skbl':data[0].skbl, 'ffbsc':data[0].ffbsc,
                 'ffry':data[0].ffry, 'ffje':data[0].ffje};
-            var index = commissions.indexOf(data[0]); //保存数组的index
-            if (index === -1) return;
+            Session.set("skxx", opt);
         }else {
             Bert.alert('请先选择发放信息', 'info');
             return;
@@ -202,28 +133,15 @@ Template.commission.events({
             return;
         };
 
-        commissionInput('修改', opt, function(result, obj){
-            if (result){
-                var commission = {'ffsj': obj.ffsj, 'skbl': obj.skbl, 'ffbsc': obj.ffbsc,
-                    'ffry': obj.ffry, 'ffje': Number(obj.ffje)};
-
-                commissions.splice(index, 1, commission);
-
-                Meteor.call('updateIndentCommission', indentId, deviceindex, commissions, function(err, result){
-                    if (err){
-                        Bert.alert(err.message, 'danger');
-                    };
-                });
-            };
-        });
+        commissionInput('Edit');
     },
     'click button#btn-del': function(evt, tpl){
         var data = $('#tb_commission').bootstrapTable('getSelections');
         if (data.length > 0){
-            var index = commissions.indexOf(data[0]); //保存数组的index
-            if (index === -1) return;
+            commissionIndex = commissions.indexOf(data[0]); //保存数组的index
+            if (commissionIndex === -1) return;
         }else {
-            Bert.alert('请先选择发货信息', 'info');
+            Bert.alert('请先选择发放信息', 'info');
             return;
         };
         if ($('#tb_device').bootstrapTable('getSelections').length === 0){
@@ -233,7 +151,7 @@ Template.commission.events({
 
         gfunc.chumjConfirm('确实要删除选中的发放信息吗？', function(result){
             if (result){
-                commissions.splice(index, 1);
+                commissions.splice(commissionIndex, 1);
 
                 Meteor.call('updateIndentCommission', indentId, deviceindex, commissions, function(err, result){
                     if (err){
@@ -242,5 +160,72 @@ Template.commission.events({
                 });
             };
         });
+    },
+});
+
+Template.commissionModal.helpers({
+	selectedCommission: function(){
+		return Session.get("skxx");
+    },
+    deducts: function(){
+        return DeductCollection.find();
+    },
+});
+
+Template.commissionModal.events({
+    'click button#btn-saveDeduct': function(evt, tpl){
+        var ffsj = $('#ffsj').val();
+        if(!ffsj){
+            $.alert('请输入发放时间');
+            return false;
+        };
+        var skbl = $('#skbl').val();
+        if(!skbl){
+            $.alert('请输入收款比例');
+            return false;
+        };
+        var ffbsc = $('#ffbsc').val();
+        if(!ffbsc){
+            $.alert('请输入发放部门');
+            return false;
+        };
+        var ffry = $('#ffry').val();
+        if(!ffry){
+            $.alert('请输入受益人');
+            return false;
+        };
+        var ffje = $('#ffje').val();
+        if(!ffje){
+            $.alert('请输入发放金额');
+            return false;
+        };
+
+        var commission = {'ffsj': ffsj, 'skbl': skbl, 'ffbsc': ffbsc, 'ffry': ffry, 'ffje': Number(ffje)};
+        if (updateMode == 'Add'){
+            commissions.push(commission);
+        } else if (updateMode == 'Edit'){
+            commissions.splice(commissionIndex, 1, commission);
+        };        
+
+        Meteor.call('updateIndentCommission', indentId, deviceindex, commissions, function(err, result){
+            if (err){
+                Bert.alert(err.message, 'danger');
+            } else {
+                $('#myModal').modal('hide');
+                Session.set("skxx", '');
+            }
+        });        
+    },
+    'change select#skbl': function(evt, tpl){
+        var skbl = evt.currentTarget.value;
+        if (skbl != '') {
+            var even = _.find(DeductCollection.find().fetch(), function(obj){ return obj.hkhsbl == skbl; });
+            if (even != undefined){
+                var ffje = func.toTwoDecimal(tcje * even.tcffbl);
+                $('#ffje').val(ffje);
+            }
+        } else {
+            $('#ffje').val(0);
+        } 
     },
 });

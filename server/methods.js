@@ -469,4 +469,27 @@ Meteor.methods({
 
         return CostTypeCollection.remove({"_id": id});
     },
+    'upsertDeduct': function(data){
+        if (check.emptyString(data.hkhsbl)) {
+            throw new Meteor.Error(403, "传入的货款回收比例不允许为空");
+        };
+        if (!check.isFloat(data.tcffbl)) {
+            throw new Meteor.Error(403, "传入的提成发放比例必须是数字");
+        };
+
+        var modifier = {$set: {}};
+        for(var i in data ) {
+            if (i !== 'id'){
+                modifier['$set'][i] = data[i];
+            };
+        };
+        return DeductCollection.upsert({"_id": data.id}, modifier);
+    },
+    'deleteDeduct': function(id){
+        if (check.emptyString(id)) {
+            throw new Meteor.Error(403, "传入的ID不允许为空");
+        };
+
+        return DeductCollection.remove({"_id": id});
+    },
 });

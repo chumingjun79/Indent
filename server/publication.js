@@ -53,3 +53,7 @@ Meteor.publish('systemInfo', function(){
 Meteor.publish('costtype', function(){
     return CostTypeCollection.find({});
 });
+
+Meteor.publish('deduct', function(){
+    return DeductCollection.find({});
+});
