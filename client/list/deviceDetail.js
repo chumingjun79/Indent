@@ -44,6 +44,7 @@ Template.devicedetail.onRendered(function(){
             {field: 'fyqt', title: '费用（其他）', halign: 'center'},
             {field: 'fyyj', title: '样机费', halign: 'center'},
             {field: 'fykc', title: '考察礼品费', halign: 'center'},
+            {field: 'ftjfy', title: '非统计费用', halign: 'center'},
             {field: 'fhsl', title: '发货数量', halign: 'center'},
             {field: 'fhje', title: '发货金额', halign: 'center'},
             {field: 'khmc', title: '客户名称', halign: 'center'},
@@ -51,7 +52,7 @@ Template.devicedetail.onRendered(function(){
 		],
         onLoadSuccess: function(data){
 			//console.log(data);
-            let sl=0, je=0, htzje=0, zbjj=0, tcxs=0, tcjs=0, fysc=0, fyqt=0, fyyj=0, fykc=0, fhsl=0, fhje=0;
+            let sl=0, je=0, htzje=0, zbjj=0, tcxs=0, tcjs=0, fysc=0, fyqt=0, fyyj=0, fykc=0, ftjfy=0, fhsl=0, fhje=0;
             for (var i in data) {
                 sl += func.toDecimal(data[i].sbsl, 2);
                 je += func.toDecimal(data[i].sbje, 2);
@@ -63,6 +64,7 @@ Template.devicedetail.onRendered(function(){
                 fyqt += func.toDecimal(data[i].fyqt, 2);
                 fyyj += func.toDecimal(data[i].fyyj, 2);
                 fykc += func.toDecimal(data[i].fykc, 2);
+                ftjfy += func.toDecimal(data[i].ftjfy, 2);
                 fhsl += func.toDecimal(data[i].fhsl, 2);
                 fhje += func.toDecimal(data[i].fhje, 2);
             };
@@ -76,6 +78,7 @@ Template.devicedetail.onRendered(function(){
             $('#fyqt')[0].innerHTML = '费用（其他）合计：'+ func.toDecimal(fyqt, 2);
             $('#fyyj')[0].innerHTML = '样机费合计：'+ func.toDecimal(fyyj, 2);
             $('#fykc')[0].innerHTML = '考察礼品费合计：'+ func.toDecimal(fykc, 2);
+            $('#ftjfy')[0].innerHTML = '非统计费用合计：'+ func.toDecimal(ftjfy, 2);
             $('#fhsl')[0].innerHTML = '发货数量合计：'+ func.toDecimal(fhsl, 2);
             $('#fhje')[0].innerHTML = '发货金额合计：'+ func.toDecimal(fhje, 2);
 		},

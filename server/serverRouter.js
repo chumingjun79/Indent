@@ -204,7 +204,7 @@ Router.route('/devicedetail/get', {where: 'server'}).get(function(){
                 bsc:"$device.bsc", fzr:"$device.fzr", ygbh:"$device.ygbh",
                 sbxs:"$device.sbxs", sbsl:"$device.sbsl", sbje:"$device.sbje",
                 tcxs:"$device.tcxs", tcjs:"$device.tcjs", fysc:"$device.fysc", fyqt:"$device.fyqt",
-                fyyj:"$device.fyyj", fykc:"$device.fykc", tszbjj:"$device.tszbjj",
+                fyyj:"$device.fyyj", fykc:"$device.fykc", ftjfy:"$device.ftjfy", tszbjj:"$device.tszbjj",
                 fhsl:{$sum:"$device.shipment.fhsl"}, fhje:{$sum:"$device.shipment.fhje"} }},
         {$match:sql},
         {$sort:{kjnd:1,kjyf:1,ddbh:1,htzje:-1}}
