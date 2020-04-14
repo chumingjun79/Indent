@@ -113,6 +113,14 @@ Router.route('/officecost', function(){
     checkSystemRole(this, 'officecost', '查看办事处费用率');
 });
 
+Router.route('/itemorder', function(){
+    checkSystemRole(this, 'itemorder', '查看项目分类订货');
+});
+
+Router.route('/industryorder', function(){
+    checkSystemRole(this, 'industryorder', '查看所属行业订货');
+});
+
 Router.route('/paymentStatus', function(){
     checkSystemRole(this, 'paymentStatus', '利润表报销');
 });
@@ -185,6 +193,15 @@ Router.route('/item', {
     },
     action: function(){
         checkSystemRole(this, 'cditem', '项目分类维护');
+    },
+});
+
+Router.route('/industry', {
+    waitOn: function(){
+        return Meteor.subscribe('industry');
+    },
+    action: function(){
+        checkSystemRole(this, 'cdindustry', '所属行业维护');
     },
 });
 

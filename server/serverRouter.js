@@ -133,6 +133,7 @@ Router.route('/devicedetail/get', {where: 'server'}).get(function(){
     let bsc = func.trim(request.bsc);
     let fzr = func.trim(request.fzr);
     let xmfl = func.trim(request.xmfl);
+    let sshy = func.trim(request.sshy);
 
     let ddoption = {};
     if (ddbh !== ""){
@@ -163,6 +164,9 @@ Router.route('/devicedetail/get', {where: 'server'}).get(function(){
     };
     if (xmfl !== ""){
         sql["xmfl"] = {$regex: xmfl};
+    };
+    if (sshy !== ""){
+        sql["sshy"] = {$regex: sshy};
     };
     //console.log(sql);
 
@@ -198,7 +202,7 @@ Router.route('/devicedetail/get', {where: 'server'}).get(function(){
     let getData = IndentCollection.aggregate([
         {$match:ddoption},
         {$unwind:{path:"$device", includeArrayIndex:"arrayIndex", preserveNullAndEmptyArrays:true}},
-        {$project:{kjnd:1, kjyf:1, ddbh:1, xmmc:1, xmfl:1, khmc:1, dxm:1,
+        {$project:{kjnd:1, kjyf:1, ddbh:1, xmmc:1, sshy:1, xmfl:1, khmc:1, dxm:1,
                 htzje:{$cond:[{$eq:["$arrayIndex",0]}, "$htzje", {$cond:[{$eq:["$arrayIndex",null]},"$htzje", 0]} ]},
                 cpfl:"$device.cpfl", sbxh:"$device.sbxh",
                 bsc:"$device.bsc", fzr:"$device.fzr", ygbh:"$device.ygbh",

@@ -9,8 +9,9 @@ var tempIndent = {
     kjyf: '',
     ddbh: '',
     xmmc: '',
-    xmfl: '',
+	xmfl: '',
 	khmc: '',
+	sshy: '',
     lxr: '',
     dxm: false,
     device: [],
@@ -100,6 +101,7 @@ Template.indent.onCreated(function(){
 	});
 	
 	Meteor.subscribe('item');
+	Meteor.subscribe('industry');
 	Meteor.subscribe('product');
     Meteor.subscribe('office');
     Meteor.subscribe('worker');
@@ -363,6 +365,9 @@ Template.device.events({
 Template.indentBody.helpers({
     items: function(){
         return ItemCollection.find();
+	},
+	industrys: function(){
+        return IndustryCollection.find();
     },
 });
 
@@ -398,6 +403,11 @@ Template.indent.onRendered(function(){
             xmfl: {
                 validators: {
                     notEmpty: {message: '项目分类不允许为空'},
+                }
+			},
+			sshy: {
+                validators: {
+                    notEmpty: {message: '所属行业不允许为空'},
                 }
             },
 		}

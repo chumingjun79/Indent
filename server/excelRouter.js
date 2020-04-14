@@ -78,7 +78,7 @@ Router.route('/export/excel', {where: 'server'}).post(function(){
 });
 
 function getReportData(report, kjnd, kjyf){
-    let resData, getData, chanpin;
+    let resData, getData, chanpin, xmfl, sshy;
 
     switch (report){
     case 'orderstatus':
@@ -328,49 +328,36 @@ function getReportData(report, kjnd, kjyf){
         ]);
 
         return getData[0];
-    case 'officemodular':
-        resData = [{}, {}, {}, {}];
+    case 'itemorder':
+        resData = [{}];
 
         getData = IndentCollection.aggregate([
             {$unwind:"$device"},
-            {$match:{kjnd: String(kjnd), kjyf:{$lte:Number(kjyf)}, "device.cpfl":'Modular' }},
-            {$group:{_id:{bsc:"$device.bsc", sbxh:"$device.sbxh"},
-                    sbsl:{$sum:"$device.sbsl"}, sbje:{$sum:"$device.sbje"} }}
+            {$match:{kjnd: String(kjnd), kjyf:{$lte: Number(kjyf)}}},
+            {$group:{_id:{yuefen:"$kjyf", xmfl:'$xmfl'}, sum_value:{$sum:"$device.sbje"}}}
         ]);
         for (let i=0; i<getData.length; i++){
-            resData[0][String(getData[i]._id.bsc)] = 0;
-            resData[1][String(getData[i]._id.bsc)] = 0;
-        }
-        for (let i=0; i<getData.length; i++){
-            if (String(getData[i]._id.sbxh).indexOf('130') !== -1) //130的模块机需要折算成两台
-            {
-                resData[0][String(getData[i]._id.bsc)] = resData[0][String(getData[i]._id.bsc)]+getData[i].sbsl*2;
-            } else {
-                resData[0][String(getData[i]._id.bsc)] = resData[0][String(getData[i]._id.bsc)]+getData[i].sbsl;
-            }
-            resData[1][String(getData[i]._id.bsc)] = resData[1][String(getData[i]._id.bsc)]+getData[i].sbje;
-        }
+            xmfl = getData[i]._id.xmfl;
+            resData[0][xmfl + String(getData[i]._id.yuefen)] = func.toDecimal(getData[i].sum_value, 2);
+        };
+
+        return resData;
+    case 'industryorder':
+        resData = [{}];
 
         getData = IndentCollection.aggregate([
             {$unwind:"$device"},
-            {$unwind:"$device.shipment"},
-            {$match:{"device.shipment.fhnd": String(kjnd), 'device.shipment.fhyf':{$lte: Number(kjyf)}, "device.cpfl":'Modular' }},
-            {$group:{_id:{bsc:'$device.bsc', sbxh:'$device.sbxh'},
-                    fhsl:{$sum:"$device.shipment.fhsl"}, fhje:{$sum:"$device.shipment.fhje"} }}
+            {$match:{kjnd: String(kjnd), kjyf:{$lte: Number(kjyf)}}},
+            {$group:{_id:{yuefen:"$kjyf", sshy:'$sshy'}, sum_value:{$sum:"$device.sbje"}}}
         ]);
         for (let i=0; i<getData.length; i++){
-            resData[2][String(getData[i]._id.bsc)] = 0;
-            resData[3][String(getData[i]._id.bsc)] = 0;
-        }
-        for (let i=0; i<getData.length; i++){
-            if (String(getData[i]._id.sbxh).indexOf('130') !== -1) //130的模块机需要折算成两台
+            sshy = func.toString(getData[i]._id.sshy);   
+            if (sshy !== '')
             {
-                resData[2][String(getData[i]._id.bsc)] = resData[2][String(getData[i]._id.bsc)]+getData[i].fhsl*2;
-            } else {
-                resData[2][String(getData[i]._id.bsc)] = resData[2][String(getData[i]._id.bsc)]+getData[i].fhsl;
-            }
-            resData[3][String(getData[i]._id.bsc)] = resData[3][String(getData[i]._id.bsc)]+getData[i].fhje;
-        }
+                sshy = sshy.replace(/、/g, ''); //ejsExcel中字段名带有'、'的话会报错
+            }        
+            resData[0][sshy + String(getData[i]._id.yuefen)] = func.toDecimal(getData[i].sum_value, 2);
+        };
 
         return resData;
     };
@@ -382,18 +369,19 @@ Router.route('/report/excel', {where: 'server'}).get(function(){
     let fs = require("fs");
     let path = require("path");
 
+    let filename = req.query.filename;
     let downFile = req.query.downfile;
     let tempFile, currFile;
-    if (req.query.filename === 'paymentStatus' || req.query.filename === 'paymentDetail')
+    if (filename === 'paymentStatus' || filename === 'paymentDetail')
     {
-        tempFile = req.query.filename + '_temp.xlsx';
+        tempFile = filename + '_temp.xlsx';
         currFile = path.normalize(process.env.HOME+'/indent/excel/'+ tempFile);
     } else {
-        tempFile = req.query.filename + '_' + req.query.kjyf + '.xlsx';
+        tempFile = filename + '_' + req.query.kjyf + '.xlsx';
         currFile = path.normalize(process.env.HOME+'/indent/excel/'+ req.query.kjnd + '/' + tempFile);
     }
 
-    let data = getReportData(req.query.filename, req.query.kjnd, req.query.kjyf);
+    let data = getReportData(filename, req.query.kjnd, req.query.kjyf);
     //console.log('%j', data);
 
     fs.exists(currFile, function(exist) {

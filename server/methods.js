@@ -331,6 +331,25 @@ Meteor.methods({
 
         return ItemCollection.remove({"_id": id});
     },
+    'upsertIndustry': function(data){
+        if (check.emptyString(data.name)) {
+            throw new Meteor.Error(403, "传入的所属行业不允许为空");
+        };
+        if (IndustryCollection.find({ "name":data.name }).count() > 0){
+            throw new Meteor.Error(403, "所属行业重复");
+        };
+
+        var modifier = {$set: {}};
+        modifier['$set']['name'] = data.name;
+        return IndustryCollection.upsert({"_id": data.id}, modifier);
+    },
+    'deleteIndustry': function(id){
+        if (check.emptyString(id)) {
+            throw new Meteor.Error(403, "传入的ID不允许为空");
+        };
+
+        return IndustryCollection.remove({"_id": id});
+    },
     'upsertProduct': function(data){
         if (check.emptyString(data.type)) {
             throw new Meteor.Error(403, "传入的大类不允许为空");

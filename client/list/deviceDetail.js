@@ -19,6 +19,7 @@ Template.devicedetail.onRendered(function(){
                     fzr: $("#fzr").val(),
                     khmc: $("#khmc").val(),
                     xmfl: $("#xmfl").val(),
+                    sshy: $("#sshy").val(),
 				};
 				return temp;
 			},
@@ -26,7 +27,8 @@ Template.devicedetail.onRendered(function(){
             {field: 'kjnd', title: '年度', halign: 'center' },
             {field: 'kjyf', title: '月份', halign: 'center' },
 			{field: 'ddbh', title: '订单编号', halign: 'center' },
-			{field: 'xmmc', title: '项目名称', halign: 'center' },
+            {field: 'xmmc', title: '项目名称', halign: 'center' },
+            {field: 'sshy', title: '所属行业', halign: 'center' },
             {field: 'xmfl', title: '项目分类', halign: 'center' },
 			{field: 'cpfl', title: '产品分类', halign: 'center' },
 			{field: 'sbxh', title: '设备型号', halign: 'center' },

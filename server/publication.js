@@ -22,6 +22,10 @@ Meteor.publish('item', function(options){
     return ItemCollection.find({});
 });
 
+Meteor.publish('industry', function(options){
+    return IndustryCollection.find({});
+});
+
 Meteor.publish('product', function(options){
     return ProductCollection.find({});
 });
